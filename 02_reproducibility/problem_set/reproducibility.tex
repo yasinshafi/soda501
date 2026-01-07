@@ -26,65 +26,90 @@ Please write three to ten sentence explanations for each of the following questi
 
   \end{enumerate}
 
-
 \section*{Applied Exercises}
 Use the code in the week's code tutorial and the lecture slides to answer the following questions.\bigskip
 
-  \begin{enumerate}
-  \setcounter{enumi}{2}
-
-\item \textbf{Reproducible project setup: dependencies, directories, and end-to-end run.}
-Using the provided reproducibility script:
+\noindent \textbf{Deliverables checklist (what your repo must contain):}
 \begin{itemize}
-  \item Create a clean project folder and initialize \texttt{renv} (or restore from an existing \texttt{renv.lock} if provided).
-  \item Run the full pipeline by sourcing the script and running \texttt{run\_analysis()}.
-  \item Verify that the following artifacts are produced:
-  \begin{itemize}
-    \item \texttt{data/raw/voter\_data.csv} and \texttt{data/processed/cleaned\_voter\_data.csv},
-    \item figures in \texttt{outputs/figures/},
-    \item tables in \texttt{outputs/tables/} (including the bootstrap output),
-    \item \texttt{outputs/session\_info.txt} and \texttt{analysis\_log.txt}.
-  \end{itemize}
-  \item Briefly describe (3--6 sentences) what each folder is for (\texttt{data/raw}, \texttt{data/processed}, \texttt{outputs/figures}, \texttt{outputs/tables}) and why the separation matters for reproducibility.
+  \item \texttt{renv.lock} (committed),
+  \item your analysis script(s) (e.g., in \texttt{analysis/} or \texttt{scripts/}),
+  \item \texttt{outputs/figures/} containing your plot(s),
+  \item a log file (e.g., \texttt{analysis\_log.txt}) that records what ran and what files were written,
+  \item a short reproducibility note (e.g., \texttt{REPRODUCE.md}) describing how to re-run your analysis from a fresh clone.
 \end{itemize}
 
-\item \textbf{Extend outputs: add one additional plot and one additional table.}
-Modify the script to generate:
-\begin{itemize}
-  \item \textbf{One additional plot} saved to \texttt{outputs/figures/}. Choose one:
-  \begin{enumerate}
-    \item a plot of bootstrap coefficient distributions (from \texttt{boot\_coef}),
-    \item a turnout plot broken down by two dimensions (e.g., party $\times$ age\_group),
-    \item a plot showing model residuals or predicted vs.\ observed turnout.
-  \end{enumerate}
-  \item \textbf{One additional table} saved to \texttt{outputs/tables/}. Choose one:
-  \begin{enumerate}
-    \item a turnout summary table by party and age group,
-    \item a table of regression coefficients with confidence intervals (or bootstrap intervals),
-    \item a missingness summary table for the cleaned dataset.
-  \end{enumerate}
-  \item In 3--6 sentences, explain how these additions improve the interpretability and auditability of the analysis.
-\end{itemize}
-
-\item \textbf{Reproducibility checks: logging + repeated runs.}
-Use the reproducibility testing ideas in the script:
-\begin{itemize}
-  \item Run the analysis multiple times (at least 3) using the provided reproducibility testing function (or an equivalent workflow you implement).
-  \item Report whether results are identical across runs. If they are not identical, identify \textbf{one} source of non-determinism and fix it (e.g., missing \texttt{set.seed()}, randomness in resampling, unstable ordering).
-  \item Add at least \textbf{two} additional log messages (\texttt{log\_info}) that record key intermediate facts (e.g., row counts before/after cleaning, number of bootstrap iterations completed, output file paths written).
-  \item In 5--8 sentences, explain what you learned from the reproducibility check and what would still threaten reproducibility across different machines.
-\end{itemize}
-
-\item \textbf{Challenge Question (Optional --- if you finish early):}
-Containerize and/or automate reproducibility.
-Choose \textbf{ONE} of the following:
+\bigskip
 \begin{enumerate}
-  \item \textbf{Docker replication.} Use the provided \texttt{create\_dockerfile()} logic (or write your own Dockerfile) to run the full analysis in a container. Provide evidence it worked (e.g., outputs created in \texttt{outputs/} and a short excerpt of container logs). In 4--8 sentences, explain what Docker adds beyond \texttt{renv}.
-  \item \textbf{GitHub Actions replication.} Set up a minimal GitHub Actions workflow that (i) installs R, (ii) restores \texttt{renv}, and (iii) runs \texttt{run\_analysis()}. Provide the workflow YAML file and a screenshot (or log excerpt) showing a successful run.
-\end{enumerate}
+  \setcounter{enumi}{2}
+\item \textbf{Clone the instructor reproducibility folder and start your project.}
+\begin{itemize}
+  \item Clone the instructor workflow repository and work inside the \texttt{reproducibility/} folder (only that folder is relevant for this assignment).
+  \item Create your own GitHub repository for submission and push your work there.
+  \item Evidence (include screenshots or paste into \texttt{commands.log}):
+  \begin{itemize}
+    \item \texttt{git clone ...}
+    \item \texttt{cd reproducibility}
+    \item \texttt{git status}
+  \end{itemize}
+  \item Helpful tidbit:
+  \begin{itemize}
+    \item macOS Terminal / Windows PowerShell both support \texttt{pwd}, \texttt{ls}, and \texttt{cd}.
+    \item If \texttt{git} is ``not recognized'', install Git and restart your terminal.
+  \end{itemize}
+\end{itemize}
+
+\item \textbf{Reproducible workflow + three regressions + plot (Income as DV).}
+\begin{itemize}
+  \item \textbf{Project structure:} Ensure your folder includes (at minimum)
+  \begin{itemize}
+    \item \texttt{data/raw/} (store the attached CSV here),
+    \item \texttt{data/processed/} (optional, only if you create derived data),
+    \item \texttt{outputs/figures/} and \texttt{outputs/tables/},
+    \item \texttt{analysis\_log.txt}.
+  \end{itemize}
+
+  \item \textbf{Dependency capture with \texttt{renv}:}
+  \begin{itemize}
+    \item Initialize or restore \texttt{renv} in your project.
+    \item Create and commit \texttt{renv.lock} (use \texttt{renv::snapshot()} once your code runs).
+  \end{itemize}
+
+  \item \textbf{Run three different regressions (hard-coded, sequential) using \texttt{income} as the dependent variable:}
+  \item Save a simple regression table (or clearly printed model summaries) to \texttt{outputs/tables/}.
+
+
+  \item \textbf{Logging requirement:} Create/update \texttt{analysis\_log.txt} so it records:
+  \begin{itemize}
+    \item when the analysis was run,
+    \item the number of rows loaded,
+    \item which outputs were written (filenames/paths),
+    \item the output of \texttt{sessionInfo()} written to a file (e.g., \texttt{outputs/session\_info.txt}).
+  \end{itemize}
+\end{itemize}
+
+\item \textbf{Push your changes to your repository (submission).}
+\begin{itemize}
+  \item Commit and push:
+  \begin{itemize}
+    \item your analysis script(s),
+    \item \texttt{renv.lock},
+    \item \texttt{analysis\_log.txt} and \texttt{REPRODUCE.md},
+    \item your output plot(s) and any small tables.
+  \end{itemize}
+  \item Do \emph{not} commit large intermediate files.
+  \item Submission: submit the link to \textbf{your} GitHub repository.
+\end{itemize}
+
+\item \textbf{Bonus (if you finish early): Bootstrap + perfect replicability.}
+\begin{itemize}
+  \item Re-run the analysis using bootstrap simulations (e.g., resample rows and re-fit at least one of your models many times).
+  \item Set a seed \textbf{once} at the top (use \texttt{set.seed(123)}).
+  \item Save bootstrap results to \texttt{outputs/tables/} (e.g., coefficient distributions / intervals).
+  \item Run the full analysis at least \textbf{twice} from a fresh R session and verify the bootstrap outputs are \textbf{identical}.
+  \item In 4--6 sentences, explain what threatened replicability and what you did to eliminate it.
+\end{itemize}
 
 \end{enumerate}
 
-\noindent \textbf{Submission:} Push your code changes to GitHub and submit a link to your repository. Your repository should include \texttt{renv.lock}, your modified script(s), and the updated outputs you created (figures/tables). Do not commit large, unnecessary intermediate files.
 
 \end{document}

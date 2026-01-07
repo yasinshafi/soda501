@@ -1,101 +1,95 @@
 \documentclass[11pt]{article}
 \usepackage{amsmath, amssymb, graphicx, hyperref}
 \usepackage{enumitem}
+\usepackage{hyperref}
 \setlist{nosep}
 \usepackage[margin=1in]{geometry}
 
-\title{ Regular Expressions in R (Functions \& Validation)}
+\title{Introduction to Big Data}
 \author{ }
 \date{ }
-
-
 
 \begin{document}
 \maketitle
 
-\section*{Conceptual Questions}
-Please write three to ten sentence explanations for each of the following questions. \textbf{You are only required to answer ONE of the two questions below.} \bigskip
- 
+\section*{Course setup}
+
+\noindent Upload a single PDF that includes screenshots confirming completion of the items below. 
+Screenshots must show your name/username where applicable.
+
 \begin{enumerate}
-
-\item In a data science workflow, why is it useful to wrap data-cleaning logic into functions (rather than writing one-off code blocks)? In your answer, connect your explanation to regex-based parsing/validation and mention one way you would test that your function behaves correctly.
-
-\item When writing regex for data extraction, what is the difference between (i) identifying a match, (ii) capturing components of a match, and (iii) replacing a match? Use a concrete example from either phone-number standardization or password validation to illustrate your answer.
-
+  \item \textbf{GitHub account}
+  \begin{enumerate}
+    \item Create a GitHub account.
+    \item Screenshot: your GitHub profile page (showing your username).
   \end{enumerate}
 
-
-\section*{Applied Exercises}
-Use the code in the week's code tutorial and the lecture slides to answer the following questions.\bigskip
-
+  \item \textbf{Git installed (no Git assignment yet)}
   \begin{enumerate}
-  \setcounter{enumi}{2}
+    \item Install Git on your computer.
+    \item Screenshot: a terminal/PowerShell window showing \texttt{git --version}.
+  \end{enumerate}
 
-\item \textbf{Phone Number Formatting:}
-Create a regex pattern to identify and format phone numbers in text. Your function should work for different formats:
-\begin{itemize}
-  \item \texttt{(123) 456-7890}
-  \item \texttt{123-456-7890}
-  \item \texttt{1234567890}
-\end{itemize}
-and standardize them to: \texttt{(XXX) XXX-XXXX}.
+  \item \textbf{Python installed and accessible from the command line}
+  \begin{enumerate}
+    \item Install Python (version 3.10+).
+    \item Screenshot: a terminal/PowerShell window showing \texttt{python --version}.
+  \end{enumerate}
 
-\bigskip
-\noindent \textbf{Requirements:}
-\begin{itemize}
-  \item Implement \texttt{format\_phone\_numbers(text)} using \texttt{stringr} (e.g., \texttt{str\_replace\_all()}).
-  \item Demonstrate that it works on a character vector with \textbf{at least 6} test strings, including at least one string that contains \textbf{two} phone numbers.
-  \item Show the \textbf{before} and \textbf{after} output clearly (print a small table is fine).
-\end{itemize}
+  \item \textbf{R installed}
+  \begin{enumerate}
+    \item Install R (version 4.3+).
+    \item Screenshot: your R console showing \texttt{R.version.string}.
+  \end{enumerate}
 
-\bigskip
-\noindent \textbf{Starter skeleton (you may copy/paste):}
-\begin{verbatim}
-# TODO: Implement this function.
-format_phone_numbers <- function(text) {
-  # pattern <- ...
-  # Use str_replace_all / str_replace to standardize
-}
-\end{verbatim}
+  \item \textbf{IDE installed (choose at least one)}
+  \begin{enumerate}
+    \item Install at least one of the following: \textbf{RStudio}, \textbf{VS Code}, or \textbf{PyCharm (Community Edition is fine)}.
+    \item Screenshot: the IDE open on your computer.
+  \end{enumerate}
 
-\item \textbf{Password Strength Checker:}
-Implement a function that uses regex to check the strength of a password.
+  \item \textbf{Cloud-synced course folder}
+  \begin{enumerate}
+    \item Create a folder for this course that is backed up and synced (Dropbox, Google Drive, OneDrive, etc.).
+    \item Screenshot: your file explorer showing the folder and the sync indicator (if available).
+  \end{enumerate}
 
-\bigskip
-\noindent \textbf{Criteria:}
-\begin{itemize}
-  \item At least 8 characters long
-  \item At least one uppercase letter
-  \item At least one lowercase letter
-  \item At least one digit
-  \item At least one special character (\texttt{@\$!\%*?\&})
-\end{itemize}
+  \item \textbf{Compression utility}
+  \begin{enumerate}
+    \item Ensure you can open \texttt{.zip} and \texttt{.gz}/\texttt{.tar.gz} files.
+    \item Windows users: install 7-Zip (or an equivalent tool).
+    \item Screenshot: a file explorer view showing a \texttt{.zip} (or \texttt{.tar.gz}) file opened/extracted.
+  \end{enumerate}
 
-\bigskip
-\noindent \textbf{Requirements:}
-\begin{itemize}
-  \item Implement \texttt{check\_password\_strength(password)} using \texttt{stringr} (e.g., multiple \texttt{str\_detect()} checks, or a single combined pattern).
-  \item Create a test vector with \textbf{at least 8} passwords (mix of valid/invalid).
-  \item Output a small results table with columns like \texttt{password} and \texttt{is\_strong} (and optionally a column indicating what criterion failed).
-\end{itemize}
+  \item \textbf{Jupyter installed (Notebook or Lab)}
+  \begin{enumerate}
+    \item Install Jupyter Notebook or JupyterLab.
+    \item Screenshot: a browser window showing Jupyter running (home page listing files is sufficient).
+  \end{enumerate}
 
-\bigskip
-\noindent \textbf{Starter skeleton (you may copy/paste):}
-\begin{verbatim}
-# TODO: Implement this function.
-check_password_strength <- function(password) {
-  # Use str_detect with multiple patterns (or a single combined pattern)
-}
-\end{verbatim}
+  \item \textbf{SQLite tools installed}
+  \begin{enumerate}
+    \item Install SQLite.
+    \item Install a SQLite database browser (e.g., DB Browser for SQLite).
+    \item Screenshot: the database browser open (and, if possible, a \texttt{.db} file opened).
+  \end{enumerate}
 
-\item \textbf{Challenge Question (Optional --- if you finish early):}
-Write a minimal set of unit tests for your two functions using \texttt{testthat}.
-\begin{itemize}
-  \item Create at least \textbf{5} tests for \texttt{format\_phone\_numbers()} and at least \textbf{5} tests for \texttt{check\_password\_strength()}.
-  \item Include at least one edge case for each (e.g., numbers embedded in longer digit strings; passwords that fail exactly one rule).
-  \item Show that your tests run without failing.
-\end{itemize}
+  \item \textbf{IRB training (if you are not already certified)}
+  \begin{enumerate}
+    \item Complete the required human-subjects/IRB training for your program/university.
+    \item Screenshot: completion certificate or training record.
+  \end{enumerate}
+\end{enumerate}
 
+\section*{Interests / sign-up}
+
+\noindent During the semester, you will: (a) work on a group project, (b) lead a coding demonstration, and (c) lead a group discussion for the articles. \href{https://docs.google.com/spreadsheets/d/1w-HvzY-aey1HhAOc2fU-II7EfJXMe9tO5QFb6u4i1h8/edit?usp=sharing}{Click this sentence to be redirected to the course sign-up google sheet.} \bigskip
+
+\begin{enumerate}
+  \setcounter{enumi}{10}
+  \item On \textbf{Sheet 1}, list the week(s) of material you are most interested in.
+  \item On \textbf{Sheet 2}, select \textbf{one week} that you will lead the \textbf{coding demonstration}. It cannot be the same week you lead the article discussion.
+  \item On \textbf{Sheet 3}, select \textbf{one week} that you will lead the \textbf{article discussion}. It cannot be the same week you lead the coding demonstration.
 \end{enumerate}
 
 \end{document}
