@@ -1,19 +1,25 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:             log_income   R-squared:                       0.000
+Model:                            OLS   Adj. R-squared:                 -0.011
+Method:                 Least Squares   F-statistic:                  0.008953
+Date:                Tue, 20 Jan 2026   Prob (F-statistic):              0.925
+Time:                        21:05:55   Log-Likelihood:                -66.602
+No. Observations:                  95   AIC:                             137.2
+Df Residuals:                      93   BIC:                             142.3
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept     11.3425      0.137     82.832      0.000      11.071      11.614
+education      0.0039      0.041      0.095      0.925      -0.077       0.085
+==============================================================================
+Omnibus:                       51.936   Durbin-Watson:                   2.005
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              200.093
+Skew:                           1.798   Prob(JB):                     3.55e-44
+Kurtosis:                       9.133   Cond. No.                         9.78
+==============================================================================
 
-Call:
-lm(formula = log_income ~ education, data = education_income_log)
-
-Residuals:
-     Min       1Q   Median       3Q      Max 
--1.15819 -0.17137 -0.01044  0.10766  1.95836 
-
-Coefficients:
-             Estimate Std. Error t value Pr(>|t|)    
-(Intercept) 11.342461   0.136934  82.832   <2e-16 ***
-education    0.003864   0.040840   0.095    0.925    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Residual standard error: 0.493 on 93 degrees of freedom
-Multiple R-squared:  9.626e-05,	Adjusted R-squared:  -0.01066 
-F-statistic: 0.008953 on 1 and 93 DF,  p-value: 0.9248
-
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

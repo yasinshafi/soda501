@@ -80,7 +80,7 @@
 
 import os
 import sys
-import platformls
+import platform
 
 import logging
 from datetime import datetime
@@ -88,6 +88,8 @@ from datetime import datetime
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import statsmodels 
+import statsmodels.formula.api as smf 
 
 # Python dependency management:
 # - Create requirements.txt after everything runs:
@@ -176,13 +178,13 @@ logging.info("Saving processed data")
 education_income_clean.to_csv("data/processed/cleaned_education_income.csv", index=False)
 
 logging.info("Fitting Model 1: income ~ education")
-# TODO: model_1 = ...
+model_1 = smf.ols("income ~ education", data=education_income_clean).fit()
 
 logging.info("Fitting Model 2: income ~ education + education^2")
-# TODO: model_2 = ...
+model_2 = smf.ols("income ~ education + I(education**2)", data=education_income_clean).fit()
 
 logging.info("Fitting Model 3: log(income) ~ education (finite log income rows only)")
-# TODO: model_3 = ...
+model_3 = smf.ols("log_income ~ education", data=education_income_log).fit()
 
 # Save model summaries (plain text) for replication checks
 logging.info("Saving regression summaries to outputs/tables/")
@@ -190,10 +192,38 @@ logging.info("Saving regression summaries to outputs/tables/")
 #   outputs/tables/model_1_summary.txt
 #   outputs/tables/model_2_summary.txt
 #   outputs/tables/model_3_summary.txt
+with open("outputs/tables/model_1_summary.txt", "w") as f:
+    f.write(model_1.summary().as_text())
+
+with open("outputs/tables/model_2_summary.txt", "w") as f:
+    f.write(model_2.summary().as_text())
+
+with open("outputs/tables/model_3_summary.txt", "w") as f:
+    f.write(model_3.summary().as_text())
+
 # TODO: create and write a regression_coefficients.csv table
+coefficients_table = pd.DataFrame({
+    "model": ["Model 1: Linear"] * len(model_1.params) +
+             ["Model 2: Quadratic"] * len(model_2.params) +
+             ["Model 3: Log Income"] * len(model_3.params),
+    "term": list(model_1.params.index) + list(model_2.params.index) + list(model_3.params.index),
+    "estimate": list(model_1.params) + list(model_2.params) + list(model_3.params),
+    "std_error": list(model_1.bse) + list(model_2.bse) + list(model_3.bse),
+    "statistic": list(model_1.tvalues) + list(model_2.tvalues) + list(model_3.tvalues),
+    "p_value": list(model_1.pvalues) + list(model_2.pvalues) + list(model_3.pvalues)
+})
+
+coefficients_table.to_csv("outputs/tables/regression_coefficients.csv", index=False)
 
 # TODO (students):
 # - Write session info output to outputs/session_info.txt
+with open("outputs/session_info.txt", "w") as f:
+    f.write(f"Python version: {sys.version}\n")
+    f.write(f"Platform: {platform.platform()}\n")
+    f.write(f"NumPy version: {np.__version__}\n")
+    f.write(f"Pandas version: {pd.__version__}\n")
+    f.write(f"Statsmodels version: {smf.__module__}\n")
+    f.write(f"Timestamp: {datetime.now().isoformat()}\n")
 
 logging.info("Saving session information")
 # TODO: write session info to outputs/session_info.txt
