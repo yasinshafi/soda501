@@ -92,7 +92,12 @@ library(broom)      # Tidy regression outputs (for tables)
 #
 # NOTE: We leave renv::init() commented out to avoid re-initializing by accident.
 
-# renv::init()
+# I set a customized path
+
+# file.edit("~/.Renviron") # This opens the file (or creates it if it doesn't exist).
+# RENV_PATHS_ROOT=D:/r_workspace/renv # Add this line in the file, save, and restart R
+
+renv::init()
 
 # Reproducible projects should separate:
 # - raw data (unchanged inputs)
@@ -128,9 +133,9 @@ log_info("Starting analysis pipeline")
 
 # Expected location for this assignment:
 # - data/raw/education_income.csv
-
 log_info("Loading education/income dataset from data/raw/education_income.csv")
 
+education_income_raw <- readr::read_csv("data/raw/education_income.csv") # added this line to load the data
 
 log_info(paste("Rows loaded:", nrow(education_income_raw)))
 log_info(paste("Columns loaded:", ncol(education_income_raw)))
@@ -139,7 +144,7 @@ log_info(paste("Columns loaded:", ncol(education_income_raw)))
 # Here we re-write it to confirm the exact file used in the run.
 
 log_info("Saving raw data copy (unchanged)")
-# readr::write_csv(education_income_raw, "data/raw/education_income.csv")
+# readr::write_csv(education_income_raw, "data/raw/education_income.csv") # Why do we overwrite?
 
 # Keep this simple and explicit:
 # - Ensure education and income exist
@@ -174,26 +179,33 @@ readr::write_csv(education_income_clean, "data/processed/cleaned_education_incom
 
 
 log_info("Fitting Model 1: income ~ education")
-# TODO: model_1 <- ...
+model_1 <- lm(income ~ education, data = education_income_clean)
 
 log_info("Fitting Model 2: income ~ education + I(education^2)")
-# TODO: model_2 <- ...
+model_2 <- lm(income ~ education + I(education^2), data = education_income_clean)
 
 log_info("Fitting Model 3: log(income) ~ education (finite log income rows only)")
-# TODO: model_3 <- ...
+model_3 <- lm(log_income ~ education, data = education_income_log)
 
 # Save model summaries (plain text) for replication checks
 log_info("Saving regression summaries to outputs/tables/")
-# TODO: writeLines(capture.output(summary(model_1)), "outputs/tables/model_1_summary.txt")
-# TODO: writeLines(capture.output(summary(model_2)), "outputs/tables/model_2_summary.txt")
-# TODO: writeLines(capture.output(summary(model_3)), "outputs/tables/model_3_summary.txt")
-# TODO: create and write a regression_coefficients.csv table
+writeLines(capture.output(summary(model_1)), "outputs/tables/model_1_summary.txt")
+writeLines(capture.output(summary(model_2)), "outputs/tables/model_2_summary.txt")
+writeLines(capture.output(summary(model_3)), "outputs/tables/model_3_summary.txt")
+# create and write a regression_coefficients.csv table
+coefficients_table <- bind_rows(
+  tidy(model_1) |> mutate(model = "Model 1: Linear"),
+  tidy(model_2) |> mutate(model = "Model 2: Quadratic"),
+  tidy(model_3) |> mutate(model = "Model 3: Log Income")
+)
+write_csv(coefficients_table, "outputs/tables/regression_coefficients.csv")
 
 # TODO (students):
 # - Write sessionInfo() output to outputs/session_info.txt
 
+
 log_info("Saving session information")
-# TODO: writeLines(capture.output(sessionInfo()), "outputs/session_info.txt")
+writeLines(capture.output(sessionInfo()), "outputs/session_info.txt")
 
 
 # TODO (students):
