@@ -44,3 +44,20 @@ Saving regression summaries to outputs/tables/
 Saving session information
 Snapshotting dependencies to requirements.txt
 Analysis pipeline completed successfully
+INFO [2026-01-22 14:50:39] Starting analysis pipeline
+INFO [2026-01-22 14:51:52] Loading education/income dataset from data/raw/education_income.csv
+INFO [2026-01-22 14:52:11] Rows loaded: 95
+INFO [2026-01-22 14:52:11] Columns loaded: 5
+INFO [2026-01-22 14:52:19] Saving raw data copy (unchanged)
+INFO [2026-01-22 14:52:39] Cleaning education/income data
+INFO [2026-01-22 14:52:50] Rows after cleaning: 95
+INFO [2026-01-22 14:54:38] Rows with finite log(income): 95
+INFO [2026-01-22 14:54:49] Saving processed data
+INFO [2026-01-22 14:55:08] Creating income vs education plot
+INFO [2026-01-22 14:56:26] Plot saved to outputs/figures/income_education_plot.png
+INFO [2026-01-22 14:57:04] Fitting Model 1: income ~ education
+INFO [2026-01-22 14:57:04] Fitting Model 2: income ~ education + I(education^2)
+INFO [2026-01-22 14:57:04] Fitting Model 3: log(income) ~ education (finite log income rows only)
+INFO [2026-01-22 14:57:15] Saving regression summaries to outputs/tables/
+INFO [2026-01-22 15:00:44] Saving session information
+INFO [2026-01-22 15:00:50] Snapshotting dependencies to renv.lock

@@ -1,26 +1,20 @@
-                            OLS Regression Results                            
-==============================================================================
-Dep. Variable:                 income   R-squared:                       0.166
-Model:                            OLS   Adj. R-squared:                  0.148
-Method:                 Least Squares   F-statistic:                     9.153
-Date:                Tue, 20 Jan 2026   Prob (F-statistic):           0.000237
-Time:                        21:05:55   Log-Likelihood:                -1210.5
-No. Observations:                  95   AIC:                             2427.
-Df Residuals:                      92   BIC:                             2435.
-Df Model:                           2                                         
-Covariance Type:            nonrobust                                         
-=====================================================================================
-                        coef    std err          t      P>|t|      [0.025      0.975]
--------------------------------------------------------------------------------------
-Intercept          2.944e+05   4.65e+04      6.337      0.000    2.02e+05    3.87e+05
-education          -1.29e+05   3.31e+04     -3.901      0.000   -1.95e+05   -6.33e+04
-I(education ** 2)  1.856e+04   5388.097      3.444      0.001    7855.042    2.93e+04
-==============================================================================
-Omnibus:                       74.132   Durbin-Watson:                   2.089
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              458.233
-Skew:                           2.544   Prob(JB):                    3.13e-100
-Kurtosis:                      12.481   Cond. No.                         91.6
-==============================================================================
 
-Notes:
-[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+Call:
+lm(formula = income ~ education + I(education^2), data = education_income_clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-152254  -21389   -1111   11192  416098 
+
+Coefficients:
+               Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      294363      46451   6.337 8.54e-09 ***
+education       -129018      33070  -3.901 0.000182 ***
+I(education^2)    18556       5388   3.444 0.000865 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 84080 on 92 degrees of freedom
+Multiple R-squared:  0.166,	Adjusted R-squared:  0.1478 
+F-statistic: 9.153 on 2 and 92 DF,  p-value: 0.000237
+

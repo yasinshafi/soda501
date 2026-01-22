@@ -1,25 +1,19 @@
-                            OLS Regression Results                            
-==============================================================================
-Dep. Variable:                 income   R-squared:                       0.058
-Model:                            OLS   Adj. R-squared:                  0.048
-Method:                 Least Squares   F-statistic:                     5.771
-Date:                Tue, 20 Jan 2026   Prob (F-statistic):             0.0183
-Time:                        21:05:55   Log-Likelihood:                -1216.3
-No. Observations:                  95   AIC:                             2437.
-Df Residuals:                      93   BIC:                             2442.
-Df Model:                           1                                         
-Covariance Type:            nonrobust                                         
-==============================================================================
-                 coef    std err          t      P>|t|      [0.025      0.975]
-------------------------------------------------------------------------------
-Intercept   1.561e+05   2.47e+04      6.324      0.000    1.07e+05    2.05e+05
-education  -1.768e+04   7360.934     -2.402      0.018   -3.23e+04   -3065.701
-==============================================================================
-Omnibus:                       90.113   Durbin-Watson:                   2.024
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):              705.706
-Skew:                           3.211   Prob(JB):                    5.73e-154
-Kurtosis:                      14.706   Cond. No.                         9.78
-==============================================================================
 
-Notes:
-[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+Call:
+lm(formula = income ~ education, data = education_income_clean)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-106748  -38179  -17233    8170  461604 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)   156079      24681   6.324 8.79e-09 ***
+education     -17683       7361  -2.402   0.0183 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 88860 on 93 degrees of freedom
+Multiple R-squared:  0.05843,	Adjusted R-squared:  0.0483 
+F-statistic: 5.771 on 1 and 93 DF,  p-value: 0.01828
+

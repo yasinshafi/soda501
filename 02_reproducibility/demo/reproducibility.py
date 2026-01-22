@@ -102,10 +102,10 @@ import statsmodels.formula.api as smf
 # - processed data (cleaned outputs)
 # - figures and tables (final outputs)
 
-os.makedirs("data/raw", exist_ok=True)
-os.makedirs("data/processed", exist_ok=True)
-os.makedirs("outputs/figures", exist_ok=True)
-os.makedirs("outputs/tables", exist_ok=True)
+os.makedirs("D:/r_workspace/soda501/soda_501/02_reproducibility/demo/data/raw", exist_ok=True)
+os.makedirs("D:/r_workspace/soda501/soda_501/02_reproducibility/demo/data/processed", exist_ok=True)
+os.makedirs("D:/r_workspace/soda501/soda_501/02_reproducibility/demo/outputs/figures", exist_ok=True)
+os.makedirs("D:/r_workspace/soda501/soda_501/02_reproducibility/demo/outputs/tables", exist_ok=True)
 
 # Logging creates an audit trail:
 # - What ran
@@ -137,7 +137,7 @@ logging.info("Starting analysis pipeline")
 
 logging.info("Loading education/income dataset from data/raw/education_income.csv")
 
-education_income_raw = pd.read_csv("data/raw/education_income.csv")
+education_income_raw = pd.read_csv("D:/r_workspace/soda501/soda_501/02_reproducibility/demo/data/raw/education_income.csv")
 
 logging.info("Rows loaded: " + str(education_income_raw.shape[0]))
 logging.info("Columns loaded: " + str(education_income_raw.shape[1]))
@@ -176,6 +176,19 @@ logging.info("Rows with finite log(income): " + str(education_income_log.shape[0
 
 logging.info("Saving processed data")
 education_income_clean.to_csv("data/processed/cleaned_education_income.csv", index=False)
+
+logging.info("Creating income vs education plot")
+
+plt.figure(figsize=(8, 6))
+plt.scatter(education_income_clean["education"], education_income_clean["income"], alpha=0.5)
+plt.xlabel("Education (Years)")
+plt.ylabel("Income")
+plt.title("Income vs Education")
+plt.tight_layout()
+plt.savefig("outputs/figures/income_education_plot.png")
+plt.close()
+
+logging.info("Plot saved to outputs/figures/income_education_plot.png")
 
 logging.info("Fitting Model 1: income ~ education")
 model_1 = smf.ols("income ~ education", data=education_income_clean).fit()
@@ -222,7 +235,7 @@ with open("outputs/session_info.txt", "w") as f:
     f.write(f"Platform: {platform.platform()}\n")
     f.write(f"NumPy version: {np.__version__}\n")
     f.write(f"Pandas version: {pd.__version__}\n")
-    f.write(f"Statsmodels version: {smf.__module__}\n")
+    f.write(f"Statsmodels version: {statsmodels.__version__}\n")
     f.write(f"Timestamp: {datetime.now().isoformat()}\n")
 
 logging.info("Saving session information")
