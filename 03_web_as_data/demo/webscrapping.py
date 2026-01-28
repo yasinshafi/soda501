@@ -1,12 +1,12 @@
 ###############################################################################
 # Web Scraping + Google Scholar Tutorial: Python (Penn State Faculty Example)
 # Author: Jared Edgerton
-# Date: date.today()
+# Date: (fill in manually or use datetime.date.today())
 #
 # This script demonstrates:
 #   1) Web scraping a Wikipedia infobox table (warm-up example)
-#   2) Web scraping Penn State faculty pages
-#   3) Pulling citation metrics from Google Scholar
+#   2) Web scraping Penn State faculty pages (text + targeted HTML scraping)
+#   3) Pulling citation metrics from Google Scholar (via the scholarly package)
 #   4) Simple plotting with matplotlib
 #
 # Teaching note (important):
@@ -22,18 +22,26 @@
 # -----------------------------------------------------------------------------
 # Install (if needed) and load the necessary libraries.
 #
-# If you do not have these installed, run (in Terminal / Anaconda Prompt):
-#   pip install requests lxml pandas matplotlib scholarly
+# In a terminal:
+#   pip install requests lxml cssselect pandas matplotlib scholarly
+#
+# Notes:
+# - lxml + cssselect lets us use CSS selectors (like "table.infobox") and XPath.
+# - Google Scholar scraping can be brittle (rate limits / CAPTCHAs). Consider
+#   pre-running tonight and saving outputs if you want a guaranteed live demo.
 
 import re
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from datetime import date
 from lxml import html
 from scholarly import scholarly
 
+# Polite headers (good practice for scraping)
+HEADERS = {
+    "User-Agent": "psu-webscrape-class-demo/1.0 (contact: you@example.com)"
+}
 
 # -----------------------------------------------------------------------------
 # Part 1: Web Scraping (Wikipedia Warm-up + Penn State Faculty Pages)
@@ -51,13 +59,12 @@ from scholarly import scholarly
 #     * A title line (regex)
 #     * A PSU email address (regex)
 # - Pull structured items like:
-#     * "Areas of Interest" (XPath)
-#     * "Research Interests" (XPath)
+#     * "Areas of Interest" (HTML nodes)
+#     * "Research Interests" (HTML nodes)
 #
 # Note:
 # - Department websites do not always have the same structure.
 # - Some pages may have "Areas of Interest" while others have "Research Interests".
-
 
 # -----------------------------------------------------------------------------
 # Part 1A: Wikipedia Warm-up (Scraping an Infobox Table)
@@ -66,36 +73,97 @@ from scholarly import scholarly
 # That infobox is typically stored as an HTML table with class "infobox".
 
 # URL of the Wikipedia page
-wiki_url = "https://en.wikipedia.org/wiki/Thomas_Brunell"
+url = "https://en.wikipedia.org/wiki/Donald_Trump"
 
-# Read all HTML tables that match the "infobox" class
-wiki_tables = pd.read_html(wiki_url, attrs={"class": "infobox"})
+# Read the HTML content
+resp = requests.get(url, headers=HEADERS)
+page = html.fromstring(resp.content)
 
-# Take the first infobox table on the page
-wiki_table = wiki_tables[0]
+###############################################################################
+# 2) Identify the HTML “thing” you want
+#
+# Wikipedia biographies commonly have an "infobox": a table on the right side
+# that summarizes key facts (Born, Education, Occupation, etc.).
+#
+# In the HTML, this is usually a <table> element with class="infobox".
+#
+# CSS selector reminder:
+#   - "table.infobox" means: a <table> tag with class="infobox"
+#   - "." indicates a class; "#" indicates an id
+###############################################################################
 
-# Give the columns simple names (X1, X2, ...) so we can clean consistently
-wiki_table.columns = [f"X{i+1}" for i in range(wiki_table.shape[1])]
+# Extract the infobox table (usually the first one on the page)
+infobox_nodes = page.cssselect("table.infobox")
 
-# Clean the data:
-# - Keep only rows where both X1 and X2 exist (not missing)
-# - Rename X1 -> Key and X2 -> Value
-cleaned_data = (
-    wiki_table
-    .dropna(subset=["X1", "X2"])
-    .rename(columns={"X1": "Key", "X2": "Value"})[["Key", "Value"]]
-    .reset_index(drop=True)
+# (Optional safety check for teaching: if none found, you’d stop or change strategy)
+# len(infobox_nodes)
+
+infobox_node = infobox_nodes[0]
+
+###############################################################################
+# 3) Convert the HTML element to a data structure
+#
+# pandas.read_html() converts an HTML <table> into a pandas DataFrame.
+# Wikipedia infobox tables often have merged cells / uneven rows; pandas handles
+# most of this automatically when reading the HTML table.
+###############################################################################
+infobox_html = html.tostring(infobox_node, encoding="unicode")
+infobox_raw = pd.read_html(infobox_html)[0]
+
+###############################################################################
+# 4) Standardize column names (so cleaning code is consistent)
+#
+# Infobox tables usually come out as 2 columns:
+#   left column  = "label" (e.g., "Born")
+#   right column = "value" (e.g., "January 1, 19xx ...")
+#
+# But sometimes rows span columns, and the parsed table can look messy.
+###############################################################################
+infobox_raw.columns = [f"X{i}" for i in range(1, infobox_raw.shape[1] + 1)]
+
+###############################################################################
+# 5) Clean into "key-value" (tidy) format
+#
+# Goal: one row per field, with:
+#   field = label text
+#   value = value text
+#
+# Notes:
+# - Filter removes rows that aren’t label/value
+# - Whitespace “squish” collapses repeated whitespace + trims ends
+###############################################################################
+infobox_kv = (
+    infobox_raw.loc[
+        infobox_raw["X1"].notna()
+        & infobox_raw["X2"].notna()
+        & (infobox_raw["X1"].astype(str).str.strip() != "")
+        & (infobox_raw["X2"].astype(str).str.strip() != ""),
+        ["X1", "X2"],
+    ]
+    .rename(columns={"X1": "field", "X2": "value"})
 )
 
-# At this point, cleaned_data is a simple Key/Value table.
-# You can inspect it:
-# print(cleaned_data)
+infobox_kv["field"] = (
+    infobox_kv["field"]
+    .astype(str)
+    .str.replace(r"\s+", " ", regex=True)
+    .str.strip()
+)
 
+infobox_kv["value"] = (
+    infobox_kv["value"]
+    .astype(str)
+    .str.replace(r"\s+", " ", regex=True)
+    .str.strip()
+)
+
+# In a notebook, you could just write: infobox_kv
+print(infobox_kv.head(25))
 
 # -----------------------------------------------------------------------------
-# Part 1B: Hard-code four Penn State faculty (social sciences broadly)
+# Part 1B: Hard-code three Penn State faculty (social sciences broadly)
 # -----------------------------------------------------------------------------
-# These are the four faculty members we will use throughout the script.
+# These are the three faculty members we will use throughout the script.
 # (We will repeat the same scraping steps for each person.)
 
 matt_name = "Matt Golder"
@@ -110,209 +178,184 @@ derek_name = "Derek Kreager"
 derek_dept = "Sociology & Criminology (College of the Liberal Arts)"
 derek_url  = "https://sociology.la.psu.edu/people/derek-kreager/"
 
-jeremy_name = "Jeremy Staff"
-jeremy_dept = "Sociology & Criminology (College of the Liberal Arts)"
-jeremy_url  = "https://sociology.la.psu.edu/people/jeremy-staff/"
-
-# A basic browser-like header can reduce the chance of being blocked.
-headers = {"User-Agent": "Mozilla/5.0 (Teaching Script)"}
-
 # -----------------------------------------------------------------------------
 # Step 1: Scrape Matt Golder (one complete example, step-by-step)
 # -----------------------------------------------------------------------------
-# 1) Request the PSU profile page HTML
-matt_html = requests.get(matt_url, headers=headers).text
+# 1) Read the PSU profile page
+matt_resp = requests.get(matt_url, headers=HEADERS)
+matt_page = html.fromstring(matt_resp.content)
 
-# 2) Parse the HTML with lxml so we can use XPath (like we did in R)
-matt_tree = html.fromstring(matt_html)
+# HTML headings run from <h1> through <h6> (six levels total), and they indicate document structure:
+#   h1 = page title (top-level; usually one per page)
+#   h2 = major section
+#   h3 = subsection
+#   h4 = sub-subsection
+#   h5 = very fine-grained subsection (rare in practice)
+#   h6 = smallest heading level (very rare)
+# In practice, most modern pages rarely use h5/h6; you usually see h1–h3 (sometimes h4).
+# For scraping, the *heading text* ("Research", "Publications", etc.) often matters more than the level,
+# so it’s common to search across multiple heading levels when mapping the page structure.
 
-# 3) Pull the full page text (useful for regex extraction)
-matt_text = " ".join(matt_tree.xpath("//body//text()"))
-matt_text = re.sub(r"\s+", " ", matt_text).strip()
+heads = [h.text_content().strip() for h in matt_page.cssselect("h1, h2, h3, h4, h5, h6")]
+print(heads)
 
-# 4) Extract a job title line (regex)
-title_pattern = (
-    r"(?:Distinguished|Liberal Arts|Roy C\.|Arnold S\.|James P\.)?"
-    r"\s*(?:Associate\s+)?Professor[^\n\r]{0,120}"
-)
-matt_title = " ".join(re.findall(title_pattern, matt_text)[:1]).strip()
+print(len(matt_page.cssselect("main, article, header, nav, footer")))
+print(len(matt_page.cssselect("p")))
+print(len(matt_page.cssselect("a")))
+print(len(matt_page.cssselect("table")))
 
-# 5) Extract a PSU email address (regex)
+# These prints can get long; consider printing just the first ~600 chars in class.
+matt_main_text = (matt_page.cssselect("main")[0].text_content().strip() + " ")[:600]
+print(matt_main_text)
+
+matt_header_text = (matt_page.cssselect("header")[0].text_content().strip() + " ")[:600]
+print(matt_header_text)
+
+matt_nav_text = (matt_page.cssselect("nav")[0].text_content().strip() + " ")[:600]
+print(matt_nav_text)
+
+# 2) Pull the full page text (useful for regex extraction)
+matt_text = matt_page.cssselect("body")[0].text_content()
+
+# 3) Extract a job title line (regex)
+# This pattern tries to capture a chunk of text containing "Professor ...".
+title_pattern = r"(?:Distinguished|Liberal Arts|Roy C\.|Arnold S\.|James P\.)?\s*(?:Associate\s+)?Professor[^\n\r]{0,120}"
+matt_title = (re.findall(title_pattern, matt_text) + [None])[0]
+matt_title = re.sub(r"\s+", " ", (matt_title or "")).strip() or None
+print(matt_title)
+
+# 4) Extract a PSU email address (regex)
 email_pattern = r"[A-Za-z0-9._%+-]+@psu\.edu"
-matt_email = " ".join(re.findall(email_pattern, matt_text)[:1]).strip()
+matt_email = (re.findall(email_pattern, matt_text) + [None])[0]
+print(matt_email)
 
-# 6) Extract "Areas of Interest" (XPath)
-matt_areas = matt_tree.xpath(
-    "//h2[normalize-space()='Areas of Interest']/following-sibling::ul[1]/li//text()"
+# 5) Extract "Areas of Interest" (HTML via XPath)
+matt_areas_nodes = matt_page.xpath("//h2[normalize-space()='Areas of Interest']/following-sibling::ul[1]/li")
+matt_areas = [n.text_content().strip() for n in matt_areas_nodes]
+print(matt_areas)
+
+# 6) Extract "Bio" (HTML via XPath union)
+# (Some sites use h2, others use h3 — we grab both without deciding which is “right”.)
+matt_bio_nodes = matt_page.xpath(
+    "//h2[normalize-space()='Professional Bio']/following-sibling::*[1]"
+    " | //h3[normalize-space()='Research Interests']/following-sibling::*[1]"
 )
-matt_areas = list(filter(None, map(str.strip, matt_areas)))
+matt_bio = "\n".join([re.sub(r"\s+", " ", n.text_content()).strip() for n in matt_bio_nodes])
+print(matt_bio)
 
-# 7) Extract "Research Interests" (XPath)
-matt_research = matt_tree.xpath(
-    "//h2[normalize-space()='Research Interests']/following-sibling::*[1]//text()"
-    " | //h3[normalize-space()='Research Interests']/following-sibling::*[1]//text()"
-)
-matt_research = list(filter(None, map(str.strip, matt_research)))
+# 7) Combine whatever we found into one string (semicolon-separated)
+matt_interests = "; ".join(matt_areas)
 
-# 8) Combine whatever we found into one string (semicolon-separated)
-matt_interests_list = matt_areas + matt_research
-matt_interests = "; ".join(matt_interests_list)
+# 8) Count how many interest items we captured
+matt_n_interest_items = len(matt_areas)
 
-# 9) Count how many interest items we captured
-matt_n_interest_items = len(matt_interests_list)
-
-# 10) Store results as one row (DataFrame)
-matt_row = pd.DataFrame([{
+# 9) Store results in a single row (dict -> later becomes DataFrame)
+matt_row = {
     "name": matt_name,
     "department": matt_dept,
     "url": matt_url,
     "scraped_title": matt_title,
     "scraped_email": matt_email,
     "scraped_interests": matt_interests,
-    "n_interest_items": matt_n_interest_items
-}])
-
+    "n_interest_items": matt_n_interest_items,
+    "bio": matt_bio,
+}
 
 # -----------------------------------------------------------------------------
 # Step 2: Scrape Sona N. Golder (repeat the same workflow)
 # -----------------------------------------------------------------------------
-sona_html = requests.get(sona_url, headers=headers).text
-sona_tree = html.fromstring(sona_html)
+sona_resp = requests.get(sona_url, headers=HEADERS)
+sona_page = html.fromstring(sona_resp.content)
 
-sona_text = " ".join(sona_tree.xpath("//body//text()"))
-sona_text = re.sub(r"\s+", " ", sona_text).strip()
+sona_text = sona_page.cssselect("body")[0].text_content()
 
-sona_title = " ".join(re.findall(title_pattern, sona_text)[:1]).strip()
-sona_email = " ".join(re.findall(email_pattern, sona_text)[:1]).strip()
+sona_title = (re.findall(title_pattern, sona_text) + [None])[0]
+sona_title = re.sub(r"\s+", " ", (sona_title or "")).strip() or None
 
-sona_areas = sona_tree.xpath(
-    "//h2[normalize-space()='Areas of Interest']/following-sibling::ul[1]/li//text()"
+sona_email = (re.findall(email_pattern, sona_text) + [None])[0]
+
+sona_areas_nodes = sona_page.xpath("//h2[normalize-space()='Areas of Interest']/following-sibling::ul[1]/li")
+sona_areas = [n.text_content().strip() for n in sona_areas_nodes]
+
+sona_bio_nodes = sona_page.xpath(
+    "//h2[normalize-space()='Professional Bio']/following-sibling::*[1]"
+    " | //h3[normalize-space()='Research Interests']/following-sibling::*[1]"
 )
-sona_areas = list(filter(None, map(str.strip, sona_areas)))
+sona_bio = "\n".join([re.sub(r"\s+", " ", n.text_content()).strip() for n in sona_bio_nodes])
 
-sona_research = sona_tree.xpath(
-    "//h2[normalize-space()='Research Interests']/following-sibling::*[1]//text()"
-    " | //h3[normalize-space()='Research Interests']/following-sibling::*[1]//text()"
-)
-sona_research = list(filter(None, map(str.strip, sona_research)))
+sona_interests = "; ".join(sona_areas)
+sona_n_interest_items = len(sona_areas)
 
-sona_interests_list = sona_areas + sona_research
-sona_interests = "; ".join(sona_interests_list)
-sona_n_interest_items = len(sona_interests_list)
-
-sona_row = pd.DataFrame([{
+sona_row = {
     "name": sona_name,
     "department": sona_dept,
     "url": sona_url,
     "scraped_title": sona_title,
     "scraped_email": sona_email,
     "scraped_interests": sona_interests,
-    "n_interest_items": sona_n_interest_items
-}])
-
+    "n_interest_items": sona_n_interest_items,
+    "bio": sona_bio,
+}
 
 # -----------------------------------------------------------------------------
 # Step 3: Scrape Derek Kreager (repeat the same workflow)
 # -----------------------------------------------------------------------------
-derek_html = requests.get(derek_url, headers=headers).text
-derek_tree = html.fromstring(derek_html)
+derek_resp = requests.get(derek_url, headers=HEADERS)
+derek_page = html.fromstring(derek_resp.content)
 
-derek_text = " ".join(derek_tree.xpath("//body//text()"))
-derek_text = re.sub(r"\s+", " ", derek_text).strip()
+derek_text = derek_page.cssselect("body")[0].text_content()
 
-derek_title = " ".join(re.findall(title_pattern, derek_text)[:1]).strip()
-derek_email = " ".join(re.findall(email_pattern, derek_text)[:1]).strip()
+derek_title = (re.findall(title_pattern, derek_text) + [None])[0]
+derek_title = re.sub(r"\s+", " ", (derek_title or "")).strip() or None
 
-derek_areas = derek_tree.xpath(
-    "//h2[normalize-space()='Areas of Interest']/following-sibling::ul[1]/li//text()"
+derek_email = (re.findall(email_pattern, derek_text) + [None])[0]
+
+# Note: Derek's page uses "Research Interests" as the list header in your R script.
+derek_areas_nodes = derek_page.xpath("//h2[normalize-space()='Research Interests']/following-sibling::ul[1]/li")
+derek_areas = [n.text_content().strip() for n in derek_areas_nodes]
+
+derek_bio_nodes = derek_page.xpath(
+    "//h2[normalize-space()='Professional Bio']/following-sibling::*[1]"
+    " | //h3[normalize-space()='Research Interests']/following-sibling::*[1]"
 )
-derek_areas = list(filter(None, map(str.strip, derek_areas)))
+derek_bio_texts = [re.sub(r"\s+", " ", n.text_content()).strip() for n in derek_bio_nodes]
 
-derek_research = derek_tree.xpath(
-    "//h2[normalize-space()='Research Interests']/following-sibling::*[1]//text()"
-    " | //h3[normalize-space()='Research Interests']/following-sibling::*[1]//text()"
-)
-derek_research = list(filter(None, map(str.strip, derek_research)))
+# Replicates the idea of derek_bio[2] in R (second element if present; otherwise None)
+derek_bio = (derek_bio_texts + [None, None])[1]
 
-derek_interests_list = derek_areas + derek_research
-derek_interests = "; ".join(derek_interests_list)
-derek_n_interest_items = len(derek_interests_list)
+derek_interests = "; ".join(derek_areas)
+derek_n_interest_items = len(derek_areas)
 
-derek_row = pd.DataFrame([{
+derek_row = {
     "name": derek_name,
     "department": derek_dept,
     "url": derek_url,
     "scraped_title": derek_title,
     "scraped_email": derek_email,
     "scraped_interests": derek_interests,
-    "n_interest_items": derek_n_interest_items
-}])
-
-
-# -----------------------------------------------------------------------------
-# Step 4: Scrape Jeremy Staff (repeat the same workflow)
-# -----------------------------------------------------------------------------
-jeremy_html = requests.get(jeremy_url, headers=headers).text
-jeremy_tree = html.fromstring(jeremy_html)
-
-jeremy_text = " ".join(jeremy_tree.xpath("//body//text()"))
-jeremy_text = re.sub(r"\s+", " ", jeremy_text).strip()
-
-jeremy_title = " ".join(re.findall(title_pattern, jeremy_text)[:1]).strip()
-jeremy_email = " ".join(re.findall(email_pattern, jeremy_text)[:1]).strip()
-
-jeremy_areas = jeremy_tree.xpath(
-    "//h2[normalize-space()='Areas of Interest']/following-sibling::ul[1]/li//text()"
-)
-jeremy_areas = list(filter(None, map(str.strip, jeremy_areas)))
-
-jeremy_research = jeremy_tree.xpath(
-    "//h2[normalize-space()='Research Interests']/following-sibling::*[1]//text()"
-    " | //h3[normalize-space()='Research Interests']/following-sibling::*[1]//text()"
-)
-jeremy_research = list(filter(None, map(str.strip, jeremy_research)))
-
-jeremy_interests_list = jeremy_areas + jeremy_research
-jeremy_interests = "; ".join(jeremy_interests_list)
-jeremy_n_interest_items = len(jeremy_interests_list)
-
-jeremy_row = pd.DataFrame([{
-    "name": jeremy_name,
-    "department": jeremy_dept,
-    "url": jeremy_url,
-    "scraped_title": jeremy_title,
-    "scraped_email": jeremy_email,
-    "scraped_interests": jeremy_interests,
-    "n_interest_items": jeremy_n_interest_items
-}])
-
+    "n_interest_items": derek_n_interest_items,
+    "bio": derek_bio,
+}
 
 # -----------------------------------------------------------------------------
 # Step 5: Combine the scraped rows into one data frame and inspect
 # -----------------------------------------------------------------------------
-scraped_profiles = pd.concat(
-    [matt_row, sona_row, derek_row, jeremy_row],
-    ignore_index=True
-)
+scraped_profiles = pd.DataFrame([matt_row, sona_row, derek_row])
 
 print(scraped_profiles)
-
 
 # -----------------------------------------------------------------------------
 # Step 6: Quick plot (interest items captured per faculty member)
 # -----------------------------------------------------------------------------
-# This mirrors the bar chart from the R version.
-
-scraped_profiles_sorted = scraped_profiles.sort_values("n_interest_items")
+plot_df = scraped_profiles.sort_values("n_interest_items")
 
 plt.figure()
-plt.barh(scraped_profiles_sorted["name"], scraped_profiles_sorted["n_interest_items"])
+plt.barh(plot_df["name"], plot_df["n_interest_items"])
 plt.title("Interest Items Captured from PSU Profile Pages")
 plt.xlabel("Number of interest items captured")
 plt.ylabel("Faculty member")
 plt.tight_layout()
 plt.show()
-
 
 # -----------------------------------------------------------------------------
 # Part 2: Pulling Google Scholar Data (Citations Over Time)
@@ -324,147 +367,108 @@ plt.show()
 #   (3) Pull publications (and view the first 5)
 #   (4) Pull citation history by year
 #   (5) Combine all citation histories into one table and plot them
-#
-# NOTE:
-# - Google Scholar scraping can fail due to bot checks / rate limits.
-# - This script intentionally does not include defensive programming so students
-#   can see the "main path" clearly.
 
 # -----------------------------------------------------------------------------
 # Step 1: Hard-code Google Scholar IDs
 # -----------------------------------------------------------------------------
-matt_scholar_id   = "yPbxmSwAAAAJ"
-sona_scholar_id   = "Cuz1fTcAAAAJ"
-derek_scholar_id  = "9c6_ChYAAAAJ"
-jeremy_scholar_id = "nm4ZRCgAAAAJ"
-
+matt_scholar_id  = "yPbxmSwAAAAJ"
+sona_scholar_id  = "Cuz1fTcAAAAJ"
+derek_scholar_id = "9c6_ChYAAAAJ"
 
 # -----------------------------------------------------------------------------
 # Step 2: Pull Google Scholar profiles (sequentially)
 # -----------------------------------------------------------------------------
-matt_author = scholarly.search_author_id(matt_scholar_id)
-matt_author = scholarly.fill(matt_author, sections=["basics", "indices", "counts", "publications"])
-
-sona_author = scholarly.search_author_id(sona_scholar_id)
-sona_author = scholarly.fill(sona_author, sections=["basics", "indices", "counts", "publications"])
-
-derek_author = scholarly.search_author_id(derek_scholar_id)
-derek_author = scholarly.fill(derek_author, sections=["basics", "indices", "counts", "publications"])
-
-jeremy_author = scholarly.search_author_id(jeremy_scholar_id)
-jeremy_author = scholarly.fill(jeremy_author, sections=["basics", "indices", "counts", "publications"])
-
+matt_profile = scholarly.fill(scholarly.search_author_id(matt_scholar_id))
+sona_profile = scholarly.fill(scholarly.search_author_id(sona_scholar_id))
+derek_profile = scholarly.fill(scholarly.search_author_id(derek_scholar_id))
 
 print("\n------------------------------")
 print("Google Scholar Profile Summaries")
-print("------------------------------")
+print("------------------------------\n")
 
-matt_profile = pd.DataFrame([{
-    "name": matt_author.get("name", ""),
-    "affiliation": matt_author.get("affiliation", ""),
-    "citedby": matt_author.get("citedby", ""),
-    "hindex": matt_author.get("hindex", ""),
-    "i10index": matt_author.get("i10index", "")
-}])
-print("\n" + matt_name)
+print(matt_name)
 print(matt_profile)
 
-sona_profile = pd.DataFrame([{
-    "name": sona_author.get("name", ""),
-    "affiliation": sona_author.get("affiliation", ""),
-    "citedby": sona_author.get("citedby", ""),
-    "hindex": sona_author.get("hindex", ""),
-    "i10index": sona_author.get("i10index", "")
-}])
 print("\n" + sona_name)
 print(sona_profile)
 
-derek_profile = pd.DataFrame([{
-    "name": derek_author.get("name", ""),
-    "affiliation": derek_author.get("affiliation", ""),
-    "citedby": derek_author.get("citedby", ""),
-    "hindex": derek_author.get("hindex", ""),
-    "i10index": derek_author.get("i10index", "")
-}])
 print("\n" + derek_name)
 print(derek_profile)
-
-jeremy_profile = pd.DataFrame([{
-    "name": jeremy_author.get("name", ""),
-    "affiliation": jeremy_author.get("affiliation", ""),
-    "citedby": jeremy_author.get("citedby", ""),
-    "hindex": jeremy_author.get("hindex", ""),
-    "i10index": jeremy_author.get("i10index", "")
-}])
-print("\n" + jeremy_name)
-print(jeremy_profile)
-
 
 # -----------------------------------------------------------------------------
 # Step 3: Pull Google Scholar publications (sequentially)
 # -----------------------------------------------------------------------------
-# We will look at the first 5 publications for each professor.
-# scholarly stores publications as a list in author["publications"].
+# Note: scholarly returns a list of publications inside each profile dict.
+# We'll convert to a DataFrame and print the first 5 rows.
+
+matt_pubs = pd.DataFrame([
+    {
+        "title": p.get("bib", {}).get("title"),
+        "year": p.get("bib", {}).get("pub_year"),
+        "citations": p.get("num_citations"),
+    }
+    for p in matt_profile.get("publications", [])
+])
+
+sona_pubs = pd.DataFrame([
+    {
+        "title": p.get("bib", {}).get("title"),
+        "year": p.get("bib", {}).get("pub_year"),
+        "citations": p.get("num_citations"),
+    }
+    for p in sona_profile.get("publications", [])
+])
+
+derek_pubs = pd.DataFrame([
+    {
+        "title": p.get("bib", {}).get("title"),
+        "year": p.get("bib", {}).get("pub_year"),
+        "citations": p.get("num_citations"),
+    }
+    for p in derek_profile.get("publications", [])
+])
 
 print("\n------------------------------")
 print("Recent Publications (first 5)")
-print("------------------------------")
+print("------------------------------\n")
 
-matt_pubs_df = pd.json_normalize(matt_author["publications"][:5])
-print("\n" + matt_name)
-print(matt_pubs_df[["bib.title", "bib.year"]].head(5))
+print(matt_name)
+print(matt_pubs.head(5))
 
-sona_pubs_df = pd.json_normalize(sona_author["publications"][:5])
 print("\n" + sona_name)
-print(sona_pubs_df[["bib.title", "bib.year"]].head(5))
+print(sona_pubs.head(5))
 
-derek_pubs_df = pd.json_normalize(derek_author["publications"][:5])
 print("\n" + derek_name)
-print(derek_pubs_df[["bib.title", "bib.year"]].head(5))
-
-jeremy_pubs_df = pd.json_normalize(jeremy_author["publications"][:5])
-print("\n" + jeremy_name)
-print(jeremy_pubs_df[["bib.title", "bib.year"]].head(5))
-
+print(derek_pubs.head(5))
 
 # -----------------------------------------------------------------------------
 # Step 4: Pull citation history (citations by year) and combine
 # -----------------------------------------------------------------------------
-# scholarly stores citation history in author["cites_per_year"] as a dictionary:
-#   {year: citations, year: citations, ...}
+matt_cites_per_year = matt_profile.get("cites_per_year", {})
+sona_cites_per_year = sona_profile.get("cites_per_year", {})
+derek_cites_per_year = derek_profile.get("cites_per_year", {})
 
-matt_ct = pd.DataFrame(list(matt_author["cites_per_year"].items()), columns=["year", "cites"])
+matt_ct = pd.DataFrame({"year": list(matt_cites_per_year.keys()), "cites": list(matt_cites_per_year.values())})
 matt_ct["name"] = matt_name
-matt_ct = matt_ct.sort_values("year")
 
-sona_ct = pd.DataFrame(list(sona_author["cites_per_year"].items()), columns=["year", "cites"])
+sona_ct = pd.DataFrame({"year": list(sona_cites_per_year.keys()), "cites": list(sona_cites_per_year.values())})
 sona_ct["name"] = sona_name
-sona_ct = sona_ct.sort_values("year")
 
-derek_ct = pd.DataFrame(list(derek_author["cites_per_year"].items()), columns=["year", "cites"])
+derek_ct = pd.DataFrame({"year": list(derek_cites_per_year.keys()), "cites": list(derek_cites_per_year.values())})
 derek_ct["name"] = derek_name
-derek_ct = derek_ct.sort_values("year")
 
-jeremy_ct = pd.DataFrame(list(jeremy_author["cites_per_year"].items()), columns=["year", "cites"])
-jeremy_ct["name"] = jeremy_name
-jeremy_ct = jeremy_ct.sort_values("year")
+citation_df = pd.concat([matt_ct, sona_ct, derek_ct], ignore_index=True)
+citation_df = citation_df.sort_values(["name", "year"])
 
-citation_df = pd.concat([matt_ct, sona_ct, derek_ct, jeremy_ct], ignore_index=True)
-
-print("\nCombined citation data (first 10 rows):")
 print(citation_df.head(10))
-
 
 # -----------------------------------------------------------------------------
 # Step 5: Plot citations over time for each professor
 # -----------------------------------------------------------------------------
-# This mirrors the multi-line ggplot from the R version.
-
 plt.figure()
 plt.plot(matt_ct["year"], matt_ct["cites"], marker="o", label=matt_name)
 plt.plot(sona_ct["year"], sona_ct["cites"], marker="o", label=sona_name)
 plt.plot(derek_ct["year"], derek_ct["cites"], marker="o", label=derek_name)
-plt.plot(jeremy_ct["year"], jeremy_ct["cites"], marker="o", label=jeremy_name)
 
 plt.title("Google Scholar Citation History (Recent Years)")
 plt.xlabel("Year")
@@ -473,17 +477,10 @@ plt.legend()
 plt.tight_layout()
 plt.show()
 
-
 # -----------------------------------------------------------------------------
 # Step 6: Median citations per year for each professor
 # -----------------------------------------------------------------------------
-median_cites = (
-    citation_df
-    .groupby("name", as_index=False)["cites"]
-    .median()
-    .rename(columns={"cites": "median_cites"})
-)
+median_cites = citation_df.groupby("name", as_index=False)["cites"].median()
+median_cites = median_cites.rename(columns={"cites": "median_cites"})
 
-print("\nMedian citations per year (by faculty):")
 print(median_cites)
-
