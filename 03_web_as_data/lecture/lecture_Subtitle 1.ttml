@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xml:lang="en" xmlns="http://www.w3.org/ns/ttml" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" xmlns:tts="http://www.w3.org/ns/ttml#styling" xmlns:ttp="http://www.w3.org/ns/ttml#parameter" xmlns:ittp="http://www.w3.org/ns/ttml/profile/imsc1#parameter" xmlns:itts="http://www.w3.org/ns/ttml/profile/imsc1#styling" ttp:profile="http://www.w3.org/ns/ttml/profile/imsc1/text" ttp:frameRate="24" ttp:timeBase="media">
+  <head>
+    <styling>
+      <style xml:id="s0" tts:color="#ffffff" tts:opacity="1" tts:fontSize="100%" tts:fontFamily="proportionalSansSerif" tts:fontWeight="bold" tts:textOutline="#ffffff 1px" tts:textAlign="center"/>
+    </styling>
+    <layout>
+      <region xml:id="r0" tts:origin="14.018% 74.884%" tts:extent="71.979% 10.278%" tts:displayAlign="center"/>
+    </layout>
+  </head>
+  <body>
+    <div xml:id="d0" region="r0" style="s0">
+      <p begin="01:00:06.500" end="01:00:07.333">Hi everyone, welcome.</p>
+      <p begin="01:00:07.708" end="01:00:09.250">Today we're gonna talk about the Web</p>
+      <p begin="01:00:09.250" end="01:00:09.458">data.</p>
+      <p begin="01:00:10.291" end="01:00:19.583">What they represent, what kind of</p>
+      <p begin="01:00:19.583" end="01:00:21.000">assumptions you're making when you</p>
+      <p begin="01:00:21.000" end="01:00:21.791">turn a website into</p>
+      <p begin="01:00:21.791" end="01:00:22.208">a dataset.</p>
+      <p begin="01:00:24.500" end="01:00:25.791">So the Web Data Lecture is gonna</p>
+      <p begin="01:00:25.791" end="01:00:27.958">differ slightly from an API lecture.</p>
+      <p begin="01:00:29.458" end="01:00:30.791">APIs and scraping are two different</p>
+      <p begin="01:00:30.791" end="01:00:32.250">ways of solving the same problem.</p>
+      <p begin="01:00:33.041" end="01:00:34.708">One can do it at scale, but they</p>
+      <p begin="01:00:34.708" end="01:00:35.416">operate in very</p>
+      <p begin="01:00:35.416" end="01:00:36.583">different engine strengths.</p>
+      <p begin="01:00:37.500" end="01:00:38.708">So as you're listening to this, I</p>
+      <p begin="01:00:38.708" end="01:00:40.208">want you to keep in mind to yourself</p>
+      <p begin="01:00:40.208" end="01:00:41.666">what kind of structure</p>
+      <p begin="01:00:41.666" end="01:00:43.875">does the Web give me and what kind</p>
+      <p begin="01:00:43.875" end="01:00:44.958">of structure do I</p>
+      <p begin="01:00:44.958" end="01:00:45.916">have to do that myself.</p>
+      <p begin="01:00:51.125" end="01:00:52.708">Let's start with why the Web matters</p>
+      <p begin="01:00:52.708" end="01:00:53.541">in the first place.</p>
+      <p begin="01:00:54.166" end="01:00:55.333">A huge amount of social and</p>
+      <p begin="01:00:55.333" end="01:00:56.375">political data is public,</p>
+      <p begin="01:00:56.791" end="01:00:57.916">continuously updated,</p>
+      <p begin="01:00:58.250" end="01:00:59.000">highly heterogeneous,</p>
+      <p begin="01:00:59.458" end="01:01:00.708">and often poorly documented.</p>
+      <p begin="01:01:01.791" end="01:01:03.541">And these features are exactly the</p>
+      <p begin="01:01:03.541" end="01:01:05.041">Web's such a powerful data source.</p>
+      <p begin="01:01:05.958" end="01:01:06.958">The most important line in this</p>
+      <p begin="01:01:06.958" end="01:01:08.708">slide is the last one.</p>
+      <p begin="01:01:09.333" end="01:01:10.708">The Web is often the first place</p>
+      <p begin="01:01:10.708" end="01:01:11.958">social behavior appears.</p>
+      <p begin="01:01:12.875" end="01:01:14.583">Organizations publish information</p>
+      <p begin="01:01:14.583" end="01:01:16.750">online long before they formalize</p>
+      <p begin="01:01:16.750" end="01:01:18.708">into reports, APIs or</p>
+      <p begin="01:01:19.125" end="01:01:19.208">databases.</p>
+      <p begin="01:01:20.291" end="01:01:21.583">That includes political movements,</p>
+      <p begin="01:01:21.833" end="01:01:23.041">advocacy groups, professional</p>
+      <p begin="01:01:23.041" end="01:01:24.125">organizations, local</p>
+      <p begin="01:01:24.250" end="01:01:25.458">governments, and sometimes even</p>
+      <p begin="01:01:25.458" end="01:01:26.541">extremists or front groups.</p>
+      <p begin="01:01:27.791" end="01:01:28.833">So if you're studying emerging</p>
+      <p begin="01:01:28.833" end="01:01:30.458">behavior, something new,</p>
+      <p begin="01:01:30.458" end="01:01:32.000">something in flux, the Web</p>
+      <p begin="01:01:32.000" end="01:01:33.500">is often where you'll see it first.</p>
+      <p begin="01:01:34.208" end="01:01:35.708">But the tradeoff is that early</p>
+      <p begin="01:01:35.708" end="01:01:37.333">signals are messy, and that</p>
+      <p begin="01:01:37.333" end="01:01:38.708">messiness is not accidental.</p>
+      <p begin="01:01:42.875" end="01:01:44.791">This slide captures the core</p>
+      <p begin="01:01:44.791" end="01:01:46.625">conceptual difference between Web</p>
+      <p begin="01:01:46.625" end="01:01:47.666">data and API data.</p>
+      <p begin="01:01:49.291" end="01:01:50.333">Websites are built from</p>
+      <p begin="01:01:50.333" end="01:01:51.875">humans, not from analysis.</p>
+      <p begin="01:01:52.875" end="01:01:53.791">They're designed to be read,</p>
+      <p begin="01:01:54.083" end="01:01:55.250">skimmed, scrolled,</p>
+      <p begin="01:01:55.250" end="01:01:56.125">and navigated visually.</p>
+      <p begin="01:01:57.583" end="01:01:59.041">They're not designed to be queried,</p>
+      <p begin="01:01:59.041" end="01:02:00.083">validated, or joint.</p>
+      <p begin="01:02:01.125" end="01:02:02.083">So that leads us to</p>
+      <p begin="01:02:02.083" end="01:02:03.041">the three problems.</p>
+      <p begin="01:02:04.375" end="01:02:05.916">First, structure is irregular.</p>
+      <p begin="01:02:07.666" end="01:02:09.333">Second, assumptions are hidden.</p>
+      <p begin="01:02:10.541" end="01:02:11.416">And third, access</p>
+      <p begin="01:02:11.416" end="01:02:12.250">points are fragile.</p>
+      <p begin="01:02:13.208" end="01:02:14.583">So the screen is the act of</p>
+      <p begin="01:02:14.583" end="01:02:15.708">recovering structure</p>
+      <p begin="01:02:15.708" end="01:02:17.083">from representation.</p>
+      <p begin="01:02:18.625" end="01:02:20.250">Unlike APIs where structure is</p>
+      <p begin="01:02:20.250" end="01:02:22.916">explicitly declared or enforced, Web</p>
+      <p begin="01:02:22.916" end="01:02:24.250">data requires interpretation.</p>
+      <p begin="01:02:25.208" end="01:02:26.333">They're referring structure from</p>
+      <p begin="01:02:26.333" end="01:02:28.083">layout, repetition, and</p>
+      <p begin="01:02:28.083" end="01:02:29.000">placement of the page.</p>
+      <p begin="01:02:29.958" end="01:02:30.875">And that interpretive</p>
+      <p begin="01:02:30.875" end="01:02:31.750">step is unavoidable.</p>
+      <p begin="01:02:32.583" end="01:02:33.541">It's also where most</p>
+      <p begin="01:02:33.541" end="01:02:35.000">gravy errors come from.</p>
+      <p begin="01:02:38.666" end="01:02:39.708">So data appear on the Web</p>
+      <p begin="01:02:39.708" end="01:02:40.791">in many different forms.</p>
+      <p begin="01:02:41.458" end="01:02:43.500">Sometimes they're static HTML pages.</p>
+      <p begin="01:02:44.041" end="01:02:44.500">Sometimes they're</p>
+      <p begin="01:02:44.500" end="01:02:45.291">embedded in tables.</p>
+      <p begin="01:02:46.000" end="01:02:46.541">Sometimes they're hidden</p>
+      <p begin="01:02:46.541" end="01:02:48.375">in PDFs or CSV downloads.</p>
+      <p begin="01:02:49.041" end="01:02:50.125">And sometimes they're rendered</p>
+      <p begin="01:02:50.125" end="01:02:51.541">dynamically with JavaScript.</p>
+      <p begin="01:02:52.875" end="01:02:54.416">And last, sometimes they'll exist in</p>
+      <p begin="01:02:54.416" end="01:02:55.208">our cat snapshots.</p>
+      <p begin="01:02:56.291" end="01:02:57.041">So what matters</p>
+      <p begin="01:02:57.041" end="01:02:58.541">most is not the format.</p>
+      <p begin="01:02:58.541" end="01:02:59.625">It's why the data are there.</p>
+      <p begin="01:03:00.416" end="01:03:02.291">The key idea here is that the most</p>
+      <p begin="01:03:02.291" end="01:03:04.083">useful Web data are</p>
+      <p begin="01:03:04.083" end="01:03:05.791">incidental, not intentional.</p>
+      <p begin="01:03:07.000" end="01:03:07.958">The site was not built</p>
+      <p begin="01:03:07.958" end="01:03:08.833">to give you a dataset.</p>
+      <p begin="01:03:09.250" end="01:03:10.166">It was built to communicate</p>
+      <p begin="01:03:10.166" end="01:03:11.333">something to an audience.</p>
+      <p begin="01:03:12.041" end="01:03:13.791">Scraping is about extracting signal</p>
+      <p begin="01:03:13.791" end="01:03:15.291">from those communication artifacts.</p>
+      <p begin="01:03:16.333" end="01:03:17.500">That means that the data always</p>
+      <p begin="01:03:17.500" end="01:03:19.166">reflect the design choices about</p>
+      <p begin="01:03:19.166" end="01:03:20.750">what matters, what is</p>
+      <p begin="01:03:20.791" end="01:03:22.041">emphasized, and what's ignored.</p>
+      <p begin="01:03:27.291" end="01:03:29.291">So now let's talk about HTML itself,</p>
+      <p begin="01:03:29.541" end="01:03:31.500">but conceptually, not technically.</p>
+      <p begin="01:03:32.791" end="01:03:34.166">HTML is a markup language.</p>
+      <p begin="01:03:34.500" end="01:03:35.833">It defines document structure.</p>
+      <p begin="01:03:36.166" end="01:03:37.958">It organizes content hierarchically.</p>
+      <p begin="01:03:38.750" end="01:03:39.500">And it relies on</p>
+      <p begin="01:03:39.500" end="01:03:40.625">nesting rather than meaning.</p>
+      <p begin="01:03:41.750" end="01:03:42.916">HTML tells you what</p>
+      <p begin="01:03:42.916" end="01:03:44.250">exists, not what it means.</p>
+      <p begin="01:03:45.000" end="01:03:46.583">There is no variable called date.</p>
+      <p begin="01:03:46.916" end="01:03:48.041">There is no column called</p>
+      <p begin="01:03:48.041" end="01:03:49.000">organization name.</p>
+      <p begin="01:03:49.958" end="01:03:51.375">There are only elements placed next</p>
+      <p begin="01:03:51.375" end="01:03:52.375">to each other in a</p>
+      <p begin="01:03:52.375" end="01:03:53.458">particular location.</p>
+      <p begin="01:03:54.500" end="01:03:57.458">So meaning is something you must</p>
+      <p begin="01:03:57.458" end="01:03:59.916">impose when you decide that a</p>
+      <p begin="01:03:59.916" end="01:04:01.375">repeated pattern corresponds</p>
+      <p begin="01:04:01.375" end="01:04:02.125">to a variable.</p>
+      <p begin="01:04:02.916" end="01:04:04.166">That's why Scrapy is not just</p>
+      <p begin="01:04:04.166" end="01:04:05.791">parsing text, it's interpretation.</p>
+      <p begin="01:04:10.458" end="01:04:11.750">So HTML is a trade.</p>
+      <p begin="01:04:11.750" end="01:04:12.208">What does that mean?</p>
+      <p begin="01:04:14.083" end="01:04:15.625">Elements contain other elements.</p>
+      <p begin="01:04:15.666" end="01:04:17.625">You have a parent-child relationship</p>
+      <p begin="01:04:17.625" end="01:04:19.333">and sibling relationships, and</p>
+      <p begin="01:04:19.333" end="01:04:20.250">position the tree</p>
+      <p begin="01:04:20.250" end="01:04:20.916">conveys meaning.</p>
+      <p begin="01:04:21.916" end="01:04:22.708">So this is critical.</p>
+      <p begin="01:04:23.250" end="01:04:25.000">Two elements of the same tag can</p>
+      <p begin="01:04:25.000" end="01:04:26.291">mean completely different things</p>
+      <p begin="01:04:26.291" end="01:04:27.500">depending on where they appear</p>
+      <p begin="01:04:27.500" end="01:04:28.000">in the tree.</p>
+      <p begin="01:04:29.041" end="01:04:31.333">Scrapy is essentially tree traversal</p>
+      <p begin="01:04:31.333" end="01:04:32.625">plus pattern matching.</p>
+      <p begin="01:04:33.541" end="01:04:35.125">You're asking questions like what</p>
+      <p begin="01:04:35.125" end="01:04:37.583">structure repeats, what is always</p>
+      <p begin="01:04:37.583" end="01:04:38.791">nested inside what,</p>
+      <p begin="01:04:39.916" end="01:04:40.541">what elements appear</p>
+      <p begin="01:04:40.541" end="01:04:41.666">together and across pages.</p>
+      <p begin="01:04:43.291" end="01:04:44.250">So let's start thinking this way.</p>
+      <p begin="01:04:44.500" end="01:04:44.958">Scrapy becomes</p>
+      <p begin="01:04:44.958" end="01:04:46.541">systematic instead of mysterious.</p>
+      <p begin="01:04:52.000" end="01:04:53.000">So the building blocks</p>
+      <p begin="01:04:53.000" end="01:04:54.083">that you work with are simple.</p>
+      <p begin="01:04:55.083" end="01:04:57.375">Tags are like div, pa, table.</p>
+      <p begin="01:04:58.000" end="01:04:58.500">We've attributes</p>
+      <p begin="01:04:58.500" end="01:04:59.958">like class ID and href.</p>
+      <p begin="01:05:01.583" end="01:05:02.541">And then we have text nodes.</p>
+      <p begin="01:05:03.125" end="01:05:04.250">So the most important idea in this</p>
+      <p begin="01:05:04.250" end="01:05:05.666">line is that meaning is inferred</p>
+      <p begin="01:05:05.666" end="01:05:06.916">from repetition location.</p>
+      <p begin="01:05:07.791" end="01:05:10.083">So one div tells you nothing, but 50</p>
+      <p begin="01:05:10.083" end="01:05:11.666">identical div is in the same</p>
+      <p begin="01:05:11.666" end="01:05:13.125">position across pages,</p>
+      <p begin="01:05:13.166" end="01:05:14.166">so it should tell you something.</p>
+      <p begin="01:05:14.708" end="01:05:15.625">Repetition is what turns</p>
+      <p begin="01:05:15.625" end="01:05:17.041">presentation into data.</p>
+      <p begin="01:05:21.041" end="01:05:22.791">So scraping is a</p>
+      <p begin="01:05:22.791" end="01:05:23.583">pattern recognition.</p>
+      <p begin="01:05:24.458" end="01:05:25.875">Good scraping relies on repeat</p>
+      <p begin="01:05:25.875" end="01:05:27.666">structure, stable attributes and</p>
+      <p begin="01:05:27.666" end="01:05:28.500">predictable nesting.</p>
+      <p begin="01:05:29.375" end="01:05:30.500">So you're reverse engineering</p>
+      <p begin="01:05:30.500" end="01:05:32.458">someone else's design decisions.</p>
+      <p begin="01:05:33.250" end="01:05:35.083">That's why scraping almost always</p>
+      <p begin="01:05:35.083" end="01:05:36.500">starts without writing code.</p>
+      <p begin="01:05:37.416" end="01:05:39.166">So you view one page source, you</p>
+      <p begin="01:05:39.166" end="01:05:41.666">scroll, you inspect, you ask what</p>
+      <p begin="01:05:41.666" end="01:05:42.791">repeats and what doesn't.</p>
+      <p begin="01:05:43.416" end="01:05:44.000">If you start coding</p>
+      <p begin="01:05:44.000" end="01:05:45.250">immediately, you're guessing.</p>
+      <p begin="01:05:45.583" end="01:05:46.875">If you start by understanding</p>
+      <p begin="01:05:46.875" end="01:05:48.250">structure, you're measuring.</p>
+      <p begin="01:05:52.708" end="01:05:54.500">So this slide shows the basics to</p>
+      <p begin="01:05:54.500" end="01:05:56.250">navigation of workflow in Python.</p>
+      <p begin="01:05:56.916" end="01:05:58.125">Conceptually, there are four steps.</p>
+      <p begin="01:05:58.958" end="01:05:59.458">First, we're going to</p>
+      <p begin="01:05:59.458" end="01:06:01.041">retrieve a page here.</p>
+      <p begin="01:06:04.250" end="01:06:04.958">Second, we're going</p>
+      <p begin="01:06:04.958" end="01:06:06.041">to parse into a tree.</p>
+      <p begin="01:06:06.375" end="01:06:08.041">We're using beautiful</p>
+      <p begin="01:06:08.041" end="01:06:09.666">soup for parsing here.</p>
+      <p begin="01:06:10.916" end="01:06:12.375">Third, we're going to select</p>
+      <p begin="01:06:12.375" end="01:06:14.083">repeated elements here.</p>
+      <p begin="01:06:15.833" end="01:06:16.625">And then fourth, we're going to</p>
+      <p begin="01:06:16.625" end="01:06:19.291">normalize the text on it.</p>
+      <p begin="01:06:19.875" end="01:06:21.333">So this works best when content</p>
+      <p begin="01:06:21.333" end="01:06:23.041">loads directly into the page,</p>
+      <p begin="01:06:23.041" end="01:06:24.083">meaning you can see it</p>
+      <p begin="01:06:24.083" end="01:06:25.375">from the view page source.</p>
+      <p begin="01:06:26.083" end="01:06:27.333">The syntax here is not</p>
+      <p begin="01:06:27.333" end="01:06:28.583">the point, it's the flow.</p>
+      <p begin="01:06:29.833" end="01:06:30.041">All right.</p>
+      <p begin="01:06:32.875" end="01:06:33.958">Okay, so we can follow the same</p>
+      <p begin="01:06:33.958" end="01:06:35.250">logic in R as well.</p>
+      <p begin="01:06:35.250" end="01:06:36.375">We have the URL here.</p>
+      <p begin="01:06:36.750" end="01:06:38.208">We're reading it into R here.</p>
+      <p begin="01:06:39.208" end="01:06:41.250">We're taking the page here.</p>
+      <p begin="01:06:42.250" end="01:06:45.208">We are parsing the tree here.</p>
+      <p begin="01:06:46.416" end="01:06:48.833">And then we are creating a text here</p>
+      <p begin="01:06:48.833" end="01:06:50.041">with a pipe logic.</p>
+      <p begin="01:06:50.666" end="01:06:52.083">But it follows the same kind of</p>
+      <p begin="01:06:52.083" end="01:06:54.541">syntax principles as</p>
+      <p begin="01:06:54.541" end="01:06:55.458">the Python version.</p>
+      <p begin="01:06:58.583" end="01:07:00.750">So embedded HTML tables are often</p>
+      <p begin="01:07:00.750" end="01:07:01.875">the best case scenario.</p>
+      <p begin="01:07:02.500" end="01:07:04.041">They're explicit, structured, and</p>
+      <p begin="01:07:04.041" end="01:07:04.875">relatively stable.</p>
+      <p begin="01:07:05.625" end="01:07:07.708">Many institutional sites quietly</p>
+      <p begin="01:07:07.708" end="01:07:09.583">expose high quality data this way.</p>
+      <p begin="01:07:10.500" end="01:07:12.416">Whenever possible, you should prefer</p>
+      <p begin="01:07:12.416" end="01:07:13.500">embedded tables over</p>
+      <p begin="01:07:13.500" end="01:07:14.666">custom scraping logic.</p>
+      <p begin="01:07:15.291" end="01:07:17.000">They break off often and require</p>
+      <p begin="01:07:17.000" end="01:07:17.875">fewer assumptions.</p>
+      <p begin="01:07:19.208" end="01:07:21.041">Here's two coding examples for it.</p>
+      <p begin="01:07:21.041" end="01:07:23.125">We're reading, so here we're looking</p>
+      <p begin="01:07:23.125" end="01:07:24.833">for the table, the first element,</p>
+      <p begin="01:07:25.875" end="01:07:27.458">same kind of process here.</p>
+      <p begin="01:07:27.916" end="01:07:29.125">We're working the page that's</p>
+      <p begin="01:07:29.125" end="01:07:32.000">written here, getting the table, and</p>
+      <p begin="01:07:32.000" end="01:07:33.208">selecting the first element.</p>
+      <p begin="01:07:39.166" end="01:07:40.458">But even without ABIs,</p>
+      <p begin="01:07:40.458" end="01:07:41.583">data is often paginated.</p>
+      <p begin="01:07:42.458" end="01:07:44.125">Pagination rules are part of the</p>
+      <p begin="01:07:44.125" end="01:07:45.291">data generating process.</p>
+      <p begin="01:07:45.875" end="01:07:47.416">They determine how much data you can</p>
+      <p begin="01:07:47.416" end="01:07:48.500">collect and often</p>
+      <p begin="01:07:48.500" end="01:07:49.750">how you can update it.</p>
+      <p begin="01:07:50.583" end="01:07:51.541">Missing a page usually</p>
+      <p begin="01:07:51.541" end="01:07:52.625">doesn't throw an error.</p>
+      <p begin="01:07:53.083" end="01:07:54.583">It suddenly removes observations.</p>
+      <p begin="01:07:55.458" end="01:07:56.416">That's one of the most dangerous</p>
+      <p begin="01:07:56.416" end="01:07:57.958">failure modes of scraping a topic.</p>
+      <p begin="01:07:58.375" end="01:08:02.541">[no speech detected]</p>
+      <p begin="01:08:03.958" end="01:08:04.916">The many data sets</p>
+      <p begin="01:08:04.916" end="01:08:06.250">require crawling links.</p>
+      <p begin="01:08:06.875" end="01:08:08.541">This is where scraping shifts from</p>
+      <p begin="01:08:08.541" end="01:08:09.750">download a page to</p>
+      <p begin="01:08:09.750" end="01:08:10.625">traverse a network.</p>
+      <p begin="01:08:11.458" end="01:08:14.916">So once you do this, logging becomes</p>
+      <p begin="01:08:14.916" end="01:08:16.583">essential because without logs, you</p>
+      <p begin="01:08:16.583" end="01:08:18.125">cannot tell where you visited,</p>
+      <p begin="01:08:18.500" end="01:08:19.791">what you skipped and what fails.</p>
+      <p begin="01:08:21.541" end="01:08:23.666">This is a Python example here where</p>
+      <p begin="01:08:23.666" end="01:08:24.583">we are looping</p>
+      <p begin="01:08:24.583" end="01:08:25.500">over hyper references.</p>
+      <p begin="01:08:26.541" end="01:08:30.083">We're finding all the values here.</p>
+      <p begin="01:08:30.458" end="01:08:31.916">And then here the same thing are we</p>
+      <p begin="01:08:31.916" end="01:08:34.875">have our page elements and we're</p>
+      <p begin="01:08:34.875" end="01:08:36.083">pulling the attributes here.</p>
+      <p begin="01:08:36.833" end="01:08:38.000">Trying to make sure you always</p>
+      <p begin="01:08:38.000" end="01:08:40.291">normalize and de-duplicate URLs when</p>
+      <p begin="01:08:40.291" end="01:08:41.416">you work out something like that.</p>
+      <p begin="01:08:45.333" end="01:08:47.250">So scraping is an interaction,</p>
+      <p begin="01:08:47.458" end="01:08:48.166">non-misterraction.</p>
+      <p begin="01:08:48.958" end="01:08:50.083">Code practice includes rate</p>
+      <p begin="01:08:50.083" end="01:08:52.583">limiting, user agent headers, error</p>
+      <p begin="01:08:52.583" end="01:08:54.583">handling, and saving raw responses.</p>
+      <p begin="01:08:55.166" end="01:08:57.000">This is the API lecture,</p>
+      <p begin="01:08:57.291" end="01:08:58.791">we're going to see as well.</p>
+      <p begin="01:08:59.750" end="01:09:00.250">But then we'll look</p>
+      <p begin="01:09:00.250" end="01:09:01.291">at the same for it.</p>
+      <p begin="01:09:01.708" end="01:09:03.166">But stability, reproducibility</p>
+      <p begin="01:09:03.166" end="01:09:05.833">matter more than speed in this case.</p>
+      <p begin="01:09:07.916" end="01:09:09.500">[no speech detected]</p>
+      <p begin="01:09:10.291" end="01:09:12.041">So some of the highest quality web</p>
+      <p begin="01:09:12.041" end="01:09:13.791">data come from boring places.</p>
+      <p begin="01:09:14.333" end="01:09:15.416">Things like local governments,</p>
+      <p begin="01:09:15.708" end="01:09:16.875">professional associations,</p>
+      <p begin="01:09:17.125" end="01:09:18.500">or doing work filings, or</p>
+      <p begin="01:09:18.500" end="01:09:19.875">posting in static reports.</p>
+      <p begin="01:09:20.916" end="01:09:22.333">These sites change slowly and</p>
+      <p begin="01:09:22.333" end="01:09:23.500">publish information</p>
+      <p begin="01:09:23.500" end="01:09:24.708">because they're required to.</p>
+      <p begin="01:09:25.166" end="01:09:26.000">Not because they're</p>
+      <p begin="01:09:26.000" end="01:09:27.208">optimizing engagement.</p>
+      <p begin="01:09:28.083" end="01:09:31.500">[no speech detected]</p>
+      <p begin="01:09:32.125" end="01:09:34.166">So boring websites tend to have</p>
+      <p begin="01:09:34.166" end="01:09:37.041">clean HTML, minimal JavaScript, and</p>
+      <p begin="01:09:37.041" end="01:09:37.875">predictable layouts.</p>
+      <p begin="01:09:38.750" end="01:09:39.333">If you care about</p>
+      <p begin="01:09:39.333" end="01:09:41.291">longitudinal data, boring is good.</p>
+      <p begin="01:09:42.166" end="01:09:43.500">Flashing websites can break much</p>
+      <p begin="01:09:43.500" end="01:09:44.333">more easily, but</p>
+      <p begin="01:09:44.333" end="01:09:45.500">boring is very predictable.</p>
+      <p begin="01:09:47.333" end="01:09:49.750">[no speech detected]</p>
+      <p begin="01:09:50.833" end="01:09:53.041">So this is not optional for your</p>
+      <p begin="01:09:53.041" end="01:09:53.958">workflow when you're</p>
+      <p begin="01:09:53.958" end="01:09:54.666">doing web scraping.</p>
+      <p begin="01:09:55.333" end="01:09:56.500">Every scraper workflow</p>
+      <p begin="01:09:56.500" end="01:09:58.083">needs good documentation.</p>
+      <p begin="01:09:58.916" end="01:10:01.000">Should report source URLs, access</p>
+      <p begin="01:10:01.000" end="01:10:02.333">dates, processing logic,</p>
+      <p begin="01:10:02.541" end="01:10:03.791">and no gaps or failures.</p>
+      <p begin="01:10:04.500" end="01:10:06.000">If someone cannot restructure data</p>
+      <p begin="01:10:06.000" end="01:10:08.041">set how it was built, then the data</p>
+      <p begin="01:10:08.041" end="01:10:09.208">set is solved as incomplete.</p>
+      <p begin="01:10:10.583" end="01:10:13.250">[no speech detected]</p>
+      <p begin="01:10:13.458" end="01:10:14.625">So here's the takeaways.</p>
+      <p begin="01:10:14.833" end="01:10:15.416">You want to understand</p>
+      <p begin="01:10:15.416" end="01:10:16.666">the structure before coding.</p>
+      <p begin="01:10:17.166" end="01:10:17.750">Start simple.</p>
+      <p begin="01:10:18.541" end="01:10:19.750">Treat scraping as measurement.</p>
+      <p begin="01:10:20.166" end="01:10:21.708">Expect breakage and document it.</p>
+      <p begin="01:10:22.291" end="01:10:24.458">And it's going to follow the same as</p>
+      <p begin="01:10:24.458" end="01:10:25.916">the API lecture that</p>
+      <p begin="01:10:25.916" end="01:10:28.291">we're going to see as well.</p>
+      <p begin="01:10:29.291" end="01:10:31.125">[no speech detected]</p>
+      <p begin="01:10:31.250" end="01:10:31.875">So there's a couple</p>
+      <p begin="01:10:31.875" end="01:10:32.833">things to keep in mind.</p>
+      <p begin="01:10:33.875" end="01:10:35.291">You should think a lot about where</p>
+      <p begin="01:10:35.291" end="01:10:36.958">to buy into web collected data.</p>
+      <p begin="01:10:37.333" end="01:10:38.833">So what kinds of information are</p>
+      <p begin="01:10:38.833" end="01:10:39.916">organizations, for example,</p>
+      <p begin="01:10:40.375" end="01:10:41.666">required to publish and how might</p>
+      <p begin="01:10:41.666" end="01:10:44.333">they obfuscate certain information.</p>
+      <p begin="01:10:45.750" end="01:10:47.750">Which sites are trustworthy for</p>
+      <p begin="01:10:47.750" end="01:10:48.500">scraping purposes?</p>
+      <p begin="01:10:49.500" end="01:10:51.250">So for example, some of my Wikipedia</p>
+      <p begin="01:10:51.250" end="01:10:52.500">is frequently scraped.</p>
+      <p begin="01:10:53.000" end="01:10:54.666">Users can edit it.</p>
+      <p begin="01:10:54.666" end="01:10:55.875">When I was in high school Wikipedia</p>
+      <p begin="01:10:55.875" end="01:10:57.958">was not seen as a legitimate source.</p>
+      <p begin="01:10:57.958" end="01:10:58.750">And it's gained a lot more</p>
+      <p begin="01:10:58.750" end="01:10:59.500">credibility, I</p>
+      <p begin="01:10:59.500" end="01:11:01.583">think, since that period.</p>
+      <p begin="01:11:02.500" end="01:11:04.000">But we can see that political</p>
+      <p begin="01:11:04.000" end="01:11:07.541">operative maybe are changing web</p>
+      <p begin="01:11:07.541" end="01:11:09.500">data constantly to try to alter</p>
+      <p begin="01:11:10.375" end="01:11:11.500">how candidates are viewed.</p>
+      <p begin="01:11:11.833" end="01:11:13.708">So even in some education, maybe</p>
+      <p begin="01:11:13.708" end="01:11:14.000">it's not</p>
+      <p begin="01:11:14.000" end="01:11:15.291">particularly trustworthy on it.</p>
+      <p begin="01:11:16.291" end="01:11:17.250">And then what assumptions</p>
+      <p begin="01:11:17.250" end="01:11:19.250">are hidden in the layout.</p>
+      <p begin="01:11:19.708" end="01:11:20.416">It's going to keep in mind.</p>
+      <p begin="01:11:21.583" end="01:11:24.000">But just keep in as a total for</p>
+      <p begin="01:11:24.000" end="01:11:25.250">these three discussion questions.</p>
+      <p begin="01:11:25.916" end="01:11:26.541">Just remember that</p>
+      <p begin="01:11:26.541" end="01:11:27.708">scraping is not neutral.</p>
+      <p begin="01:11:28.416" end="01:11:29.958">Haze to the time is going to reflect</p>
+      <p begin="01:11:29.958" end="01:11:31.416">institutional incentives and</p>
+      <p begin="01:11:31.416" end="01:11:32.208">audience priorities.</p>
+      <p begin="01:11:33.166" end="01:11:34.458">And understanding those choices is</p>
+      <p begin="01:11:34.458" end="01:11:35.500">part of doing serious</p>
+      <p begin="01:11:35.500" end="01:11:36.833">social data analysis.</p>
+    </div>
+  </body>
+</tt>

@@ -1,0 +1,503 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xml:lang="en" xmlns="http://www.w3.org/ns/ttml" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" xmlns:tts="http://www.w3.org/ns/ttml#styling" xmlns:ttp="http://www.w3.org/ns/ttml#parameter" xmlns:ittp="http://www.w3.org/ns/ttml/profile/imsc1#parameter" xmlns:itts="http://www.w3.org/ns/ttml/profile/imsc1#styling" ttp:profile="http://www.w3.org/ns/ttml/profile/imsc1/text" ttp:frameRate="24" ttp:timeBase="media">
+  <head>
+    <styling>
+      <style xml:id="s0" tts:color="#ffffff" tts:opacity="1" tts:fontSize="100%" tts:fontFamily="proportionalSansSerif" tts:fontWeight="bold" tts:textOutline="#ffffff 1px" tts:textAlign="center"/>
+    </styling>
+    <layout>
+      <region xml:id="r0" tts:origin="13.913% 74.884%" tts:extent="72.188% 10.278%" tts:displayAlign="center"/>
+    </layout>
+  </head>
+  <body>
+    <div xml:id="d0" region="r0" style="s0">
+      <p begin="01:00:01.416" end="01:00:02.583">Hi everyone, welcome back.</p>
+      <p begin="01:00:02.583" end="01:00:03.625">In this lecture, we're gonna talk</p>
+      <p begin="01:00:03.625" end="01:00:04.541">about Texas data,</p>
+      <p begin="01:00:05.500" end="01:00:06.166">but I wanna be very</p>
+      <p begin="01:00:06.166" end="01:00:07.041">clear right at the start</p>
+      <p begin="01:00:07.041" end="01:00:07.666">about the framing.</p>
+      <p begin="01:00:08.541" end="01:00:09.666">So, text analysis is</p>
+      <p begin="01:00:09.666" end="01:00:10.916">not about a single method,</p>
+      <p begin="01:00:10.916" end="01:00:11.791">it's about a pipeline.</p>
+      <p begin="01:00:12.500" end="01:00:13.541">I'm insight into this</p>
+      <p begin="01:00:13.541" end="01:00:14.916">because many people encounter</p>
+      <p begin="01:00:15.041" end="01:00:16.916">text analysis for the first time</p>
+      <p begin="01:00:16.916" end="01:00:18.125">through a specific tool.</p>
+      <p begin="01:00:18.583" end="01:00:19.750">Maybe topic models,</p>
+      <p begin="01:00:20.041" end="01:00:21.041">sentiment analysis,</p>
+      <p begin="01:00:21.375" end="01:00:22.875">transformer models, and</p>
+      <p begin="01:00:22.875" end="01:00:23.583">they come away thinking</p>
+      <p begin="01:00:23.583" end="01:00:25.000">the model is the method.</p>
+      <p begin="01:00:25.750" end="01:00:27.416">In practice, the model's option is</p>
+      <p begin="01:00:27.416" end="01:00:28.250">the least important part.</p>
+      <p begin="01:00:29.083" end="01:00:30.000">The biggest threat to</p>
+      <p begin="01:00:30.000" end="01:00:31.750">validity usually happens</p>
+      <p begin="01:00:31.916" end="01:00:33.375">before the model ever sees the data,</p>
+      <p begin="01:00:33.708" end="01:00:34.458">when you decide</p>
+      <p begin="01:00:34.458" end="01:00:35.666">what text to include,</p>
+      <p begin="01:00:35.916" end="01:00:36.958">how to clean it, and</p>
+      <p begin="01:00:36.958" end="01:00:37.958">how to represent it.</p>
+      <p begin="01:00:38.375" end="01:00:39.041">These decisions</p>
+      <p begin="01:00:39.041" end="01:00:40.791">quietly shape your measure,</p>
+      <p begin="01:00:41.083" end="01:00:41.750">what your measure</p>
+      <p begin="01:00:41.750" end="01:00:42.791">actually is capturing.</p>
+      <p begin="01:00:44.875" end="01:00:46.250">So today, I'm gonna walk the</p>
+      <p begin="01:00:46.250" end="01:00:47.333">pipeline end-to-end,</p>
+      <p begin="01:00:47.583" end="01:00:47.958">collection,</p>
+      <p begin="01:00:48.166" end="01:00:49.541">cleaning, representation,</p>
+      <p begin="01:00:49.541" end="01:00:50.458">modeling, and validation.</p>
+      <p begin="01:00:50.958" end="01:00:52.000">In each step, I'll be</p>
+      <p begin="01:00:52.000" end="01:00:53.375">explicit about what assumptions</p>
+      <p begin="01:00:53.375" end="01:00:54.291">you're making and</p>
+      <p begin="01:00:54.291" end="01:00:55.125">what kinds of meaning</p>
+      <p begin="01:00:55.291" end="01:00:56.041">you're throwing away.</p>
+      <p begin="01:00:56.958" end="01:00:57.500">I want you to come</p>
+      <p begin="01:00:57.500" end="01:00:58.333">away from this lecture</p>
+      <p begin="01:00:58.500" end="01:00:59.958">thinking less like which</p>
+      <p begin="01:00:59.958" end="01:01:01.208">algorithm should I use,</p>
+      <p begin="01:01:01.416" end="01:01:02.250">and more like what</p>
+      <p begin="01:01:02.250" end="01:01:03.375">exactly am I measuring,</p>
+      <p begin="01:01:03.958" end="01:01:05.125">and how did I construct it.</p>
+      <p begin="01:01:08.041" end="01:01:08.916">So, why text data?</p>
+      <p begin="01:01:09.666" end="01:01:11.000">Text is one of the most common forms</p>
+      <p begin="01:01:11.000" end="01:01:12.041">of social data we have.</p>
+      <p begin="01:01:12.625" end="01:01:13.458">A huge amount of</p>
+      <p begin="01:01:13.458" end="01:01:14.791">political and social behavior</p>
+      <p begin="01:01:14.958" end="01:01:16.083">leads to textual traces,</p>
+      <p begin="01:01:16.375" end="01:01:17.250">things like news articles,</p>
+      <p begin="01:01:17.583" end="01:01:18.500">speeches, press</p>
+      <p begin="01:01:18.500" end="01:01:20.291">releases, social media posts,</p>
+      <p begin="01:01:20.333" end="01:01:22.083">policy documents, internal memos,</p>
+      <p begin="01:01:22.333" end="01:01:22.958">and court filings.</p>
+      <p begin="01:01:24.333" end="01:01:25.125">If you wanna study</p>
+      <p begin="01:01:25.125" end="01:01:26.750">ideology, prep framing,</p>
+      <p begin="01:01:27.041" end="01:01:28.041">blame attribution,</p>
+      <p begin="01:01:28.416" end="01:01:29.541">legitimacy claims,</p>
+      <p begin="01:01:29.750" end="01:01:31.083">agenda setting or persuasion,</p>
+      <p begin="01:01:32.041" end="01:01:32.916">text is often the</p>
+      <p begin="01:01:32.916" end="01:01:34.625">primary observable output.</p>
+      <p begin="01:01:35.625" end="01:01:36.958">So here's a simple example.</p>
+      <p begin="01:01:37.541" end="01:01:38.666">If you wanna study how governments</p>
+      <p begin="01:01:38.666" end="01:01:40.000">justify the use of force,</p>
+      <p begin="01:01:40.625" end="01:01:41.708">the justification is not</p>
+      <p begin="01:01:41.708" end="01:01:43.166">a number, it's a speech.</p>
+      <p begin="01:01:43.666" end="01:01:44.416">It's an oppressed</p>
+      <p begin="01:01:44.416" end="01:01:45.958">statement, it's the language,</p>
+      <p begin="01:01:46.583" end="01:01:47.833">the text is the outcome.</p>
+      <p begin="01:01:48.791" end="01:01:50.541">But text presents a challenge.</p>
+      <p begin="01:01:51.166" end="01:01:52.583">So unlike survey data or</p>
+      <p begin="01:01:52.583" end="01:01:53.500">administrative data,</p>
+      <p begin="01:01:54.000" end="01:01:54.791">text does not come</p>
+      <p begin="01:01:54.791" end="01:01:56.166">naturally in rows and columns.</p>
+      <p begin="01:01:56.791" end="01:01:57.500">There's no obvious</p>
+      <p begin="01:01:57.500" end="01:01:59.125">variable called front level</p>
+      <p begin="01:01:59.458" end="01:02:01.041">or ideological position.</p>
+      <p begin="01:02:02.083" end="01:02:04.500">So when we analyze text, we're not</p>
+      <p begin="01:02:04.500" end="01:02:05.541">just analyzing data,</p>
+      <p begin="01:02:05.875" end="01:02:07.208">we are constructing data.</p>
+      <p begin="01:02:07.916" end="01:02:09.333">That's the core message here.</p>
+      <p begin="01:02:10.041" end="01:02:12.500">Text is data, but only after we</p>
+      <p begin="01:02:12.500" end="01:02:13.791">build a measurement pipeline.</p>
+      <p begin="01:02:20.083" end="01:02:20.916">So this is the conceptual</p>
+      <p begin="01:02:20.916" end="01:02:22.000">background of the lecture.</p>
+      <p begin="01:02:22.833" end="01:02:24.041">Text analysis is a pipeline.</p>
+      <p begin="01:02:24.458" end="01:02:25.166">We have collection,</p>
+      <p begin="01:02:25.833" end="01:02:28.625">cleaning, representation,</p>
+      <p begin="01:02:29.625" end="01:02:31.000">modeling and validation.</p>
+      <p begin="01:02:32.208" end="01:02:33.750">Each tape shapes the inference.</p>
+      <p begin="01:02:34.750" end="01:02:35.791">So that's not a</p>
+      <p begin="01:02:35.791" end="01:02:36.833">metaphor, it's literal.</p>
+      <p begin="01:02:37.583" end="01:02:38.541">If you change what</p>
+      <p begin="01:02:38.541" end="01:02:39.708">documents collect,</p>
+      <p begin="01:02:39.708" end="01:02:41.250">you change the population of text.</p>
+      <p begin="01:02:42.083" end="01:02:43.625">If you change cleaning,</p>
+      <p begin="01:02:44.208" end="01:02:44.875">you change what</p>
+      <p begin="01:02:44.875" end="01:02:46.458">language counts as the same.</p>
+      <p begin="01:02:47.291" end="01:02:48.458">If you change representation,</p>
+      <p begin="01:02:48.916" end="01:02:49.500">you change what</p>
+      <p begin="01:02:49.500" end="01:02:50.875">similarity even means.</p>
+      <p begin="01:02:51.375" end="01:02:52.500">And if you change the model,</p>
+      <p begin="01:02:52.500" end="01:02:53.041">you change how</p>
+      <p begin="01:02:53.041" end="01:02:54.041">patterns are summarized.</p>
+      <p begin="01:02:55.250" end="01:02:55.916">So here's a real</p>
+      <p begin="01:02:55.916" end="01:02:57.083">example from practice.</p>
+      <p begin="01:02:57.666" end="01:02:59.500">Two researchers analyze the same set</p>
+      <p begin="01:02:59.500" end="01:03:00.500">of political speeches.</p>
+      <p begin="01:03:01.000" end="01:03:01.916">One removes all</p>
+      <p begin="01:03:01.916" end="01:03:03.083">procedural languages,</p>
+      <p begin="01:03:03.625" end="01:03:04.833">things like thank you,</p>
+      <p begin="01:03:05.208" end="01:03:06.708">honor to be here and so on.</p>
+      <p begin="01:03:06.708" end="01:03:07.541">The other keeps it.</p>
+      <p begin="01:03:08.041" end="01:03:09.458">They then run topic models.</p>
+      <p begin="01:03:10.083" end="01:03:12.583">One finds a strong national unity</p>
+      <p begin="01:03:12.583" end="01:03:14.125">topic, the other does not.</p>
+      <p begin="01:03:14.791" end="01:03:16.375">The difference within the model is</p>
+      <p begin="01:03:16.375" end="01:03:17.083">the cleaning step.</p>
+      <p begin="01:03:18.291" end="01:03:19.333">So as we go through the</p>
+      <p begin="01:03:19.333" end="01:03:20.458">pipeline and keep asking,</p>
+      <p begin="01:03:21.333" end="01:03:22.500">what is this step</p>
+      <p begin="01:03:22.500" end="01:03:23.875">doing to the meaning?</p>
+      <p begin="01:03:28.916" end="01:03:31.250">So raw text is not analysis ready.</p>
+      <p begin="01:03:32.083" end="01:03:32.708">Raw text contains</p>
+      <p begin="01:03:32.708" end="01:03:34.833">formatting, HTML markup,</p>
+      <p begin="01:03:35.625" end="01:03:35.958">boilerplate</p>
+      <p begin="01:03:35.958" end="01:03:37.625">language, navigation text,</p>
+      <p begin="01:03:37.708" end="01:03:38.458">disclaimers,</p>
+      <p begin="01:03:38.458" end="01:03:40.375">footnotes, repeat headers</p>
+      <p begin="01:03:40.583" end="01:03:42.458">and duplicated content.</p>
+      <p begin="01:03:43.458" end="01:03:45.750">And the key line to this slide</p>
+      <p begin="01:03:46.083" end="01:03:47.125">is one that you're</p>
+      <p begin="01:03:47.125" end="01:03:48.000">gonna internalize.</p>
+      <p begin="01:03:48.416" end="01:03:50.041">Preprocessing decisions are</p>
+      <p begin="01:03:50.041" end="01:03:51.208">theoretical decisions.</p>
+      <p begin="01:03:52.250" end="01:03:53.833">Preprocessing often feels boring.</p>
+      <p begin="01:03:54.125" end="01:03:55.625">It feels like janitorial work,</p>
+      <p begin="01:03:56.333" end="01:03:57.500">but it's actually where you decide</p>
+      <p begin="01:03:57.500" end="01:03:58.375">what counts as signal.</p>
+      <p begin="01:03:59.291" end="01:04:00.541">So let's make this concrete.</p>
+      <p begin="01:04:01.250" end="01:04:01.666">Suppose you're</p>
+      <p begin="01:04:01.666" end="01:04:03.000">studying stream and spreader,</p>
+      <p begin="01:04:03.000" end="01:04:04.250">can you move all religious</p>
+      <p begin="01:04:04.250" end="01:04:05.666">references at stop words?</p>
+      <p begin="01:04:06.416" end="01:04:07.750">You just remove core</p>
+      <p begin="01:04:07.750" end="01:04:08.958">ideological content.</p>
+      <p begin="01:04:10.041" end="01:04:12.000">Suppose you strip numbers because</p>
+      <p begin="01:04:12.000" end="01:04:13.166">numbers aren't words.</p>
+      <p begin="01:04:13.708" end="01:04:16.500">You might remove casualty counts</p>
+      <p begin="01:04:16.708" end="01:04:18.583">or dates that signal escalation.</p>
+      <p begin="01:04:20.208" end="01:04:21.250">Suppose you lowercase</p>
+      <p begin="01:04:21.250" end="01:04:23.000">everything in claps acronyms.</p>
+      <p begin="01:04:23.291" end="01:04:24.916">You might blur distinction between</p>
+      <p begin="01:04:24.916" end="01:04:26.250">institutions and concepts.</p>
+      <p begin="01:04:27.541" end="01:04:29.458">These aren't technical mistakes.</p>
+      <p begin="01:04:29.875" end="01:04:31.125">They're theoretical assumptions</p>
+      <p begin="01:04:31.125" end="01:04:33.458">about what language matters.</p>
+      <p begin="01:04:34.500" end="01:04:35.791">So preprocessing is</p>
+      <p begin="01:04:35.791" end="01:04:37.083">not a neutral step.</p>
+      <p begin="01:04:37.083" end="01:04:37.833">It's part of your</p>
+      <p begin="01:04:37.833" end="01:04:38.958">measurement instrument,</p>
+      <p begin="01:04:39.541" end="01:04:40.625">just like survey design.</p>
+      <p begin="01:04:45.041" end="01:04:46.458">So tokenization is where</p>
+      <p begin="01:04:46.458" end="01:04:47.791">text is broken to units.</p>
+      <p begin="01:04:48.500" end="01:04:49.208">These units might be</p>
+      <p begin="01:04:49.208" end="01:04:51.041">words, subwords or characters,</p>
+      <p begin="01:04:51.375" end="01:04:53.250">and the choice matters more than the</p>
+      <p begin="01:04:53.250" end="01:04:54.375">people often realize.</p>
+      <p begin="01:04:56.041" end="01:04:58.416">The pseudo code that I list here is</p>
+      <p begin="01:04:58.416" end="01:04:59.416">intentionally simple.</p>
+      <p begin="01:05:00.708" end="01:05:02.208">We're loading our documents here.</p>
+      <p begin="01:05:03.500" end="01:05:04.500">We're tokenizing the</p>
+      <p begin="01:05:04.500" end="01:05:07.166">data in this process here.</p>
+      <p begin="01:05:08.833" end="01:05:09.875">We're normalizing it,</p>
+      <p begin="01:05:10.083" end="01:05:11.125">we're removing stop words,</p>
+      <p begin="01:05:12.166" end="01:05:13.250">and we're storing the results.</p>
+      <p begin="01:05:14.333" end="01:05:15.000">But each of these</p>
+      <p begin="01:05:15.000" end="01:05:16.375">tests encodes assumptions.</p>
+      <p begin="01:05:17.125" end="01:05:19.125">So word tokenization assumes words</p>
+      <p begin="01:05:19.833" end="01:05:20.958">are the right unit of meaning.</p>
+      <p begin="01:05:21.625" end="01:05:22.958">That's intuitive, but it</p>
+      <p begin="01:05:22.958" end="01:05:24.583">breaks down with rare words,</p>
+      <p begin="01:05:25.125" end="01:05:26.291">spelling variation, or</p>
+      <p begin="01:05:26.291" end="01:05:27.541">multilingual corpora.</p>
+      <p begin="01:05:28.583" end="01:05:30.333">Subword tokenization, which is a</p>
+      <p begin="01:05:30.333" end="01:05:31.750">common in transformers,</p>
+      <p begin="01:05:31.750" end="01:05:33.416">allows models to handle unknown</p>
+      <p begin="01:05:33.416" end="01:05:35.375">words in morphology.</p>
+      <p begin="01:05:36.625" end="01:05:37.500">But it also makes</p>
+      <p begin="01:05:37.500" end="01:05:38.583">interpretation harder.</p>
+      <p begin="01:05:39.583" end="01:05:41.208">Because your units are no longer</p>
+      <p begin="01:05:41.208" end="01:05:42.500">meaningful in isolation,</p>
+      <p begin="01:05:43.166" end="01:05:45.000">character tokenization can handle</p>
+      <p begin="01:05:45.083" end="01:05:46.416">creative language and misspelling,</p>
+      <p begin="01:05:47.333" end="01:05:48.750">but it radically changes what</p>
+      <p begin="01:05:48.750" end="01:05:50.083">meaning even looks like.</p>
+      <p begin="01:05:50.958" end="01:05:52.250">So tokenization is not</p>
+      <p begin="01:05:52.250" end="01:05:53.500">just a technical step,</p>
+      <p begin="01:05:53.500" end="01:05:55.125">it's the first step where you define</p>
+      <p begin="01:05:55.125" end="01:05:56.375">the granularity of meaning.</p>
+      <p begin="01:06:01.208" end="01:06:02.500">That rewards the classic</p>
+      <p begin="01:06:02.500" end="01:06:03.666">pipeline representation.</p>
+      <p begin="01:06:04.250" end="01:06:05.250">You build a vocabulary,</p>
+      <p begin="01:06:05.833" end="01:06:07.375">count how often each term</p>
+      <p begin="01:06:07.500" end="01:06:08.083">appears in each</p>
+      <p begin="01:06:08.083" end="01:06:09.500">document and store the results.</p>
+      <p begin="01:06:10.333" end="01:06:11.125">The key conceptual</p>
+      <p begin="01:06:11.125" end="01:06:12.333">point here is that</p>
+      <p begin="01:06:12.333" end="01:06:13.500">Beggar words prioritize</p>
+      <p begin="01:06:13.500" end="01:06:15.208">transparency over semantics.</p>
+      <p begin="01:06:16.083" end="01:06:17.000">This is why Beggar</p>
+      <p begin="01:06:17.000" end="01:06:18.291">words are still widely used.</p>
+      <p begin="01:06:18.666" end="01:06:20.083">You can open the matrix and see</p>
+      <p begin="01:06:20.083" end="01:06:21.333">exactly what's being counted.</p>
+      <p begin="01:06:21.958" end="01:06:23.375">You can inspect coefficients</p>
+      <p begin="01:06:23.666" end="01:06:24.708">and trace them back to the words.</p>
+      <p begin="01:06:25.708" end="01:06:27.041">But it also ignores word order.</p>
+      <p begin="01:06:28.000" end="01:06:29.500">That means not good and</p>
+      <p begin="01:06:29.500" end="01:06:30.958">good can look similar.</p>
+      <p begin="01:06:31.791" end="01:06:33.458">Negation is hard for Beggar words.</p>
+      <p begin="01:06:33.708" end="01:06:35.041">Starchism will disappear.</p>
+      <p begin="01:06:35.875" end="01:06:36.208">Multivore</p>
+      <p begin="01:06:36.208" end="01:06:37.875">expressions get broken apart</p>
+      <p begin="01:06:38.083" end="01:06:39.791">unless you explicitly model them.</p>
+      <p begin="01:06:40.375" end="01:06:41.958">So Beggar words is often a</p>
+      <p begin="01:06:41.958" end="01:06:43.375">defensible starting point,</p>
+      <p begin="01:06:43.416" end="01:06:45.083">especially for exploratory work,</p>
+      <p begin="01:06:45.416" end="01:06:46.666">but it's important to be explicit</p>
+      <p begin="01:06:46.916" end="01:06:48.291">about what it cannot capture.</p>
+      <p begin="01:06:52.833" end="01:06:54.333">Turn frequency, inverse document</p>
+      <p begin="01:06:54.333" end="01:06:55.166">frequency weighting</p>
+      <p begin="01:06:55.166" end="01:06:56.833">is a refinement for Beggar words.</p>
+      <p begin="01:06:57.541" end="01:06:58.416">It downweights words</p>
+      <p begin="01:06:58.416" end="01:06:59.333">that appear everywhere</p>
+      <p begin="01:06:59.583" end="01:07:00.500">and upweights words</p>
+      <p begin="01:07:00.500" end="01:07:01.333">that are distinctive</p>
+      <p begin="01:07:01.583" end="01:07:02.625">to particular documents.</p>
+      <p begin="01:07:03.625" end="01:07:05.208">This is extremely useful for tasks</p>
+      <p begin="01:07:05.375" end="01:07:05.875">like document</p>
+      <p begin="01:07:05.875" end="01:07:07.375">similarity or clustering.</p>
+      <p begin="01:07:08.041" end="01:07:11.333">But TF-IDF encodes a value judgment.</p>
+      <p begin="01:07:12.000" end="01:07:13.875">Distinctive language matters more</p>
+      <p begin="01:07:13.875" end="01:07:14.875">than shared language.</p>
+      <p begin="01:07:15.833" end="01:07:17.375">It's often what you</p>
+      <p begin="01:07:17.375" end="01:07:18.625">want, but not always.</p>
+      <p begin="01:07:19.666" end="01:07:22.083">So if you're studying census farming</p>
+      <p begin="01:07:22.083" end="01:07:23.208">or shared ideology,</p>
+      <p begin="01:07:23.791" end="01:07:24.500">the most important</p>
+      <p begin="01:07:24.500" end="01:07:25.500">words might be the ones</p>
+      <p begin="01:07:25.500" end="01:07:26.500">that everyone uses,</p>
+      <p begin="01:07:27.500" end="01:07:28.791">but TF-IDF will push</p>
+      <p begin="01:07:28.791" end="01:07:29.583">those to the background.</p>
+      <p begin="01:07:30.833" end="01:07:32.375">So TF-IDF is not</p>
+      <p begin="01:07:32.375" end="01:07:33.916">better than Beggar words.</p>
+      <p begin="01:07:33.916" end="01:07:35.125">It's Beggar words with a different</p>
+      <p begin="01:07:35.125" end="01:07:36.416">theory or importance.</p>
+      <p begin="01:07:37.291" end="01:07:39.041">So I just wanna ground this in a</p>
+      <p begin="01:07:39.041" end="01:07:40.000">little bit of an anecdote</p>
+      <p begin="01:07:40.208" end="01:07:41.458">from a classic</p>
+      <p begin="01:07:41.458" end="01:07:42.583">political science research</p>
+      <p begin="01:07:42.583" end="01:07:43.750">that uses this process.</p>
+      <p begin="01:07:44.750" end="01:07:46.041">Someone was studying rhetoric</p>
+      <p begin="01:07:46.250" end="01:07:46.916">between Republicans,</p>
+      <p begin="01:07:47.250" end="01:07:48.625">Democrats, and their parties.</p>
+      <p begin="01:07:50.375" end="01:07:51.625">And when they were</p>
+      <p begin="01:07:51.625" end="01:07:52.291">trying to figure out</p>
+      <p begin="01:07:52.291" end="01:07:53.583">what words are very distinct,</p>
+      <p begin="01:07:53.875" end="01:07:55.791">an example of this for identifying</p>
+      <p begin="01:07:55.791" end="01:07:56.875">libertarian speeches</p>
+      <p begin="01:07:56.875" end="01:07:57.791">or documents with</p>
+      <p begin="01:07:57.791" end="01:07:58.916">the use of raw milk</p>
+      <p begin="01:07:59.500" end="01:08:00.125">as a discussion.</p>
+      <p begin="01:08:00.625" end="01:08:02.791">It's something that they only were,</p>
+      <p begin="01:08:03.083" end="01:08:05.166">until kind of recently actually,</p>
+      <p begin="01:08:06.208" end="01:08:06.500">they were the</p>
+      <p begin="01:08:06.500" end="01:08:07.750">primary political party</p>
+      <p begin="01:08:07.750" end="01:08:08.625">that was fighting for</p>
+      <p begin="01:08:08.625" end="01:08:09.666">things like raw milk.</p>
+      <p begin="01:08:10.958" end="01:08:12.125">So if you see a</p>
+      <p begin="01:08:12.125" end="01:08:13.125">constitutional document</p>
+      <p begin="01:08:13.125" end="01:08:14.583">that discusses something like that,</p>
+      <p begin="01:08:15.291" end="01:08:16.833">it's a highly</p>
+      <p begin="01:08:16.833" end="01:08:18.000">correlated or associated</p>
+      <p begin="01:08:18.000" end="01:08:18.750">with libertarian</p>
+      <p begin="01:08:18.750" end="01:08:20.958">political movements.</p>
+      <p begin="01:08:21.500" end="01:08:22.583">But things like the word liberty,</p>
+      <p begin="01:08:23.291" end="01:08:24.291">oh, I'm sorry,</p>
+      <p begin="01:08:24.291" end="01:08:25.333">liberty, authoritarian.</p>
+      <p begin="01:08:26.791" end="01:08:27.541">Things like words</p>
+      <p begin="01:08:27.541" end="01:08:29.750">like liberty, patriotism,</p>
+      <p begin="01:08:30.083" end="01:08:31.458">other words are actually shared</p>
+      <p begin="01:08:31.541" end="01:08:32.833">between all the political parties.</p>
+      <p begin="01:08:33.333" end="01:08:35.541">So TF-IDF does a nice job of</p>
+      <p begin="01:08:35.541" end="01:08:36.958">identifying words</p>
+      <p begin="01:08:36.958" end="01:08:39.291">that are very unique to a set of</p>
+      <p begin="01:08:39.291" end="01:08:40.125">certain documents.</p>
+      <p begin="01:08:45.916" end="01:08:46.916">Embeddings represent a more</p>
+      <p begin="01:08:46.916" end="01:08:47.833">fundamental shift.</p>
+      <p begin="01:08:48.333" end="01:08:49.333">Instead of counting words,</p>
+      <p begin="01:08:49.541" end="01:08:50.791">embeddings tax into</p>
+      <p begin="01:08:50.791" end="01:08:51.791">a geometric space.</p>
+      <p begin="01:08:52.333" end="01:08:53.166">So similar meanings</p>
+      <p begin="01:08:53.166" end="01:08:54.291">correspond to proximity.</p>
+      <p begin="01:08:55.291" end="01:08:56.500">So that's very powerful.</p>
+      <p begin="01:08:56.833" end="01:08:59.000">Synonyms can be close even if</p>
+      <p begin="01:08:59.000" end="01:08:59.750">they're different words</p>
+      <p begin="01:09:00.125" end="01:09:02.500">and context matters in this space.</p>
+      <p begin="01:09:03.000" end="01:09:04.250">But you lose a lot of transparency.</p>
+      <p begin="01:09:05.000" end="01:09:05.750">You're no longer</p>
+      <p begin="01:09:05.750" end="01:09:07.500">saying this word increased,</p>
+      <p begin="01:09:08.708" end="01:09:10.000">you're saying this document moved</p>
+      <p begin="01:09:10.000" end="01:09:11.583">closer to that document.</p>
+      <p begin="01:09:12.791" end="01:09:13.875">That means embeddings demand</p>
+      <p begin="01:09:13.875" end="01:09:15.000">stronger validation.</p>
+      <p begin="01:09:16.333" end="01:09:16.916">You need to show</p>
+      <p begin="01:09:16.916" end="01:09:18.291">that the geometry aligns</p>
+      <p begin="01:09:18.291" end="01:09:19.541">with your substantive concept,</p>
+      <p begin="01:09:20.500" end="01:09:22.041">not just the model as well.</p>
+      <p begin="01:09:26.916" end="01:09:28.250">So topic models are designed to</p>
+      <p begin="01:09:28.250" end="01:09:29.500">summarize large corpora.</p>
+      <p begin="01:09:30.166" end="01:09:30.500">They identify</p>
+      <p begin="01:09:30.500" end="01:09:31.791">patterns of co-occurrence</p>
+      <p begin="01:09:31.791" end="01:09:33.000">and label them as topics.</p>
+      <p begin="01:09:33.875" end="01:09:34.583">The most important</p>
+      <p begin="01:09:34.583" end="01:09:35.791">line in this slide is</p>
+      <p begin="01:09:35.833" end="01:09:37.375">topics summarize patterns, they're</p>
+      <p begin="01:09:37.375" end="01:09:38.250">not ground truth.</p>
+      <p begin="01:09:39.458" end="01:09:40.333">Topic models don't discover</p>
+      <p begin="01:09:40.333" end="01:09:41.416">the true ideological</p>
+      <p begin="01:09:41.416" end="01:09:42.916">structure of politics.</p>
+      <p begin="01:09:43.416" end="01:09:44.083">They reflect your</p>
+      <p begin="01:09:44.083" end="01:09:45.791">pre-processing, your vocabulary,</p>
+      <p begin="01:09:46.083" end="01:09:47.000">and your modeling choices.</p>
+      <p begin="01:09:47.833" end="01:09:48.708">So I've seen topic</p>
+      <p begin="01:09:48.708" end="01:09:50.458">models change dramatically</p>
+      <p begin="01:09:50.750" end="01:09:52.250">when a researcher slightly adjust</p>
+      <p begin="01:09:52.250" end="01:09:53.375">the document length</p>
+      <p begin="01:09:53.916" end="01:09:55.083">or remove a handful of</p>
+      <p begin="01:09:55.083" end="01:09:56.041">high-frequency words.</p>
+      <p begin="01:09:56.833" end="01:09:58.333">So topic models are useful,</p>
+      <p begin="01:09:58.333" end="01:09:59.791">especially for exploration,</p>
+      <p begin="01:10:00.500" end="01:10:02.375">but they require careful</p>
+      <p begin="01:10:02.375" end="01:10:04.250">interpretation of robustness checks.</p>
+      <p begin="01:10:13.458" end="01:10:14.875">So transformers are currently</p>
+      <p begin="01:10:14.875" end="01:10:16.500">dominant in many text tones.</p>
+      <p begin="01:10:17.583" end="01:10:18.791">But I want you to think of them as</p>
+      <p begin="01:10:18.791" end="01:10:20.416">pipelines, not magic boxes.</p>
+      <p begin="01:10:21.291" end="01:10:22.500">They tokenize text in</p>
+      <p begin="01:10:22.500" end="01:10:23.625">a model specific way,</p>
+      <p begin="01:10:23.958" end="01:10:25.791">encode contextual representations,</p>
+      <p begin="01:10:26.583" end="01:10:28.583">pull those representations, and then</p>
+      <p begin="01:10:28.583" end="01:10:30.333">optionally fine tune them.</p>
+      <p begin="01:10:31.250" end="01:10:33.875">They model context explicitly, which</p>
+      <p begin="01:10:33.875" end="01:10:34.875">is a major advantage,</p>
+      <p begin="01:10:35.208" end="01:10:35.916">but they also</p>
+      <p begin="01:10:35.916" end="01:10:37.541">magnify upstream decisions.</p>
+      <p begin="01:10:38.250" end="01:10:39.583">Over selection, pre-processing,</p>
+      <p begin="01:10:40.083" end="01:10:41.833">and labeling matter even more,</p>
+      <p begin="01:10:42.500" end="01:10:43.708">because the representations are</p>
+      <p begin="01:10:43.708" end="01:10:44.500">harder to inspect.</p>
+      <p begin="01:10:45.541" end="01:10:47.125">High performance does not excuse</p>
+      <p begin="01:10:47.125" end="01:10:48.333">weak measurement states.</p>
+      <p begin="01:10:49.291" end="01:10:50.666">Here's just some coding.</p>
+      <p begin="01:10:51.541" end="01:10:53.000">We have our tokenizer, our</p>
+      <p begin="01:10:53.000" end="01:10:53.916">transformer here,</p>
+      <p begin="01:10:55.041" end="01:10:56.625">pulling our hidden state, and then</p>
+      <p begin="01:10:56.625" end="01:10:57.875">some fine tuning processes.</p>
+      <p begin="01:10:57.875" end="01:10:59.791">This is what a Python setup would</p>
+      <p begin="01:10:59.791" end="01:11:00.541">look like for this.</p>
+      <p begin="01:11:05.958" end="01:11:06.875">So this is where many</p>
+      <p begin="01:11:06.875" end="01:11:08.291">text-to-data projects fail.</p>
+      <p begin="01:11:09.166" end="01:11:11.000">Text models can fail silently.</p>
+      <p begin="01:11:11.666" end="01:11:12.250">They can produce</p>
+      <p begin="01:11:12.250" end="01:11:13.791">outputs that look clean,</p>
+      <p begin="01:11:14.166" end="01:11:16.333">quantitative, and convincing, while</p>
+      <p begin="01:11:16.333" end="01:11:17.291">being driven by artifice.</p>
+      <p begin="01:11:18.291" end="01:11:19.291">So we have to validate.</p>
+      <p begin="01:11:20.458" end="01:11:21.791">These two habits</p>
+      <p begin="01:11:21.791" end="01:11:23.583">matter enormously for them.</p>
+      <p begin="01:11:24.166" end="01:11:24.791">So the first is</p>
+      <p begin="01:11:24.791" end="01:11:26.125">running sensitivity checks.</p>
+      <p begin="01:11:27.208" end="01:11:28.625">You want to run your pipeline and</p>
+      <p begin="01:11:28.625" end="01:11:29.250">your alternative</p>
+      <p begin="01:11:29.250" end="01:11:30.583">pre-processing choices</p>
+      <p begin="01:11:30.583" end="01:11:31.541">and see what changes.</p>
+      <p begin="01:11:32.500" end="01:11:33.250">And then the second</p>
+      <p begin="01:11:33.250" end="01:11:34.708">is stability checks.</p>
+      <p begin="01:11:34.708" end="01:11:35.833">You want to rerun models with</p>
+      <p begin="01:11:35.833" end="01:11:36.708">different random seeds.</p>
+      <p begin="01:11:37.791" end="01:11:38.750">If your results depend</p>
+      <p begin="01:11:38.750" end="01:11:40.041">heavily on one choice,</p>
+      <p begin="01:11:40.041" end="01:11:41.250">it's not necessarily fatal,</p>
+      <p begin="01:11:41.791" end="01:11:42.416">but it changes how</p>
+      <p begin="01:11:42.416" end="01:11:43.750">strong your claim should be.</p>
+      <p begin="01:11:44.541" end="01:11:45.375">So validation is</p>
+      <p begin="01:11:45.375" end="01:11:46.958">optional is part of the method.</p>
+      <p begin="01:11:48.500" end="01:11:50.416">So validation is not optional is</p>
+      <p begin="01:11:50.416" end="01:11:51.166">part of your method.</p>
+      <p begin="01:11:54.833" end="01:11:56.125">So bias enters text</p>
+      <p begin="01:11:56.125" end="01:11:57.083">pipelines everywhere.</p>
+      <p begin="01:11:57.958" end="01:11:59.000">Corporate selection reflects</p>
+      <p begin="01:11:59.000" end="01:12:00.250">platform incentives,</p>
+      <p begin="01:12:00.583" end="01:12:01.125">institutional</p>
+      <p begin="01:12:01.125" end="01:12:02.583">constraints, and visibility.</p>
+      <p begin="01:12:03.583" end="01:12:05.000">Pre-processing decisions reflect</p>
+      <p begin="01:12:05.000" end="01:12:06.291">your theory of meaning.</p>
+      <p begin="01:12:07.208" end="01:12:09.000">Pre-chain models inherit biases from</p>
+      <p begin="01:12:09.000" end="01:12:09.708">the training data,</p>
+      <p begin="01:12:10.208" end="01:12:12.166">labeling imports human judgment.</p>
+      <p begin="01:12:13.583" end="01:12:14.750">But here's the key takeaway.</p>
+      <p begin="01:12:15.833" end="01:12:16.583">Upstream choices</p>
+      <p begin="01:12:16.583" end="01:12:18.500">dominate downstream results.</p>
+      <p begin="01:12:21.166" end="01:12:21.791">If you remember what</p>
+      <p begin="01:12:21.791" end="01:12:22.708">incentives to manufacture,</p>
+      <p begin="01:12:23.041" end="01:12:24.583">this is the really important one.</p>
+      <p begin="01:12:29.083" end="01:12:30.875">So every text pipeline should</p>
+      <p begin="01:12:30.875" end="01:12:33.583">document where the corpus came from,</p>
+      <p begin="01:12:36.125" end="01:12:37.000">how it was cleaned.</p>
+      <p begin="01:12:38.166" end="01:12:38.500">These are</p>
+      <p begin="01:12:38.500" end="01:12:40.333">pre-processing steps, typically.</p>
+      <p begin="01:12:40.708" end="01:12:42.041">How it's represented as</p>
+      <p begin="01:12:42.041" end="01:12:44.416">bag of words embedding TFIDF.</p>
+      <p begin="01:12:45.083" end="01:12:46.583">What models are used and what are</p>
+      <p begin="01:12:46.583" end="01:12:47.083">their parameters,</p>
+      <p begin="01:12:47.625" end="01:12:48.916">and how the results were validated.</p>
+      <p begin="01:12:50.791" end="01:12:51.416">This is what makes</p>
+      <p begin="01:12:51.416" end="01:12:53.458">text analysis auditable.</p>
+      <p begin="01:12:54.583" end="01:12:56.000">So if someone cannot reconstruct</p>
+      <p begin="01:12:56.000" end="01:12:57.333">your text and how</p>
+      <p begin="01:12:57.333" end="01:12:58.208">it was transformed,</p>
+      <p begin="01:12:58.208" end="01:12:59.583">they cannot evaluate measures.</p>
+      <p begin="01:13:00.333" end="01:13:01.541">Audible pipelines are</p>
+      <p begin="01:13:01.541" end="01:13:02.750">reproducible pipelines.</p>
+      <p begin="01:13:03.000" end="01:13:09.208">So what we emphasize in practice,</p>
+      <p begin="01:13:09.208" end="01:13:11.041">let me summarize what we need.</p>
+      <p begin="01:13:12.000" end="01:13:12.625">We want to do</p>
+      <p begin="01:13:12.625" end="01:13:14.291">pipelines over a single model,</p>
+      <p begin="01:13:15.791" end="01:13:17.500">simplicity before complexity,</p>
+      <p begin="01:13:18.791" end="01:13:20.541">validation over accuracy,</p>
+      <p begin="01:13:21.416" end="01:13:23.000">and transparency in pre-processing.</p>
+      <p begin="01:13:24.000" end="01:13:25.458">So these principles are once</p>
+      <p begin="01:13:25.458" end="01:13:27.541">separate rigorous text-as-data work</p>
+      <p begin="01:13:27.541" end="01:13:29.416">from black box number generation.</p>
+      <p begin="01:13:33.291" end="01:13:34.333">So let me close with a few</p>
+      <p begin="01:13:34.333" end="01:13:35.333">questions to keep in mind.</p>
+      <p begin="01:13:36.541" end="01:13:37.875">Where does the meaning get lost in</p>
+      <p begin="01:13:37.875" end="01:13:38.708">your text pipelines?</p>
+      <p begin="01:13:39.583" end="01:13:40.750">So when you're going from a very</p>
+      <p begin="01:13:40.750" end="01:13:43.500">complex text corpus to bag of words,</p>
+      <p begin="01:13:43.500" end="01:13:44.875">you're losing a lot of information.</p>
+      <p begin="01:13:45.875" end="01:13:47.500">When you are removing stop words,</p>
+      <p begin="01:13:47.500" end="01:13:48.000">you might be losing</p>
+      <p begin="01:13:48.000" end="01:13:48.875">a lot of information,</p>
+      <p begin="01:13:49.250" end="01:13:50.250">changing punctuation</p>
+      <p begin="01:13:50.250" end="01:13:51.208">of removing numbers.</p>
+      <p begin="01:13:51.791" end="01:13:52.500">These are all common</p>
+      <p begin="01:13:52.500" end="01:13:53.833">pre-processing steps,</p>
+      <p begin="01:13:53.833" end="01:13:55.500">but they can fundamentally change</p>
+      <p begin="01:13:55.500" end="01:13:57.541">the data that we're looking at.</p>
+      <p begin="01:13:57.541" end="01:13:57.958">And that's just</p>
+      <p begin="01:13:57.958" end="01:13:59.000">looking at bag of words.</p>
+      <p begin="01:14:00.000" end="01:14:01.833">Things like embedding spaces or</p>
+      <p begin="01:14:01.833" end="01:14:03.875">context-forward embedding spaces</p>
+      <p begin="01:14:04.083" end="01:14:06.208">also have a ton of meaning,</p>
+      <p begin="01:14:06.208" end="01:14:07.916">but that can be affected by the</p>
+      <p begin="01:14:07.916" end="01:14:08.833">pre-training process</p>
+      <p begin="01:14:08.833" end="01:14:10.166">before you get into it.</p>
+      <p begin="01:14:11.041" end="01:14:12.500">So think about what text</p>
+      <p begin="01:14:12.500" end="01:14:14.000">is lost and what names lost.</p>
+      <p begin="01:14:14.791" end="01:14:15.666">Then you want to think about which</p>
+      <p begin="01:14:15.666" end="01:14:16.916">decisions matter most</p>
+      <p begin="01:14:17.166" end="01:14:18.333">for your research questions.</p>
+      <p begin="01:14:19.166" end="01:14:21.458">So does removing numbers help or</p>
+      <p begin="01:14:21.458" end="01:14:23.791">hurt your ability to understand</p>
+      <p begin="01:14:24.583" end="01:14:25.625">the text that you're analyzing?</p>
+      <p begin="01:14:26.666" end="01:14:28.250">And you can do that for any type of</p>
+      <p begin="01:14:28.250" end="01:14:29.250">pre-processing step.</p>
+      <p begin="01:14:30.416" end="01:14:31.291">And then how should</p>
+      <p begin="01:14:31.291" end="01:14:32.541">uncertainty be communicated</p>
+      <p begin="01:14:32.541" end="01:14:34.000">when text-driven measures are</p>
+      <p begin="01:14:34.000" end="01:14:36.291">sensitive to pre-processing on it?</p>
+      <p begin="01:14:37.041" end="01:14:38.833">So we're going to explore more of</p>
+      <p begin="01:14:38.833" end="01:14:39.708">this in the lab today.</p>
+    </div>
+  </body>
+</tt>
