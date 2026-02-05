@@ -4,71 +4,128 @@
 \setlist{nosep}
 \usepackage[margin=1in]{geometry}
 
-\title{ Text as Data Pipelines}
-\author{ }
-\date{ }
-
-
+\title{Text as Data Pipelines}
+\author{}
+\date{}
 
 \begin{document}
 \maketitle
 
-\noindent \textbf{Note on data.} This problem set uses a \textbf{synthetic} text corpus created for the Week code tutorial (or an instructor-provided file). The goal is to practice end-to-end text pipelines---not to make substantive claims about real-world political texts.
+\noindent \textbf{Note on data.}  
+This problem set uses a corpus of \textbf{movie plot summaries} derived from a public archival dataset (the CMU Movie Summary Corpus, provided by the instructor). Movie plots are used as a neutral, non-political text source that allows us to focus on \emph{pipeline design, representation choices, and modeling decisions} rather than substantive interpretation. You should treat this corpus as a stand-in for real-world social text data.
+
+\section*{Start Off: Verifying Your Environment}
+
+\begin{enumerate}
+\item \textbf{Environment check (required).}  
+Submit proof that you successfully ran the full tutorial code on your machine. You may submit \emph{one} of the following:
+\begin{itemize}
+  \item A screenshot or text file showing console output that includes the printed representation shapes (document--term matrix, Word2Vec document vectors, and transformer embeddings).
+  \item A screenshot of your \texttt{figures/} directory showing generated plots with timestamps.
+  \item A Git commit (hash or screenshot) that includes at least one generated figure or output file.
+  \item A short log file (e.g., \texttt{run\_log.txt}) containing printed diagnostics and evaluation metrics.
+\end{itemize}
+\end{enumerate}
+
 
 \section*{Conceptual Questions}
-Please write three to ten sentence explanations for each of the following questions. \textbf{You are only required to answer ONE of the two questions below.} \bigskip
- 
+
+Please write three to ten sentence explanations for each of the following questions.  
+\textbf{You are only required to answer ONE of the two questions below.} \bigskip
+
 \begin{enumerate}
+\setcounter{enumi}{1}
+\item Compare \textbf{bag-of-words} representations (e.g., a document--term matrix) to \textbf{embedding-based} representations (Word2Vec or transformer embeddings). Discuss two trade-offs involving interpretability, robustness, or downstream modeling. Give one concrete example of when you would prefer each representation in social science research.
 
-\item Compare \textbf{bag-of-words} representations (e.g., a document-term matrix) to \textbf{embedding} representations (Word2Vec / transformer embeddings). Discuss two trade-offs involving interpretability, robustness, and downstream modeling. Give one concrete example of when you would prefer each representation in social science research.
+\item A text-as-data pipeline is more than a model. Describe a practical pipeline architecture for a research project that uses topic models and embeddings. In your answer, address:  
+(i) where you would cache intermediate artifacts (e.g., tokenized text, vocabularies, embeddings),  
+(ii) how you would document versions and randomness (e.g., seeds), and  
+(iii) one way you would prevent data leakage or overfitting when evaluating models.
 
-\item A text-as-data pipeline is more than a model. Describe a practical pipeline architecture for a research project that uses topic models and embeddings. In your answer, address (i) where you would cache intermediate artifacts (e.g., tokenized text, vocabulary, embeddings), (ii) how you would document versions and randomness (seeds), and (iii) one way you would prevent data leakage or overfitting when evaluating models.
-
-  \end{enumerate}
-
+\end{enumerate}
 
 \section*{Applied Exercises}
-Use the code in the week's code tutorial and the lecture slides to answer the following questions.\bigskip
 
-  \begin{enumerate}
-  \setcounter{enumi}{2}
+Use the code in the week’s Python tutorial and the lecture slides to answer the following questions. \textbf{You are only required to answer TWO out of the three questions below.} \bigskip
 
-\item \textbf{Topic model (LDA): tokenization $\rightarrow$ document-term matrix $\rightarrow$ topics.}
-Using the Week Python tutorial (classic LDA section):
+\begin{enumerate}
+\setcounter{enumi}{3}
+
+\item \textbf{Topic model (LDA): tokenization $\rightarrow$ document--term matrix $\rightarrow$ topics.}
+
+Using the Week Python tutorial (classic LDA section) and the movie plot corpus:
+
 \begin{itemize}
-  \item Load the synthetic corpus (e.g., \texttt{data\_raw/week\_synthetic\_corpus.csv}) and create a document-term matrix using \texttt{CountVectorizer}.
+  \item Load the movie corpus (e.g., \texttt{data\_raw/week\_movie\_corpus.csv}) and create a document--term matrix using \texttt{CountVectorizer}.
   \item Fit an LDA model with a chosen number of topics (e.g., $K=6$).
   \item Report the top 8--12 words for each topic.
   \item Assign each document a dominant topic and create a plot showing the number of documents per dominant topic.
-  \item In 5--8 sentences, interpret at least \textbf{two} topics (what they seem to capture) and explain how preprocessing choices (stopwords, \texttt{min\_df}, token pattern) affect topic quality.
+  \item In 3--8 sentences, interpret at least \textbf{two} topics and explain how preprocessing choices (e.g., stopwords, \texttt{min\_df}, token pattern) affect topic quality.
 \end{itemize}
 
-\item \textbf{Word embedding regression: Word2Vec $\rightarrow$ document vectors $\rightarrow$ out-of-sample prediction.}
-Using the Word2Vec regression section of the tutorial:
+\item \textbf{Word embedding regression: Word2Vec $\rightarrow$ document vectors $\rightarrow$ prediction.}
+
+Using the Word2Vec section of the tutorial and the movie corpus:
+
 \begin{itemize}
-  \item Tokenize the documents (simple tokenization is fine).
-  \item Train Word2Vec on the corpus and create a document embedding for each document by averaging its word vectors.
-  \item Fit a Ridge regression model to predict the provided outcome variable (e.g., \texttt{y\_outcome}). Use a train/test split and report out-of-sample \textbf{MAE}, \textbf{RMSE}, and $R^2$.
-  \item Create a predicted-vs-actual scatterplot (or another clear diagnostic plot).
-  \item In 5--8 sentences, explain what it means to regress an outcome on embeddings and discuss at least \textbf{two} limitations of this approach (e.g., interpretability, domain shift, embedding quality, small corpora).
+  \item Tokenize the movie plots (simple tokenization is sufficient).
+  \item Train a Word2Vec model on the corpus and construct a document-level embedding for each plot by averaging word vectors.
+  \item Fit a Ridge regression model to predict the provided outcome variable \texttt{y\_outcome} (a binary indicator derived from movie genres). Use a train/test split.
+  \item Report out-of-sample \textbf{MAE}, \textbf{RMSE}, and $R^2$, and include a predicted-vs-actual diagnostic plot.
+  \item In 3--8 sentences, explain what it means to regress an outcome on text embeddings and discuss at least \textbf{two} limitations of this approach (e.g., interpretability, domain shift, embedding quality).
 \end{itemize}
 
 \item \textbf{BERTopic: transformer embeddings $\rightarrow$ clustering $\rightarrow$ topic summaries.}
+
 Using the BERTopic section of the tutorial:
+
 \begin{itemize}
-  \item Fit BERTopic and generate a topic summary table (e.g., \texttt{get\_topic\_info()}).
-  \item Create a plot of topic counts (excluding outliers if present).
+  \item Fit a BERTopic model on the movie plots and generate a topic summary table.
+  \item Create a plot showing the number of documents assigned to each topic (excluding outliers if present).
   \item Report (i) the number of topics discovered (excluding outliers) and (ii) the share of documents assigned to the outlier topic (Topic $=-1$), if applicable.
-  \item In 6--10 sentences, compare BERTopic to LDA on this dataset: discuss topic interpretability, sensitivity to preprocessing, and computational cost. Identify one situation where BERTopic is likely to outperform LDA and one where LDA may be preferable.
+  \item In 3--10 sentences, compare BERTopic to LDA on this dataset. Discuss topic interpretability, sensitivity to preprocessing, and computational cost. Identify one setting where BERTopic is likely to outperform LDA and one where LDA may be preferable.
 \end{itemize}
 
-\item \textbf{Challenge Question (Optional --- if you finish early):}
-Use \textbf{transformer embeddings} for prediction and compare to Word2Vec regression.
+\item \textbf{In-Class Extension: Multinomial Outcome (Required for Participation).}
+
+In the tutorial, the outcome variable \texttt{y\_outcome} is binary. Extend this analysis to a \textbf{multinomial outcome} using movie genres.
+
 \begin{itemize}
-  \item Compute sentence/document embeddings using a lightweight model (e.g., \texttt{sentence-transformers/all-MiniLM-L6-v2}).
-  \item Fit a Ridge regression (or another simple model) to predict \texttt{y\_outcome} using the transformer embeddings.
-  \item Report MAE, RMSE, and $R^2$, and compare them directly to your Word2Vec regression results.
-  \item In 4--8 sentences, interpret why the transformer approach does better or worse here, and what that implies for choosing representations in real text-as-data projects.
+  \item Redefine the outcome variable so that each document belongs to one of several genre categories (e.g., Action, Comedy, Drama, Horror, Other).
+  \item Replace the regression model with an appropriate multinomial model.
+  \item Evaluate performance using accuracy and a confusion matrix.
+\end{itemize}
+
+\noindent \textbf{Pseudo code (outline only):}
+
+\begin{verbatim}
+# Map genre labels to integers
+genre_to_label = {"action": 0, "comedy": 1, "drama": 2, "horror": 3, "other": 4}
+y_multiclass = map(true_genre, genre_to_label)
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(embeddings, y_multiclass)
+
+# Fit multinomial model
+fit multinomial_logit(X_train, y_train)
+
+# Predict and evaluate
+y_pred = predict(X_test)
+compute accuracy
+compute confusion_matrix
+\end{verbatim}
+
+\noindent In 5--7 sentences, discuss how changing the outcome definition affects interpretation and model performance, even though the text representation and pipeline remain the same.
+
+\item \textbf{Challenge Question (Optional --- if you finish early).}
+
+Use transformer embeddings for prediction and compare results to the Word2Vec-based models.
+
+\begin{itemize}
+  \item Compute document embeddings using a pretrained transformer model.
+  \item Fit a simple predictive model using these embeddings.
+  \item Compare performance to the Word2Vec results.
+  \item In 4--8 sentences, discuss what this comparison suggests about representation choice in text-as-data projects.
 \end{itemize}
 
 \end{enumerate}
