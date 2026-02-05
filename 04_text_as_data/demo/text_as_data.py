@@ -39,6 +39,8 @@
 # NOTE: Students can run Parts 1–3 without BERTopic if installation is a barrier.
 # (BERTopic is included because it is part of this week's material.)
 
+#pip install numpy pandas matplotlib seaborn scikit-learn gensim sentence-transformers bertopic umap-learn hdbscan wordcloud pyLDAvis
+
 import os
 import re
 import random
@@ -54,6 +56,15 @@ from sklearn.linear_model import Ridge
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 import ast
 from gensim.models import Word2Vec
+from sentence_transformers import SentenceTransformer
+from bertopic import BERTopic
+from umap import UMAP
+import hdbscan
+from wordcloud import WordCloud
+import pyLDAvis
+import pyLDAvis.lda_model
+import seaborn as sns
+from sklearn.manifold import TSNE
 
 # Reproducibility
 random.seed(123)
@@ -72,6 +83,8 @@ os.makedirs("src", exist_ok=True)
 # Expected archive location (based on your screenshot):
 #   04_text_as_data/demo/MovieSummaries.tar.gz
 #
+# You can download here: http://www.cs.cmu.edu/~ark/personas/data/MovieSummaries.tar.gz
+#
 # This block:
 #   1) extracts the archive (if needed)
 #   2) loads plot summaries + metadata
@@ -84,8 +97,8 @@ os.makedirs("src", exist_ok=True)
 
 
 # 0.1 Paths
-archive_path = os.path.join("04_text_as_data", "demo", "MovieSummaries.tar.gz")
-extract_dir  = os.path.join("04_text_as_data", "demo", "MovieSummaries_extracted")
+archive_path = os.path.join("MovieSummaries.tar.gz")
+extract_dir  = os.path.join("MovieSummaries_extracted")
 
 os.makedirs(extract_dir, exist_ok=True)
 
@@ -104,8 +117,8 @@ for root, dirs, files in os.walk(extract_dir):
         break
 
 if need_extract:
-    print("\n--- Extracting MovieSummaries.tar.gz ---")
-    with tarfile.open(archive_path, "r:gz") as tar:
+    print("\n--- Extracting MovieSummaries.tar ---")
+    with tarfile.open(archive_path, "r") as tar:
         tar.extractall(path=extract_dir)
     print("Extraction complete:", extract_dir)
 else:
@@ -241,7 +254,7 @@ print(df["true_topic"].value_counts().head(10))
 
 # 0.9 Optional: downsample for classroom runtime (BERTopic + embeddings can be heavy)
 # Keep it reproducible with seed=123.
-max_docs = 3000  # adjust (e.g., 800 for quick laptops, 3000 for your machine)
+max_docs = 800  # adjust (e.g., 800 for quick laptops, 3000 for your machine)
 if df.shape[0] > max_docs:
     df = df.sample(n=max_docs, random_state=123).copy()
 
@@ -264,6 +277,14 @@ df.to_csv("data_raw/week_movie_corpus.csv", index=False)
 # -----------------------------------------------------------------------------
 # For many "classic" text-as-data workflows, we build a document-term matrix (DTM)
 # with CountVectorizer or TF-IDF. This implicitly defines a tokenizer + vocabulary.
+
+df = pd.read_csv("data_raw/week_movie_corpus.csv")
+
+#os.makedirs("Penn State/Spring 2026/SoDA 501/Week 4/data_raw", exist_ok=True)
+#os.makedirs("Penn State/Spring 2026/SoDA 501/Week 4/data_processed", exist_ok=True)
+#os.makedirs("Penn State/Spring 2026/SoDA 501/Week 4/figures", exist_ok=True)
+#os.makedirs("Penn State/Spring 2026/SoDA 501/Week 4/outputs", exist_ok=True)
+#os.makedirs("Penn State/Spring 2026/SoDA 501/Week 4/src", exist_ok=True)
 
 vectorizer = CountVectorizer(
     lowercase=True,
@@ -288,6 +309,25 @@ print("\n--- Top terms by total count ---")
 print(top_terms)
 
 top_terms.to_csv("outputs/week_top_terms.csv", index=False)
+
+# Generate a dictionary of word frequencies from the CountVectorizer results
+word_freqs = dict(zip(vocab, term_totals))
+
+# Create the Word Cloud
+wordcloud = WordCloud(
+    width=800, 
+    height=400, 
+    background_color='white',
+    colormap='viridis'
+).generate_from_frequencies(word_freqs)
+
+# Plot
+plt.figure(figsize=(10, 5))
+plt.imshow(wordcloud, interpolation='bilinear')
+plt.axis('off')
+plt.title("Word Cloud of Document Terms (min_df=5)", fontsize=16)
+plt.savefig("figures/wordcloud.png", dpi=200)
+plt.show()
 
 # -----------------------------------------------------------------------------
 # Part 2: Classic topic model (LDA)
@@ -332,7 +372,17 @@ plt.xlabel("Dominant topic")
 plt.ylabel("Number of documents")
 plt.tight_layout()
 plt.savefig("figures/week_lda_dominant_topic_counts.png", dpi=200)
+plt.show()
 plt.close()
+
+
+lda_display = pyLDAvis.lda_model.prepare(
+    lda, 
+    X_counts, 
+    vectorizer, 
+    mds='tsne'
+)
+pyLDAvis.save_html(lda_display, 'outputs/lda_visualization.html')
 
 # -----------------------------------------------------------------------------
 # Part 3: Word embedding regression (Word2Vec -> doc vectors -> Ridge regression)
@@ -403,22 +453,34 @@ metrics = pd.DataFrame(
 )
 metrics.to_csv("outputs/week_word2vec_regression_metrics.csv", index=False)
 
-plt.figure(figsize=(5, 5))
-plt.scatter(y_test, y_pred, alpha=0.6)
-plt.title("Word2Vec Regression: Predicted vs Actual")
-plt.xlabel("Actual y_outcome")
-plt.ylabel("Predicted y_outcome")
-plt.tight_layout()
-plt.savefig("figures/week_word2vec_pred_vs_actual.png", dpi=200)
-plt.close()
+plt.figure(figsize=(8, 6))
+sns.regplot(x=y_test, y=y_pred, scatter_kws={'alpha':0.5}, line_kws={'color':'red'})
+plt.xlabel("Actual Outcome (y_test)")
+plt.ylabel("Predicted Outcome (y_pred)")
+plt.title("Ridge Regression: Actual vs. Predicted Values")
+plt.grid(True, linestyle='--', alpha=0.6)
+plt.savefig("figures/word2vec_regression_actual_vs_predicted.png", dpi=200)
+plt.show()
+
+words_to_plot = w2v.wv.index_to_key[:500]
+word_vectors = np.array([w2v.wv[w] for w in words_to_plot])
+
+tsne = TSNE(n_components=2, random_state=123, perplexity=30)
+embeddings_2d = tsne.fit_transform(word_vectors)
+
+plt.figure(figsize=(12, 10))
+plt.scatter(embeddings_2d[:, 0], embeddings_2d[:, 1], alpha=0.5, s=10)
+
+for i, word in enumerate(words_to_plot[::20]): # Label every 20th word
+    plt.annotate(word, xy=(embeddings_2d[i*20, 0], embeddings_2d[i*20, 1]), fontsize=9)
+
+plt.title("t-SNE Projection of Word2Vec Embeddings")
+plt.savefig("figures/word2vec_embeddings_tsne.png", dpi=200)
+plt.show()
 
 # -----------------------------------------------------------------------------
 # Part 4: BERT-based topic model (BERTopic)
 # -----------------------------------------------------------------------------
-from sentence_transformers import SentenceTransformer
-from bertopic import BERTopic
-from umap import UMAP
-import hdbscan
 
 embed_model = SentenceTransformer("all-MiniLM-L6-v2")
 embeddings = embed_model.encode(df["text"].tolist(), show_progress_bar=True)
@@ -435,9 +497,10 @@ umap_model = UMAP(
 )
 
 hdbscan_model = hdbscan.HDBSCAN(
-    min_cluster_size=15,
+    min_cluster_size=5,
     metric="euclidean",
-    cluster_selection_method="eom"
+    cluster_selection_method="eom",
+    prediction_data=True
 )
 
 topic_model = BERTopic(
@@ -471,4 +534,14 @@ plt.xlabel("Topic")
 plt.ylabel("Count")
 plt.tight_layout()
 plt.savefig("figures/week_bertopic_topic_counts.png", dpi=200)
+plt.show()
 plt.close()
+
+fig_hierarchy = topic_model.visualize_hierarchy()
+fig_hierarchy.show()
+fig_hierarchy.write_html("outputs/topic_hierarchy.html")
+
+fig_docs = topic_model.visualize_documents(df["text"].tolist(), embeddings=embeddings)
+fig_docs.show()
+fig_docs.write_html("outputs/document_map.html")
+
