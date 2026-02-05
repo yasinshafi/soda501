@@ -1,0 +1,2 @@
+model,accuracy
+multinomial_logistic,0.33

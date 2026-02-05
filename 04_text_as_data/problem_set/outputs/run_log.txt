@@ -1,0 +1,256 @@
+================================================================================
+SoDA 501 - Problem Set 3: Text as Data
+Student: Yasin Shafi
+Date: February 5, 2026
+================================================================================
+
+--- Loading Data ---
+Corpus loaded: 800 documents
+Columns: ['doc_id', 'wikipedia_movie_id', 'movie_name', 'release_date', 'text', 'true_topic', 'y_outcome']
+
+First few rows:
+   doc_id  wikipedia_movie_id            movie_name release_date                                               text true_topic  y_outcome
+0       1            15225443        Phantom Beirut         1998  At the end of the eighties it seems the Lebane...      drama          0
+1       2             4578386  I Downloaded A Ghost   2004-04-06  Stella Blackstone  and her best friend Albert ...     comedy          0
+2       3            24460261       Chance Pe Dance   2010-01-15  Sameer Behl  comes to Mumbai with Bollywood dr...     comedy          0
+3       4             3262031            Motel Hell   1980-10-18  Farmer Vincent Smith and his younger sister Id...     comedy          0
+4       5            32998257  Hands Across the Sea         1912  Jack Dudley, an English farmer, is married to ...      other          0
+
+Outcome variable distribution:
+y_outcome
+0    664
+1    136
+Name: count, dtype: int64
+
+================================================================================
+QUESTION 5: Word Embedding Regression (Word2Vec → Ridge Regression)
+================================================================================
+
+--- Step 1: Tokenizing movie plots ---
+Number of documents tokenized: 800
+Example tokens (first 20): ['at', 'the', 'end', 'of', 'the', 'eighties', 'it', 'seems', 'the', 'lebanese', 'conflict', 'will', 'never', 'end', 'khalil', 'a', 'man', 'in', 'his', 'thirties']
+
+--- Step 2: Training Word2Vec model ---
+Word2Vec model trained
+Vocabulary size: 11969
+Vector dimensionality: 100
+Example words in vocabulary: ['the', 'to', 'and', 'a', 'of', 'in', 'is', 'his', 'he', 'her', 's', 'that', 'with', 'she', 'him', 'for', 'by', 'as', 'on', 'but']
+
+--- Step 3: Constructing document-level embeddings ---
+Document embedding matrix shape: (800, 100)
+Each document represented as 100-dimensional vector
+
+--- Step 4: Fitting Ridge regression model ---
+Training set size: 600
+Test set size: 200
+Ridge(random_state=123)
+Ridge regression model fitted
+
+--- Step 5: Out-of-sample performance ---
+MAE:  0.2717
+RMSE: 0.3659
+R²:   0.0728
+
+Metrics saved to outputs/word2vec_regression_metrics.csv
+
+--- Step 6: Creating diagnostic plot ---
+<Figure size 800x600 with 0 Axes>
+<Axes: >
+Text(0.5, 0, 'Actual Outcome (y_test)')
+Text(0, 0.5, 'Predicted Outcome (y_pred)')
+Text(0.5, 1.0, 'Ridge Regression: Actual vs. Predicted Values\n(Word2Vec Embeddings)')
+Diagnostic plot saved to figures/word2vec_regression_actual_vs_predicted.png
+
+================================================================================
+QUESTION 6: BERTopic Analysis (Transformer Embeddings → Clustering)
+================================================================================
+
+--- Step 1: Generating transformer embeddings ---
+Embedding matrix shape: (800, 384)
+Each document represented as 384-dimensional vector
+
+--- Step 2: Fitting BERTopic model ---
+BERTopic model fitted and transformed
+
+--- Step 3: Topic summary ---
+
+Topic Info:
+    Topic  Count  ...                                     Representation                                Representative_Docs
+0      -1    323  ...    [the, to, and, is, of, his, in, he, with, that]  [Most of the film is silent and there are just...
+1       0    117  ...      [and, to, the, of, his, in, is, her, he, him]  [{{Plot}} On a study tour, Bhama , a final-yea...
+2       1     45  ...   [her, she, and, to, he, the, that, is, with, in]  [For years, women have been pouring tears alon...
+3       2     30  ...  [the, and, tom, cat, jerry, to, then, bugs, of...  [An unnamed alley cat searches for food in som...
+4       3     28  ...    [the, to, her, and, of, that, in, she, is, his]  [{{Plot}} Sixteen-year-old Eiko, carrying a bu...
+5       4     27  ...  [of, film, the, in, story, his, and, life, wit...  [The film's tripartite structure is apparently...
+6       5     27  ...    [the, of, to, in, and, they, leo, that, is, as]  [The occupants of a small village live in fear...
+7       6     25  ...   [the, to, and, of, in, is, karl, eric, his, war]  [A joint military operation between Russian an...
+8       7     21  ...  [to, the, and, his, lu, of, in, ilyoung, xiaoc...  [The plot is based on the story of how "Jade U...
+9       8     20  ...  [to, helen, and, the, her, john, he, is, his, ...  [David Sumner , a timid American mathematician...
+10      9     18  ...  [to, and, her, the, with, hannah, don, he, in,...  [Connie Wyatt is a restless 15-year-old who is...
+11     10     16  ...  [her, and, tony, to, the, anne, she, that, jam...  [The film opens with a shot of a naked woman, ...
+12     11     15  ...  [the, of, dragon, to, and, in, is, his, danton...  [In the year 60 B.C. a group of Druids, includ...
+13     12     13  ...  [the, vincent, johnny, and, to, of, terry, mar...  [Farmer Vincent Smith and his younger sister I...
+14     13     11  ...  [sullivan, dredd, paul, costigan, the, to, is,...  [In the 3rd millennium, much of Earth has beco...
+15     14      9  ...  [cheung, ho, the, baldy, and, to, diamond, he,...  [ Dr. Fuentes  is a medical professor/doctor n...
+16     15      9  ...  [gifford, the, in, and, is, to, waco, lynch, c...  [John "Hannibal" Smith is held captive in Mexi...
+17     16      8  ...  [milk, travis, cohen, the, and, in, he, cole, ...  [Milk is the story of Harvey Milk , and his st...
+18     17      8  ...  [swan, phantom, phoenix, winslow, the, michael...  [18-year-old Danny d'Angelo, an alumnus of Ben...
+19     18      8  ...  [camp, rajas, summer, kids, balloon, the, of, ...  [After inheriting a casino from his dead uncle...
+20     19      6  ...  [carl, hagon, cynthia, joe, to, he, his, peppe...  [Joe Norson  lives with his in-laws in New Yor...
+21     20      6  ...  [bob, isabelle, grace, fok, donald, to, and, t...  [Will Stronghold  is beginning his freshman ye...
+22     21      5  ...  [spiders, the, hansen, ashley, and, spider, am...  [A very large female anaconda captured from th...
+23     22      5  ...  [holmes, watson, moriarty, that, lauder, raine...  [A psychological thriller that takes you throu...
+
+[24 rows x 5 columns]
+
+Topic info saved to outputs/bertopic_topic_info.csv
+
+--- Step 4: Key statistics ---
+Number of topics discovered (excluding outliers): 23
+Number of outlier documents (Topic = -1): 323
+Share of outlier documents: 40.38%
+
+Topic distribution:
+-1     323
+ 0     117
+ 1      45
+ 2      30
+ 3      28
+ 4      27
+ 5      27
+ 6      25
+ 7      21
+ 8      20
+ 9      18
+ 10     16
+ 11     15
+ 12     13
+ 13     11
+ 14      9
+ 15      9
+ 16      8
+ 17      8
+ 18      8
+ 19      6
+ 20      6
+ 21      5
+ 22      5
+Name: count, dtype: int64
+
+--- Step 5: Creating topic count plot ---
+<Figure size 1000x500 with 0 Axes>
+<BarContainer object of 23 artists>
+Text(0.5, 0, 'Topic')
+Text(0, 0.5, 'Number of Documents')
+Text(0.5, 1.0, 'BERTopic: Documents per Topic (Excluding Outliers)')
+([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22], [Text(0, 0, '0'), Text(1, 0, '1'), Text(2, 0, '2'), Text(3, 0, '3'), Text(4, 0, '4'), Text(5, 0, '5'), Text(6, 0, '6'), Text(7, 0, '7'), Text(8, 0, '8'), Text(9, 0, '9'), Text(10, 0, '10'), Text(11, 0, '11'), Text(12, 0, '12'), Text(13, 0, '13'), Text(14, 0, '14'), Text(15, 0, '15'), Text(16, 0, '16'), Text(17, 0, '17'), Text(18, 0, '18'), Text(19, 0, '19'), Text(20, 0, '20'), Text(21, 0, '21'), Text(22, 0, '22')])
+Topic count plot saved to figures/bertopic_topic_counts.png
+<Figure size 1000x500 with 0 Axes>
+<BarContainer object of 24 artists>
+Text(0.5, 0, 'Topic')
+Text(0, 0.5, 'Number of Documents')
+Text(0.5, 1.0, 'BERTopic: Documents per Topic (Including Outliers in Red)')
+([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23], [Text(0, 0, '-1'), Text(1, 0, '0'), Text(2, 0, '1'), Text(3, 0, '2'), Text(4, 0, '3'), Text(5, 0, '4'), Text(6, 0, '5'), Text(7, 0, '6'), Text(8, 0, '7'), Text(9, 0, '8'), Text(10, 0, '9'), Text(11, 0, '10'), Text(12, 0, '11'), Text(13, 0, '12'), Text(14, 0, '13'), Text(15, 0, '14'), Text(16, 0, '15'), Text(17, 0, '16'), Text(18, 0, '17'), Text(19, 0, '18'), Text(20, 0, '19'), Text(21, 0, '20'), Text(22, 0, '21'), Text(23, 0, '22')])
+Topic count plot (with outliers) saved to figures/bertopic_topic_counts_with_outliers.png
+
+--- Generating additional visualizations ---
+Topic hierarchy saved to outputs/bertopic_hierarchy.html
+Document map saved to outputs/bertopic_document_map.html
+
+================================================================================
+IN-CLASS EXTENSION: Multinomial Outcome Classification
+================================================================================
+
+--- Step 1: Creating multinomial outcome from genres ---
+Genre mapping: {'action': 0, 'comedy': 1, 'drama': 2, 'horror': 3, 'other': 4}
+
+Genre distribution:
+0    136
+1    231
+2    236
+3     42
+4    155
+Name: count, dtype: int64
+
+--- Step 2: Train/test split for multinomial classification ---
+Training set size: 600
+Test set size: 200
+
+Training set class distribution:
+0    102
+1    173
+2    177
+3     32
+4    116
+Name: count, dtype: int64
+
+--- Step 3: Fitting multinomial logistic regression ---
+LogisticRegression(max_iter=1000, multi_class='multinomial', random_state=123)
+Multinomial logistic regression model fitted
+
+--- Step 4: Prediction and evaluation ---
+Accuracy: 0.3300
+
+Classification Report:
+              precision    recall  f1-score   support
+
+      Action       0.00      0.00      0.00        34
+      Comedy       0.29      0.50      0.37        58
+       Drama       0.37      0.59      0.45        59
+      Horror       0.00      0.00      0.00        10
+       Other       0.40      0.05      0.09        39
+
+    accuracy                           0.33       200
+   macro avg       0.21      0.23      0.18       200
+weighted avg       0.27      0.33      0.26       200
+
+
+Confusion Matrix:
+[[ 0 19 12  0  3]
+ [ 0 29 29  0  0]
+ [ 0 24 35  0  0]
+ [ 0  6  4  0  0]
+ [ 0 22 15  0  2]]
+
+Results saved to outputs/multinomial_classification_metrics.csv
+Confusion matrix saved to outputs/confusion_matrix.csv
+
+--- Step 5: Visualizing confusion matrix ---
+<Figure size 1000x800 with 0 Axes>
+<Axes: >
+Text(0.5, 58.7222222222222, 'Predicted Genre')
+Text(95.72222222222221, 0.5, 'True Genre')
+Text(0.5, 1.0, 'Confusion Matrix: Multinomial Genre Classification\n(Word2Vec Embeddings)')
+Confusion matrix plot saved to figures/multinomial_confusion_matrix.png
+
+--- Per-class performance ---
+    Genre  Precision    Recall  F1-Score  Support
+0  Action   0.000000  0.000000  0.000000       34
+1  Comedy   0.290000  0.500000  0.367089       58
+2   Drama   0.368421  0.593220  0.454545       59
+3  Horror   0.000000  0.000000  0.000000       10
+4   Other   0.400000  0.051282  0.090909       39
+<Figure size 1000x600 with 0 Axes>
+<BarContainer object of 5 artists>
+Text(0.5, 0, 'Genre')
+Text(0, 0.5, 'F1-Score')
+Text(0.5, 1.0, 'Per-Class F1-Scores: Multinomial Genre Classification')
+(0.0, 1.0)
+Per-class F1 scores plot saved to figures/per_class_f1_scores.png
+
+--- Multinomial classification extension complete ---
+
+================================================================================
+Analysis complete!
+================================================================================
+
+Outputs generated:
+  - outputs/run_log.txt (this log)
+  - outputs/word2vec_regression_metrics.csv
+  - outputs/bertopic_topic_info.csv
+  - figures/word2vec_regression_actual_vs_predicted.png
+  - figures/bertopic_topic_counts.png
+  - figures/bertopic_topic_counts_with_outliers.png
+  - data_processed/corpus_with_bertopic.csv
+
+================================================================================
