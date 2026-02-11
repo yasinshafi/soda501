@@ -65,17 +65,19 @@ import pyLDAvis
 import pyLDAvis.lda_model
 import seaborn as sns
 from sklearn.manifold import TSNE
+from pathlib import Path
+import tarfile, os
 
 # Reproducibility
 random.seed(123)
 np.random.seed(123)
 
 # Create project folders (safe to run repeatedly)
-os.makedirs("Penn State/Spring 2026/SoDA 501/Week 4/data_raw", exist_ok=True)
-os.makedirs("Penn State/Spring 2026/SoDA 501/Week 4/data_processed", exist_ok=True)
-os.makedirs("Penn State/Spring 2026/SoDA 501/Week 4/figures", exist_ok=True)
-os.makedirs("Penn State/Spring 2026/SoDA 501/Week 4/outputs", exist_ok=True)
-os.makedirs("Penn State/Spring 2026/SoDA 501/Week 4/src", exist_ok=True)
+os.makedirs("04_text_as_data/demo/data_raw", exist_ok=True)
+os.makedirs("04_text_as_data/demo/data_processed", exist_ok=True)
+os.makedirs("04_text_as_data/demo/Week 4/figures", exist_ok=True)
+os.makedirs("04_text_as_data/demo/outputs", exist_ok=True)
+os.makedirs("04_text_as_data/demo/src", exist_ok=True)
 
 # -----------------------------------------------------------------------------
 # Part 0: Load the CMU Movie Summary Corpus from MovieSummaries.tar.gz
@@ -97,8 +99,8 @@ os.makedirs("Penn State/Spring 2026/SoDA 501/Week 4/src", exist_ok=True)
 
 
 # 0.1 Paths
-archive_path = os.path.join("04_text_as_data", "demo", "MovieSummaries.tar")
-extract_dir  = os.path.join("04_text_as_data", "demo", "MovieSummaries_extracted")
+archive_path = r"04_text_as_data\demo\MovieSummaries.tar.gz"
+extract_dir  = r"04_text_as_data\demo\MovieSummaries_extracted"
 
 os.makedirs(extract_dir, exist_ok=True)
 
@@ -118,7 +120,7 @@ for root, dirs, files in os.walk(extract_dir):
 
 if need_extract:
     print("\n--- Extracting MovieSummaries.tar ---")
-    with tarfile.open(archive_path, "r:tar") as tar:
+    with tarfile.open(archive_path, "r:*") as tar:
         tar.extractall(path=extract_dir)
     print("Extraction complete:", extract_dir)
 else:
