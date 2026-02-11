@@ -12,10 +12,28 @@
 \maketitle
 
 
-\section*{Conceptual Questions}
-Please write a three to ten sentence explanation for \textbf{ONE} of the two questions below.
+
+\section*{Start Off: Verifying Your Environment}
 
 \begin{enumerate}
+\item \textbf{Environment check (required).}  
+Submit proof that you successfully ran the full tutorial code on your machine. You may submit \emph{one} of the following:
+\begin{itemize}
+  \item A screenshot or text file showing console output that includes the printed representation shapes (document--term matrix, Word2Vec document vectors, and transformer embeddings).
+  \item A screenshot of your \texttt{figures/} directory showing generated plots with timestamps.
+  \item A Git commit (hash or screenshot) that includes at least one generated figure or output file.
+  \item A short log file (e.g., \texttt{run\_log.txt}) containing printed diagnostics and evaluation metrics.
+\end{itemize}
+\end{enumerate}
+
+
+\section*{Conceptual Questions}
+
+Please write three to ten sentence explanations for each of the following questions.  
+\textbf{You are only required to answer ONE of the two questions below.} \bigskip
+
+\begin{enumerate}
+\setcounter{enumi}{1}
 \item \textbf{Estimands at scale (ITT vs ``product impact'').}
 In a platform A/B test, the treatment may (i) fail to deliver to some users, (ii) deliver but users may not engage, and (iii) outcomes may be measured through fragile logs.
 \begin{itemize}
@@ -34,10 +52,10 @@ Large experiments rely on instrumentation and event logs (missing events, changi
 \end{enumerate}
 
 \section*{Applied Exercises}
-Use the code in the week’s code tutorial and the lecture slides to answer the following questions.\\bigskip
+Use the code in the week’s code tutorial and the lecture slides to answer the following questions. \textbf{You are only required to answer TWO of the three questions below.} \bigskip
 
 \begin{enumerate}
-\setcounter{enumi}{2}
+\setcounter{enumi}{3}
 
 \item \textbf{Add a retention-style outcome and estimate its ATE.}
 Extend the pipeline so that, in addition to the existing outcomes, you compute a user-level retention / activity measure.
