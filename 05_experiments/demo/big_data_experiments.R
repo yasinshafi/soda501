@@ -1,4 +1,4 @@
-`git # Big Data Experiments as Data Pipelines
+# Big Data Experiments as Data Pipelines
 # This script provides a complete framework for reproducible large-scale experimentation
 # Authors should modify and extend the code to meet their specific needs
 #

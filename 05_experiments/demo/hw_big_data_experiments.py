@@ -186,7 +186,7 @@ lin = (
     -5.0
     + 0.08 * logs["clicks"]
     + 0.10 * np.log1p(logs["baseline_activity"])
-    + 0.15 * logs["treat"]
+    + 0.15 * logs["recieved"]
     + 0.02 * (logs["dow"].isin([6, 7])).astype(float)
 )
 logs["purchase_prob"] = sc.expit(lin.to_numpy())
