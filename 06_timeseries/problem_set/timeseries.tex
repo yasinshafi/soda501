@@ -12,10 +12,24 @@
 \maketitle
 
 
+\section*{Start Off: Verifying Your Environment}
+
+\begin{enumerate}
+\item \textbf{Environment check (required).}  
+Submit proof that you successfully ran the full tutorial code on your machine. You may submit \emph{one} of the following:
+\begin{itemize}
+  \item A screenshot or text file showing console output that includes the printed representation shapes (document--term matrix, Word2Vec document vectors, and transformer embeddings).
+  \item A screenshot of your \texttt{figures/} directory showing generated plots with timestamps.
+  \item A Git commit (hash or screenshot) that includes at least one generated figure or output file.
+  \item A short log file (e.g., \texttt{run\_log.txt}) containing printed diagnostics and evaluation metrics.
+\end{itemize}
+\end{enumerate}
+
 \section*{Conceptual Questions}
 Please write a three to ten sentence explanation for \textbf{ONE} of the two questions below.
 
 \begin{enumerate}
+\setcounter{enumi}{1}
 \item \textbf{Time leakage and honest evaluation.}
 In the coding tutorial, you computed RMSE under (i) a random train/test split and (ii) a time-based split (train on past, test on future).
 \begin{itemize}
@@ -37,7 +51,7 @@ Interrupted Time Series (ITS) is often used when an intervention occurs at a kno
 Use the code in \texttt{timeseries.R} and the lecture slides to answer the following questions.\\bigskip
 
 \begin{enumerate}
-\setcounter{enumi}{2}
+\setcounter{enumi}{3}
 
 \item \textbf{Decomposition: trend + seasonality + residual (save a figure).}
 Extend the synthetic daily time series in \texttt{timeseries.R} by decomposing it into components.
