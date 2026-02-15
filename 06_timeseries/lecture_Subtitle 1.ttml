@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xml:lang="en" xmlns="http://www.w3.org/ns/ttml" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" xmlns:tts="http://www.w3.org/ns/ttml#styling" xmlns:ttp="http://www.w3.org/ns/ttml#parameter" xmlns:ittp="http://www.w3.org/ns/ttml/profile/imsc1#parameter" xmlns:itts="http://www.w3.org/ns/ttml/profile/imsc1#styling" ttp:profile="http://www.w3.org/ns/ttml/profile/imsc1/text" ttp:frameRate="24" ttp:timeBase="media">
+  <head>
+    <styling>
+      <style xml:id="s0" tts:color="#ffffff" tts:opacity="1" tts:fontSize="100%" tts:fontFamily="proportionalSansSerif" tts:fontWeight="bold" tts:textOutline="#ffffff 1px" tts:textAlign="center"/>
+    </styling>
+    <layout>
+      <region xml:id="r0" tts:origin="0.000% 74.884%" tts:extent="100.000% 10.278%" tts:displayAlign="center"/>
+    </layout>
+  </head>
+  <body>
+    <div xml:id="d0" region="r0" style="s0">
+      <p begin="01:00:04.041" end="01:00:05.083">Hi everyone, today we're going to be</p>
+      <p begin="01:00:05.083" end="01:00:06.000">covering time series</p>
+      <p begin="01:00:06.000" end="01:00:08.250">analysis for social data. The</p>
+      <p begin="01:00:08.250" end="01:00:10.666">central idea of today's lecture is this.</p>
+      <p begin="01:00:11.333" end="01:00:12.166">In big social data</p>
+      <p begin="01:00:12.166" end="01:00:13.583">sets, time structure is not</p>
+      <p begin="01:00:13.583" end="01:00:15.708">a nuisance. It's part of the data</p>
+      <p begin="01:00:15.708" end="01:00:17.708">generating process. So if</p>
+      <p begin="01:00:17.708" end="01:00:19.208">you ignore time, you can build</p>
+      <p begin="01:00:19.208" end="01:00:21.000">models that look excellent in sample,</p>
+      <p begin="01:00:21.333" end="01:00:22.041">having things like high</p>
+      <p begin="01:00:22.041" end="01:00:23.916">R squared, low error, but</p>
+      <p begin="01:00:23.916" end="01:00:26.750">class and deployment. And even worse, you</p>
+      <p begin="01:00:26.750" end="01:00:27.666">can tell the wrong</p>
+      <p begin="01:00:27.666" end="01:00:29.583">causal story. So time is</p>
+      <p begin="01:00:29.625" end="01:00:34.916">not decoration and structure. Most big</p>
+      <p begin="01:00:34.916" end="01:00:36.250">social data sets are time</p>
+      <p begin="01:00:36.250" end="01:00:37.916">index. So examples of this</p>
+      <p begin="01:00:37.916" end="01:00:40.041">include platform logs, things like daily</p>
+      <p begin="01:00:40.041" end="01:00:41.541">active users, retention</p>
+      <p begin="01:00:41.541" end="01:00:44.041">engagement, online experiments</p>
+      <p begin="01:00:44.166" end="01:00:46.750">measured over days or weeks, economic</p>
+      <p begin="01:00:46.750" end="01:00:48.291">indicators like employment</p>
+      <p begin="01:00:48.291" end="01:00:51.625">or inflation, the event data</p>
+      <p begin="01:00:51.625" end="01:00:54.583">that's aggregated by day, and then topic</p>
+      <p begin="01:00:54.583" end="01:00:56.291">prevalence and texturing</p>
+      <p begin="01:00:56.291" end="01:00:58.875">for time. Now here's the key</p>
+      <p begin="01:00:58.916" end="01:01:01.583">principle. Time structure is not noise.</p>
+      <p begin="01:01:02.250" end="01:01:03.166">When something varies over</p>
+      <p begin="01:01:03.166" end="01:01:05.333">time, you must ask, is there</p>
+      <p begin="01:01:05.333" end="01:01:08.208">a trend? Is there seasonality? Is there</p>
+      <p begin="01:01:08.208" end="01:01:09.875">autocorrelation? Do the</p>
+      <p begin="01:01:09.875" end="01:01:11.041">measurement process change?</p>
+      <p begin="01:01:11.708" end="01:01:14.958">Do the population composition change? In</p>
+      <p begin="01:01:14.958" end="01:01:16.583">big data settings, time often</p>
+      <p begin="01:01:16.583" end="01:01:18.083">explains more structure than</p>
+      <p begin="01:01:18.083" end="01:01:20.791">cross-sectional differences. If you pull</p>
+      <p begin="01:01:20.791" end="01:01:22.291">across time without thinking</p>
+      <p begin="01:01:22.291" end="01:01:23.500">carefully, you're effectively</p>
+      <p begin="01:01:23.708" end="01:01:26.416">assuming that you have IID, which is</p>
+      <p begin="01:01:26.416" end="01:01:34.375">almost never true in social systems. So</p>
+      <p begin="01:01:34.375" end="01:01:35.375">there are three common</p>
+      <p begin="01:01:35.375" end="01:01:37.875">time index structures for time series. So</p>
+      <p begin="01:01:37.875" end="01:01:38.875">first we have time series.</p>
+      <p begin="01:01:39.583" end="01:01:41.375">This is one unit observed over</p>
+      <p begin="01:01:41.375" end="01:01:43.291">time. Example of these include things</p>
+      <p begin="01:01:43.291" end="01:01:46.583">like national approval, GDP, maybe total</p>
+      <p begin="01:01:46.583" end="01:01:50.000">DAU. Then we have things</p>
+      <p begin="01:01:50.000" end="01:01:51.416">like panels or time series</p>
+      <p begin="01:01:51.416" end="01:01:53.458">cross-sectional data. These are many</p>
+      <p begin="01:01:53.458" end="01:01:55.791">units observed over time. Examples of</p>
+      <p begin="01:01:55.791" end="01:01:59.083">this could be users by day, states or</p>
+      <p begin="01:01:59.083" end="01:02:01.041">countries by year or by week or by month.</p>
+      <p begin="01:02:02.291" end="01:02:02.916">And then we also have</p>
+      <p begin="01:02:02.916" end="01:02:06.333">event streams. These are irregularly</p>
+      <p begin="01:02:06.333" end="01:02:09.375">timed events. Things like this might be</p>
+      <p begin="01:02:09.375" end="01:02:11.500">tweets, protest events,</p>
+      <p begin="01:02:11.875" end="01:02:15.166">logins. But the key rule is that data</p>
+      <p begin="01:02:15.166" end="01:02:17.125">structure determines the model and</p>
+      <p begin="01:02:17.125" end="01:02:18.833">validation. If you have</p>
+      <p begin="01:02:18.833" end="01:02:20.708">one unit, you want to use ARIMA type</p>
+      <p begin="01:02:20.708" end="01:02:23.500">models, they make the most sense. If you</p>
+      <p begin="01:02:23.500" end="01:02:24.458">have many units, you</p>
+      <p begin="01:02:24.458" end="01:02:26.000">want to use fixed effects or hierarchical</p>
+      <p begin="01:02:26.000" end="01:02:27.958">models. If events are</p>
+      <p begin="01:02:27.958" end="01:02:29.666">irregular, you may need hazard models</p>
+      <p begin="01:02:29.666" end="01:02:32.583">or point processes. You don't choose</p>
+      <p begin="01:02:32.583" end="01:02:34.625">models based on taste, you choose them</p>
+      <p begin="01:02:34.625" end="01:02:35.583">based on their structure.</p>
+      <p begin="01:02:40.458" end="01:02:42.000">So there's extremely common and big</p>
+      <p begin="01:02:42.000" end="01:02:44.041">social data or repeated sampling over</p>
+      <p begin="01:02:44.041" end="01:02:46.416">time. So we have three</p>
+      <p begin="01:02:46.458" end="01:02:49.000">patterns. We have repeated cross-sections</p>
+      <p begin="01:02:49.000" end="01:02:51.666">for it. These would be things like new</p>
+      <p begin="01:02:51.666" end="01:02:52.916">samples each week or</p>
+      <p begin="01:02:52.916" end="01:02:55.250">weekly surveys. We have things like</p>
+      <p begin="01:02:55.250" end="01:02:56.708">rotating panels. This would</p>
+      <p begin="01:02:56.708" end="01:02:57.791">be things like respondents</p>
+      <p begin="01:02:57.791" end="01:03:01.333">process, some refresh for it, and then</p>
+      <p begin="01:03:01.333" end="01:03:02.583">rolling cohorts, so new</p>
+      <p begin="01:03:02.583" end="01:03:06.583">users each week. So these cause</p>
+      <p begin="01:03:06.583" end="01:03:09.708">different ability issues. And among them</p>
+      <p begin="01:03:09.708" end="01:03:11.166">are changes in outcomes, may</p>
+      <p begin="01:03:11.166" end="01:03:12.458">reflect composition change,</p>
+      <p begin="01:03:12.500" end="01:03:15.041">not behavioral changes. So what are some</p>
+      <p begin="01:03:15.041" end="01:03:17.666">examples of this? Suppose that there's</p>
+      <p begin="01:03:17.666" end="01:03:18.833">daily income averages</p>
+      <p begin="01:03:18.833" end="01:03:21.291">and they rise. Is this because people are</p>
+      <p begin="01:03:21.291" end="01:03:22.916">earning more or because high</p>
+      <p begin="01:03:22.916" end="01:03:24.916">income users are more active</p>
+      <p begin="01:03:24.916" end="01:03:27.083">that week? So this is especially</p>
+      <p begin="01:03:27.083" end="01:03:30.291">important in big data systems where users</p>
+      <p begin="01:03:30.291" end="01:03:32.666">churn, new users enter,</p>
+      <p begin="01:03:32.666" end="01:03:34.875">and measurement changes. So you have to</p>
+      <p begin="01:03:34.875" end="01:03:36.500">do some practical checks for this. One</p>
+      <p begin="01:03:36.500" end="01:03:37.041">way to do this is to</p>
+      <p begin="01:03:37.083" end="01:03:39.250">compare covariate distributions over time</p>
+      <p begin="01:03:39.250" end="01:03:41.250">or waves. You have to</p>
+      <p begin="01:03:41.250" end="01:03:43.000">post-ratify if your composition</p>
+      <p begin="01:03:43.125" end="01:03:44.958">starts to drift or you have to plot</p>
+      <p begin="01:03:44.958" end="01:03:47.458">cohort-specific trajectories. So this is</p>
+      <p begin="01:03:47.458" end="01:03:48.541">where a time series meets</p>
+      <p begin="01:03:48.541" end="01:03:56.333">causal inference. When you have many</p>
+      <p begin="01:03:56.333" end="01:03:57.625">units over time, you have</p>
+      <p begin="01:03:57.625" end="01:03:59.666">two dimensions. One is unit and</p>
+      <p begin="01:03:59.708" end="01:04:03.291">time. And as a base time workflow, we</p>
+      <p begin="01:04:03.291" end="01:04:04.958">have our Y sub IT, that's</p>
+      <p begin="01:04:04.958" end="01:04:07.541">our unit and our team for ISV,</p>
+      <p begin="01:04:07.541" end="01:04:10.208">I mean to be the experimental unit at</p>
+      <p begin="01:04:10.208" end="01:04:12.250">time t. And then we're going</p>
+      <p begin="01:04:12.250" end="01:04:13.791">to have an alpha parameter,</p>
+      <p begin="01:04:14.541" end="01:04:16.625">some sort of lambda parameter, then we</p>
+      <p begin="01:04:16.625" end="01:04:18.041">have our coefficients and</p>
+      <p begin="01:04:18.041" end="01:04:20.250">our epsilon in that case. When</p>
+      <p begin="01:04:20.250" end="01:04:21.666">we're doing standard regression, we</p>
+      <p begin="01:04:21.666" end="01:04:22.750">assume that our errors are</p>
+      <p begin="01:04:22.750" end="01:04:26.416">independently distributed, but we</p>
+      <p begin="01:04:26.458" end="01:04:28.125">know that there's a correlation in time</p>
+      <p begin="01:04:28.125" end="01:04:29.916">for our area. And so we have</p>
+      <p begin="01:04:29.916" end="01:04:31.791">to do some sort of, when we</p>
+      <p begin="01:04:31.791" end="01:04:33.208">have temporal data, we want to condition</p>
+      <p begin="01:04:33.208" end="01:04:36.541">out this issue for IID for</p>
+      <p begin="01:04:36.541" end="01:04:38.916">it. And in terms of this, it's</p>
+      <p begin="01:04:38.916" end="01:04:41.791">just serial correlation or errors for it.</p>
+      <p begin="01:04:42.833" end="01:04:45.416">So why does this matter?</p>
+      <p begin="01:04:45.416" end="01:04:46.500">If your standard errors are</p>
+      <p begin="01:04:46.500" end="01:04:49.125">wrong, then you're going to get a high</p>
+      <p begin="01:04:49.125" end="01:04:50.375">rate of type 1 error for</p>
+      <p begin="01:04:50.375" end="01:04:52.458">it. In big data sense, we have</p>
+      <p begin="01:04:52.500" end="01:04:54.708">serial dependence and it's almost always</p>
+      <p begin="01:04:54.708" end="01:04:58.041">guaranteed. So what are some problems</p>
+      <p begin="01:04:58.041" end="01:04:59.000">that we might encounter?</p>
+      <p begin="01:04:59.000" end="01:05:01.500">We have things like staggered treatment</p>
+      <p begin="01:05:01.500" end="01:05:04.416">adoption, dynamic effects for our time</p>
+      <p begin="01:05:04.416" end="01:05:05.250">series data, and then</p>
+      <p begin="01:05:05.250" end="01:05:08.208">feature leakage across time. Panel data</p>
+      <p begin="01:05:08.208" end="01:05:09.416">is a powerful way to try</p>
+      <p begin="01:05:09.416" end="01:05:11.166">to handle this, but only if</p>
+      <p begin="01:05:11.166" end="01:05:13.583">you respect our temporal dependencies.</p>
+      <p begin="01:05:23.625" end="01:05:25.541">So many big data science outcomes are not</p>
+      <p begin="01:05:25.541" end="01:05:26.416">static measurements,</p>
+      <p begin="01:05:26.625" end="01:05:28.958">they're durations. So standard of</p>
+      <p begin="01:05:30.250" end="01:05:32.250">modeling a level, we model how long until</p>
+      <p begin="01:05:32.250" end="01:05:35.083">something happens. For example, this</p>
+      <p begin="01:05:35.083" end="01:05:37.041">might be time until a</p>
+      <p begin="01:05:37.041" end="01:05:41.125">turn, time until first purchase, until</p>
+      <p begin="01:05:41.125" end="01:05:43.583">next login, or maybe until a</p>
+      <p begin="01:05:43.583" end="01:05:45.083">conversation or an event ends.</p>
+      <p begin="01:05:45.125" end="01:05:50.625">So what is a time to event outcome? A</p>
+      <p begin="01:05:50.625" end="01:05:51.500">time to event is a random</p>
+      <p begin="01:05:51.500" end="01:05:53.958">variable. The event could be,</p>
+      <p begin="01:05:54.625" end="01:05:56.916">like I said, churn, conversation,</p>
+      <p begin="01:05:57.750" end="01:05:59.291">purchase, it could be something like a</p>
+      <p begin="01:05:59.291" end="01:06:00.708">failure. In biomedical</p>
+      <p begin="01:06:00.875" end="01:06:03.375">sciences, we would use death for</p>
+      <p begin="01:06:03.375" end="01:06:04.416">criminology, we'd look at</p>
+      <p begin="01:06:04.416" end="01:06:06.416">something like re-offense or</p>
+      <p begin="01:06:06.416" end="01:06:10.083">protistoration for event data. In a big</p>
+      <p begin="01:06:10.083" end="01:06:11.291">data platform, almost</p>
+      <p begin="01:06:11.291" end="01:06:12.791">every retention metric is</p>
+      <p begin="01:06:12.833" end="01:06:17.458">fundamentally time to event. So one thing</p>
+      <p begin="01:06:17.458" end="01:06:18.083">that we might encounter</p>
+      <p begin="01:06:18.083" end="01:06:19.416">then is a term called right</p>
+      <p begin="01:06:19.458" end="01:06:21.875">censoring. Right censoring occurs when</p>
+      <p begin="01:06:21.875" end="01:06:22.625">you do not observe an</p>
+      <p begin="01:06:22.625" end="01:06:24.208">event before the study ends.</p>
+      <p begin="01:06:24.958" end="01:06:27.750">So example might be that a user, what a</p>
+      <p begin="01:06:27.750" end="01:06:29.250">user signs up, we've</p>
+      <p begin="01:06:29.250" end="01:06:30.583">observed them for 30 days,</p>
+      <p begin="01:06:31.208" end="01:06:33.250">they're not churned yet, we don't know</p>
+      <p begin="01:06:33.250" end="01:06:34.916">when they will churn. For</p>
+      <p begin="01:06:34.916" end="01:06:36.666">this would be two over 30, this</p>
+      <p begin="01:06:36.666" end="01:06:38.500">would be right censoring. In biomedical</p>
+      <p begin="01:06:38.500" end="01:06:39.541">sciences, maybe we want to</p>
+      <p begin="01:06:39.541" end="01:06:40.708">see how a drug intervention</p>
+      <p begin="01:06:41.000" end="01:06:44.375">extends life. People who live longer than</p>
+      <p begin="01:06:44.375" end="01:06:46.500">the outcome would be</p>
+      <p begin="01:06:46.500" end="01:06:48.000">right censored for this.</p>
+      <p begin="01:06:49.125" end="01:06:50.583">So then we have hazard versus survival</p>
+      <p begin="01:06:50.583" end="01:06:53.250">curve. So a survival function, we have</p>
+      <p begin="01:06:53.250" end="01:06:55.125">our time until event,</p>
+      <p begin="01:06:55.125" end="01:06:57.375">or the probability that event has not</p>
+      <p begin="01:06:57.375" end="01:07:01.250">happened before time t. For</p>
+      <p begin="01:07:01.250" end="01:07:02.416">a hazard function, it would</p>
+      <p begin="01:07:02.416" end="01:07:04.583">describe the instantaneous risk of an</p>
+      <p begin="01:07:04.583" end="01:07:06.291">event occurring at time t,</p>
+      <p begin="01:07:06.666" end="01:07:08.375">given survival to that point</p>
+      <p begin="01:07:08.708" end="01:07:11.875">for it. So for a survival, it might be a</p>
+      <p begin="01:07:11.875" end="01:07:13.708">churn for it, for example, a churn of</p>
+      <p begin="01:07:13.708" end="01:07:15.666">users. For a hazard,</p>
+      <p begin="01:07:15.666" end="01:07:17.416">an intuition might be among users who</p>
+      <p begin="01:07:17.416" end="01:07:18.916">have survived until time t,</p>
+      <p begin="01:07:19.375" end="01:07:21.000">what is the risk of churning</p>
+      <p begin="01:07:21.375" end="01:07:24.250">right now for it? So the key concept is</p>
+      <p begin="01:07:24.250" end="01:07:25.000">survival function</p>
+      <p begin="01:07:25.000" end="01:07:27.333">describe remaining probability,</p>
+      <p begin="01:07:27.500" end="01:07:29.291">a hazard function describes instantaneous</p>
+      <p begin="01:07:29.291" end="01:07:33.666">risk for it. As a key</p>
+      <p begin="01:07:33.666" end="01:07:34.625">understanding between</p>
+      <p begin="01:07:34.791" end="01:07:37.833">these, a survival curve is determined by</p>
+      <p begin="01:07:37.833" end="01:07:40.041">the hazard over time. So</p>
+      <p begin="01:07:40.041" end="01:07:41.958">high hazard early is our</p>
+      <p begin="01:07:41.958" end="01:07:44.458">survival drops quickly, and low hazard</p>
+      <p begin="01:07:44.458" end="01:07:45.875">means our survival declines</p>
+      <p begin="01:07:45.875" end="01:07:48.416">slowly. But if hazards change</p>
+      <p begin="01:07:48.416" end="01:07:51.083">over time, our effects are dynamic for</p>
+      <p begin="01:07:51.083" end="01:07:59.916">it. So what does it</p>
+      <p begin="01:07:59.916" end="01:08:01.041">matter in big data? Large</p>
+      <p begin="01:08:01.125" end="01:08:03.291">platforms often overemphasize static</p>
+      <p begin="01:08:03.291" end="01:08:04.916">metrics, ignore timing,</p>
+      <p begin="01:08:05.875" end="01:08:07.833">misinterpret early engagement</p>
+      <p begin="01:08:07.916" end="01:08:10.458">spikes. Survival modeling forces you to</p>
+      <p begin="01:08:10.458" end="01:08:12.375">think dynamically. And</p>
+      <p begin="01:08:12.375" end="01:08:13.708">dynamic thinking could be</p>
+      <p begin="01:08:13.708" end="01:08:15.166">necessary in things like retention</p>
+      <p begin="01:08:15.166" end="01:08:17.166">modeling, conversion</p>
+      <p begin="01:08:17.166" end="01:08:19.625">optimization, policy duration effects,</p>
+      <p begin="01:08:19.875" end="01:08:21.541">political mobilization timing, and</p>
+      <p begin="01:08:21.541" end="01:08:24.958">conflict onset timing. But it's just some</p>
+      <p begin="01:08:24.958" end="01:08:26.041">key concepts for this</p>
+      <p begin="01:08:26.083" end="01:08:29.416">we have our time to event outcome. It's a</p>
+      <p begin="01:08:29.416" end="01:08:30.208">variable measuring the</p>
+      <p begin="01:08:30.208" end="01:08:31.625">duration until an event occurs.</p>
+      <p begin="01:08:32.833" end="01:08:35.458">Right censoring is an event not observed</p>
+      <p begin="01:08:35.458" end="01:08:36.541">before the study ends.</p>
+      <p begin="01:08:37.500" end="01:08:39.958">Survival function or s, s of t for</p>
+      <p begin="01:08:39.958" end="01:08:41.416">the function is a probability that event</p>
+      <p begin="01:08:41.416" end="01:08:42.750">has not occurred by time t.</p>
+      <p begin="01:08:43.375" end="01:08:44.708">We have a hazard function,</p>
+      <p begin="01:08:45.166" end="01:08:46.875">is the instantaneous risk of an event</p>
+      <p begin="01:08:46.875" end="01:08:48.166">time t, conditional on</p>
+      <p begin="01:08:48.166" end="01:08:50.000">survival. And then we have time</p>
+      <p begin="01:08:50.000" end="01:08:51.708">varying treatment effects, which is the</p>
+      <p begin="01:08:51.708" end="01:08:52.750">treatment effects that</p>
+      <p begin="01:08:52.750" end="01:08:55.416">change over time. And it's visible</p>
+      <p begin="01:08:55.500" end="01:09:01.125">in survival curves. So here's just a</p>
+      <p begin="01:09:01.125" end="01:09:02.500">visualization what this</p>
+      <p begin="01:09:02.500" end="01:09:06.083">looks like. We have our survival</p>
+      <p begin="01:09:06.083" end="01:09:08.125">probability here, our turnover routine.</p>
+      <p begin="01:09:08.750" end="01:09:10.375">We see a decline in</p>
+      <p begin="01:09:10.375" end="01:09:13.375">survival probability over time,</p>
+      <p begin="01:09:13.375" end="01:09:15.750">and it's broken out by sex 1 and sex 2</p>
+      <p begin="01:09:15.750" end="01:09:17.791">for it. So we maybe we can just generally</p>
+      <p begin="01:09:17.791" end="01:09:18.791">assume that the blue</p>
+      <p begin="01:09:19.750" end="01:09:23.083">in this case is women, because women tend</p>
+      <p begin="01:09:23.083" end="01:09:24.666">to live longer for it.</p>
+      <p begin="01:09:24.666" end="01:09:25.458">Let's just say it's like a</p>
+      <p begin="01:09:25.791" end="01:09:29.250">biomedical thing. Yellow is below it, and</p>
+      <p begin="01:09:29.250" end="01:09:32.000">we see over time higher</p>
+      <p begin="01:09:32.000" end="01:09:33.958">risk of non-survival. The</p>
+      <p begin="01:09:33.958" end="01:09:35.250">interpretation would be higher risk of</p>
+      <p begin="01:09:35.250" end="01:09:36.666">non-survival over time where</p>
+      <p begin="01:09:36.666" end="01:09:38.625">your solo probability at this</p>
+      <p begin="01:09:38.625" end="01:09:43.125">point is like 25, but 4 and</p>
+      <p begin="01:09:43.125" end="01:09:44.458">much higher for the blue band.</p>
+      <p begin="01:09:49.791" end="01:09:52.125">So for forecasting over causal timing, we</p>
+      <p begin="01:09:52.125" end="01:09:54.750">have two goals for it. With forecasting,</p>
+      <p begin="01:09:56.833" end="01:09:58.458">you want to predict future values from</p>
+      <p begin="01:09:58.458" end="01:10:00.750">past values on it. And</p>
+      <p begin="01:10:00.750" end="01:10:02.041">then for causal timing,</p>
+      <p begin="01:10:02.333" end="01:10:03.958">we think about the estimated effect of an</p>
+      <p begin="01:10:03.958" end="01:10:05.333">intervention at a specific time.</p>
+      <p begin="01:10:06.333" end="01:10:08.000">But forecasting is generally going to be</p>
+      <p begin="01:10:08.000" end="01:10:09.375">about predictive accuracy,</p>
+      <p begin="01:10:10.125" end="01:10:12.416">or causal timing is about counterfactuals</p>
+      <p begin="01:10:12.416" end="01:10:13.916">for them. These are two</p>
+      <p begin="01:10:13.916" end="01:10:15.333">different targets. A model</p>
+      <p begin="01:10:15.375" end="01:10:17.375">can forecast well, but identify causal</p>
+      <p begin="01:10:17.375" end="01:10:19.375">effects poorly. In big data</p>
+      <p begin="01:10:19.375" end="01:10:20.750">experiments, we often combine</p>
+      <p begin="01:10:20.791" end="01:10:22.750">both. We want to forecast our baseline</p>
+      <p begin="01:10:22.750" end="01:10:24.625">and detect treatment</p>
+      <p begin="01:10:24.625" end="01:10:27.125">deviation, but never confuse</p>
+      <p begin="01:10:27.125" end="01:10:29.416">predictive accuracy with causal validity.</p>
+      <p begin="01:10:31.458" end="01:10:36.083">The biggest mistake we make generally,</p>
+      <p begin="01:10:37.000" end="01:10:38.958">we think about time, is data leakage or</p>
+      <p begin="01:10:38.958" end="01:10:39.666">time leakage in this</p>
+      <p begin="01:10:39.666" end="01:10:41.333">case. So time leakage happens</p>
+      <p begin="01:10:41.458" end="01:10:43.500">when the model sees the future before</p>
+      <p begin="01:10:43.500" end="01:10:45.541">training. So if we're trying</p>
+      <p begin="01:10:45.541" end="01:10:47.875">to forecast, we can't include</p>
+      <p begin="01:10:48.083" end="01:10:51.000">future data or forecasting efforts in it,</p>
+      <p begin="01:10:51.000" end="01:10:52.458">right? Because it'll</p>
+      <p begin="01:10:52.458" end="01:10:54.041">arbitrarily increase our predictive</p>
+      <p begin="01:10:54.166" end="01:10:56.458">power or forecasting power if it's</p>
+      <p begin="01:10:56.458" end="01:10:57.458">trained on future instances</p>
+      <p begin="01:10:57.458" end="01:10:59.291">of it. So you want to make sure</p>
+      <p begin="01:10:59.291" end="01:11:00.583">when you're doing something forecasting,</p>
+      <p begin="01:11:01.333" end="01:11:02.583">your training and test</p>
+      <p begin="01:11:02.583" end="01:11:04.583">splits don't break time ordering</p>
+      <p begin="01:11:05.583" end="01:11:07.833">because if they do, it'll produce an</p>
+      <p begin="01:11:07.833" end="01:11:10.166">inflated performance metrics for it.</p>
+      <p begin="01:11:10.250" end="01:11:12.416">So the correct evaluation is you want to</p>
+      <p begin="01:11:12.416" end="01:11:14.000">train the past and test the future</p>
+      <p begin="01:11:14.875" end="01:11:17.416">in forecasting efforts. If deployment is</p>
+      <p begin="01:11:17.416" end="01:11:18.166">forward looking,</p>
+      <p begin="01:11:18.416" end="01:11:19.958">evaluation must be forward looking.</p>
+      <p begin="01:11:20.583" end="01:11:22.375">This is one of the most common mistakes</p>
+      <p begin="01:11:22.375" end="01:11:23.541">in applied machine</p>
+      <p begin="01:11:23.541" end="01:11:24.875">learning for social science.</p>
+      <p begin="01:11:28.541" end="01:11:31.750">So a minimal assigned time series DGP can</p>
+      <p begin="01:11:31.750" end="01:11:32.708">be set up this way. We have</p>
+      <p begin="01:11:32.708" end="01:11:34.208">an animal DGP where we have</p>
+      <p begin="01:11:34.750" end="01:11:38.500">one sub t, we have our mu sub t and error</p>
+      <p begin="01:11:38.500" end="01:11:40.291">term here. This is an</p>
+      <p begin="01:11:40.291" end="01:11:42.416">inclusion for autocorrelation</p>
+      <p begin="01:11:42.875" end="01:11:44.375">in this case, but the key idea is</p>
+      <p begin="01:11:44.375" end="01:11:47.000">observations are dependent over time. We</p>
+      <p begin="01:11:47.000" end="01:11:50.083">include our autocorrelation</p>
+      <p begin="01:11:50.083" end="01:11:52.750">term here where standard errors are if we</p>
+      <p begin="01:11:52.750" end="01:11:54.333">ignore the autocorrelation</p>
+      <p begin="01:11:54.333" end="01:11:55.375">of time, these things are</p>
+      <p begin="01:11:55.500" end="01:11:57.583">a little bit wrong. Our inference is a</p>
+      <p begin="01:11:57.583" end="01:11:58.250">little bit wrong and our</p>
+      <p begin="01:11:58.250" end="01:11:59.250">forecasts are going to be wrong.</p>
+      <p begin="01:12:00.083" end="01:12:06.208">So this is a decomposition for trend</p>
+      <p begin="01:12:06.208" end="01:12:08.583">seasonality and residuals here. So we</p>
+      <p begin="01:12:08.583" end="01:12:09.958">have the same function</p>
+      <p begin="01:12:09.958" end="01:12:13.166">as before. We have Y sub t, T sub t plus</p>
+      <p begin="01:12:13.166" end="01:12:14.958">S sub t plus R sub t.</p>
+      <p begin="01:12:14.958" end="01:12:16.791">That's trend seasonality in our</p>
+      <p begin="01:12:16.791" end="01:12:19.125">residuals for it. So we have our original</p>
+      <p begin="01:12:19.125" end="01:12:22.541">time series here. We have our trend component. We have</p>
+      <p begin="01:12:22.541" end="01:12:25.333">our trend component. We have our</p>
+      <p begin="01:12:25.333" end="01:12:28.666">seasonality component and then our</p>
+      <p begin="01:12:28.666" end="01:12:30.791">residual component here.</p>
+      <p begin="01:12:31.791" end="01:12:33.166">But these are big data systems.</p>
+      <p begin="01:12:33.500" end="01:12:34.375">Seasonality is often</p>
+      <p begin="01:12:34.375" end="01:12:37.000">mechanical. You have to remove it before</p>
+      <p begin="01:12:37.000" end="01:12:39.583">interpreting your residual variation.</p>
+      <p begin="01:12:39.583" end="01:12:40.291">Otherwise, you're going</p>
+      <p begin="01:12:40.291" end="01:12:41.833">to attribute weekly cycles</p>
+      <p begin="01:12:42.416" end="01:12:48.458">to treatment effects for it. So here's</p>
+      <p begin="01:12:48.458" end="01:12:50.250">just a general visualization of</p>
+      <p begin="01:12:50.250" end="01:12:51.250">autocorrelated trend.</p>
+      <p begin="01:12:51.916" end="01:12:53.625">Autocorrelation is going to produce a</p>
+      <p begin="01:12:53.625" end="01:12:56.041">smooth looking data where we</p>
+      <p begin="01:12:56.041" end="01:12:57.166">have a sort of smooth trend</p>
+      <p begin="01:12:57.166" end="01:13:05.750">over time. So persistence in this case</p>
+      <p begin="01:13:05.750" end="01:13:08.000">does not imply signal. In</p>
+      <p begin="01:13:08.000" end="01:13:10.291">big data, many KPI share</p>
+      <p begin="01:13:10.291" end="01:13:12.750">strong autocorrelation. That makes that</p>
+      <p begin="01:13:12.750" end="01:13:15.375">regression look significant. But</p>
+      <p begin="01:13:15.375" end="01:13:16.750">significance makes reflect</p>
+      <p begin="01:13:17.208" end="01:13:19.958">mechanical persistence. This is why we</p>
+      <p begin="01:13:19.958" end="01:13:21.625">want to use like hack standard errors</p>
+      <p begin="01:13:22.250" end="01:13:25.041">and dynamic models can be more useful.</p>
+      <p begin="01:13:29.166" end="01:13:31.500">So proper forecasting evaluation, we want</p>
+      <p begin="01:13:31.500" end="01:13:34.833">to fit on T. We want to</p>
+      <p begin="01:13:34.833" end="01:13:36.625">predict on T plus one and then</p>
+      <p begin="01:13:36.625" end="01:13:38.541">slide forward and repeat this process.</p>
+      <p begin="01:13:38.958" end="01:13:39.625">This is going to</p>
+      <p begin="01:13:39.625" end="01:13:41.250">produce many out of sample</p>
+      <p begin="01:13:42.250" end="01:13:44.583">errors, but this would be a generally</p>
+      <p begin="01:13:44.583" end="01:13:46.250">useful way for</p>
+      <p begin="01:13:46.250" end="01:13:47.708">forecasting because it's not</p>
+      <p begin="01:13:48.500" end="01:13:51.958">leaking in future information for past on</p>
+      <p begin="01:13:51.958" end="01:13:52.541">it. And then we just</p>
+      <p begin="01:13:52.541" end="01:13:53.833">evaluate with our back testing.</p>
+      <p begin="01:13:59.666" end="01:14:01.791">So what does this look like visually? We</p>
+      <p begin="01:14:01.791" end="01:14:02.791">have our training data</p>
+      <p begin="01:14:03.458" end="01:14:05.708">in green here. This is I'm really now</p>
+      <p begin="01:14:05.708" end="01:14:07.166">very non colorblind</p>
+      <p begin="01:14:07.166" end="01:14:08.625">friendly. So we have our</p>
+      <p begin="01:14:09.583" end="01:14:12.583">yellow line or I'm sorry, our wine line</p>
+      <p begin="01:14:12.583" end="01:14:14.500">that's red here. We have our</p>
+      <p begin="01:14:14.500" end="01:14:16.125">training data here in green,</p>
+      <p begin="01:14:16.375" end="01:14:17.791">and then we have our testing data here.</p>
+      <p begin="01:14:18.791" end="01:14:19.375">And this is how we would</p>
+      <p begin="01:14:19.375" end="01:14:20.583">set it up where normally</p>
+      <p begin="01:14:20.583" end="01:14:23.791">if you're not concerned with forecasting,</p>
+      <p begin="01:14:23.791" end="01:14:24.458">just like maybe</p>
+      <p begin="01:14:24.458" end="01:14:25.916">increasing productive accuracy,</p>
+      <p begin="01:14:26.541" end="01:14:28.833">you wouldn't have to split your data by</p>
+      <p begin="01:14:28.833" end="01:14:30.500">training and testing over</p>
+      <p begin="01:14:30.500" end="01:14:31.916">temporally in this case.</p>
+      <p begin="01:14:32.333" end="01:14:37.750">So what would this look like as a</p>
+      <p begin="01:14:37.750" end="01:14:40.458">training testing window with back</p>
+      <p begin="01:14:40.458" end="01:14:41.291">propagation? We have</p>
+      <p begin="01:14:41.291" end="01:14:44.333">our training data here, we forecast here,</p>
+      <p begin="01:14:44.875" end="01:14:46.625">then we just slide forward</p>
+      <p begin="01:14:46.625" end="01:14:47.833">and repeat the same process</p>
+      <p begin="01:14:47.833" end="01:14:50.833">again for our back testing. So each of</p>
+      <p begin="01:14:50.833" end="01:14:52.916">these are just iterating for the blue</p>
+      <p begin="01:14:52.916" end="01:14:54.416">training with our time</p>
+      <p begin="01:14:54.416" end="01:14:58.250">T as our X axis. And our testing is</p>
+      <p begin="01:14:58.250" end="01:15:00.041">always going to be ahead of our training.</p>
+      <p begin="01:15:00.500" end="01:15:02.875">Ahead of our training data.</p>
+      <p begin="01:15:07.791" end="01:15:09.791">So even in randomized experiments,</p>
+      <p begin="01:15:09.791" end="01:15:12.000">outcomes are going to sit inside time</p>
+      <p begin="01:15:12.000" end="01:15:13.666">processes. We have big</p>
+      <p begin="01:15:13.666" end="01:15:16.000">N, but that doesn't remove things like</p>
+      <p begin="01:15:16.000" end="01:15:19.541">seasonality, drift, instrumental</p>
+      <p begin="01:15:19.541" end="01:15:21.333">instrumentation shifts,</p>
+      <p begin="01:15:21.625" end="01:15:24.333">spillovers, and randomization will solve</p>
+      <p begin="01:15:24.333" end="01:15:25.875">it doesn't randomization</p>
+      <p begin="01:15:25.875" end="01:15:27.000">just solve selection bias,</p>
+      <p begin="01:15:27.041" end="01:15:29.166">not these other problems for it. So we</p>
+      <p begin="01:15:29.166" end="01:15:30.208">want to solve our time</p>
+      <p begin="01:15:30.208" end="01:15:32.041">structure on it. So time series</p>
+      <p begin="01:15:32.041" end="01:15:35.041">can be even important if we are engaged</p>
+      <p begin="01:15:35.041" end="01:15:37.250">in experimental interventions.</p>
+      <p begin="01:15:40.750" end="01:15:42.958">So what is an interrupted time series? We</p>
+      <p begin="01:15:42.958" end="01:15:45.208">want to define a simple</p>
+      <p begin="01:15:45.208" end="01:15:46.375">causal timing for our design</p>
+      <p begin="01:15:46.375" end="01:15:48.625">where we have an intervention at T0. We</p>
+      <p begin="01:15:48.625" end="01:15:50.000">want to compare the pre and the post</p>
+      <p begin="01:15:50.000" end="01:15:50.791">while accounting for</p>
+      <p begin="01:15:50.833" end="01:15:53.583">trend over time. So this is what the</p>
+      <p begin="01:15:53.583" end="01:15:56.875">setup would be where we have our fixed</p>
+      <p begin="01:15:56.875" end="01:15:57.791">effects here and here.</p>
+      <p begin="01:15:58.291" end="01:16:01.416">We have our pre post treatment can be</p>
+      <p begin="01:16:01.416" end="01:16:02.541">things like some sort of policy</p>
+      <p begin="01:16:02.541" end="01:16:04.541">intervention, maybe a new</p>
+      <p begin="01:16:04.625" end="01:16:06.583">web page design for usage, maybe a</p>
+      <p begin="01:16:06.583" end="01:16:07.750">different headline. And</p>
+      <p begin="01:16:07.750" end="01:16:09.250">then we see differences in</p>
+      <p begin="01:16:09.500" end="01:16:11.875">let's say daily acted users depending on</p>
+      <p begin="01:16:11.875" end="01:16:13.083">the treatment of the new</p>
+      <p begin="01:16:13.083" end="01:16:15.541">interface for act maybe</p>
+      <p begin="01:16:15.583" end="01:16:18.833">the duration, differences in duration for</p>
+      <p begin="01:16:18.833" end="01:16:19.958">time pre and post.</p>
+      <p begin="01:16:21.458" end="01:16:22.541">And these are just ways</p>
+      <p begin="01:16:23.041" end="01:16:25.458">of modeling it with our T0 for that</p>
+      <p begin="01:16:25.458" end="01:16:30.333">intervention. Ways to check for to see if</p>
+      <p begin="01:16:30.333" end="01:16:31.416">there's a seasonality</p>
+      <p begin="01:16:31.416" end="01:16:33.041">or trend issues is doing fake</p>
+      <p begin="01:16:33.041" end="01:16:35.958">intervention data. So instead of having</p>
+      <p begin="01:16:35.958" end="01:16:38.166">it with actual implementation,</p>
+      <p begin="01:16:38.250" end="01:16:40.625">we just pick another arbitrary time we</p>
+      <p begin="01:16:40.625" end="01:16:42.000">test it again. And there's</p>
+      <p begin="01:16:42.000" end="01:16:43.916">a way for seeing if our data</p>
+      <p begin="01:16:44.083" end="01:16:45.750">actually has a trend for it. So if you</p>
+      <p begin="01:16:45.750" end="01:16:46.458">get statistical</p>
+      <p begin="01:16:46.458" end="01:16:48.708">significance when you pick an</p>
+      <p begin="01:16:48.708" end="01:16:51.166">arbitrary intervention date, it's a sign</p>
+      <p begin="01:16:51.166" end="01:16:53.375">that you need to account</p>
+      <p begin="01:16:53.375" end="01:16:54.750">for trends in your data.</p>
+      <p begin="01:16:56.875" end="01:16:58.166">And then also just generally</p>
+      <p begin="01:16:58.166" end="01:16:59.833">pre-trend diagnostic tests.</p>
+      <p begin="01:17:04.208" end="01:17:06.875">So here's an example of what inter ITS</p>
+      <p begin="01:17:06.875" end="01:17:08.500">intuition or interrupted</p>
+      <p begin="01:17:08.500" end="01:17:10.708">time series look like we have</p>
+      <p begin="01:17:10.708" end="01:17:13.791">a before intervention period and after</p>
+      <p begin="01:17:13.791" end="01:17:15.833">intervention period, we have</p>
+      <p begin="01:17:15.833" end="01:17:18.125">a measured outcome here. The</p>
+      <p begin="01:17:18.125" end="01:17:19.583">counterfactual is without the</p>
+      <p begin="01:17:19.583" end="01:17:20.500">intervention we would expect</p>
+      <p begin="01:17:20.500" end="01:17:22.791">for it to be here. So we see</p>
+      <p begin="01:17:23.500" end="01:17:27.541">a level change and then we see a change</p>
+      <p begin="01:17:27.541" end="01:17:28.333">here, which is just a</p>
+      <p begin="01:17:28.333" end="01:17:29.916">trend change over time. So we</p>
+      <p begin="01:17:29.916" end="01:17:33.416">have our intervention, our trend and our</p>
+      <p begin="01:17:33.416" end="01:17:37.250">estimated effect. Same here. And then</p>
+      <p begin="01:17:37.250" end="01:17:37.833">maybe here's another</p>
+      <p begin="01:17:37.958" end="01:17:41.041">example where we have our intervention at</p>
+      <p begin="01:17:41.041" end="01:17:44.708">T10 looking at T0 or</p>
+      <p begin="01:17:44.708" end="01:17:47.500">T20. Tobacco consumption,</p>
+      <p begin="01:17:47.791" end="01:17:50.083">this is our pre-intervention slope, our</p>
+      <p begin="01:17:50.083" end="01:17:51.750">post-intervention slope</p>
+      <p begin="01:17:51.750" end="01:17:52.916">for our policy intervention.</p>
+      <p begin="01:17:53.125" end="01:17:55.375">Maybe this is just some sort of like</p>
+      <p begin="01:17:55.375" end="01:17:57.333">discouraging or let's say this</p>
+      <p begin="01:17:57.333" end="01:17:58.583">is our new tax on cigarettes,</p>
+      <p begin="01:17:58.583" end="01:18:02.375">we would expect for the slope to continue</p>
+      <p begin="01:18:02.375" end="01:18:03.625">here, but the policy</p>
+      <p begin="01:18:03.625" end="01:18:04.958">intervention of this new tax would</p>
+      <p begin="01:18:04.958" end="01:18:11.583">be it is a decreasing tax for usage. And</p>
+      <p begin="01:18:11.583" end="01:18:12.375">then we can also just</p>
+      <p begin="01:18:12.375" end="01:18:14.791">look at the trends as a time</p>
+      <p begin="01:18:14.791" end="01:18:16.541">series for it where we have that shock</p>
+      <p begin="01:18:16.541" end="01:18:21.208">it's hit at T0 here</p>
+      <p begin="01:18:21.208" end="01:18:24.000">between maybe like around 120.</p>
+      <p begin="01:18:25.708" end="01:18:27.500">The intercept is lower and it becomes</p>
+      <p begin="01:18:27.500" end="01:18:30.000">higher after our intervention. So this</p>
+      <p begin="01:18:30.000" end="01:18:31.125">would just be a pre-post.</p>
+      <p begin="01:18:35.958" end="01:18:37.625">I'm just providing a bunch of different</p>
+      <p begin="01:18:37.625" end="01:18:39.250">visualizations how this might look</p>
+      <p begin="01:18:40.000" end="01:18:41.375">where we have our interrupted time series</p>
+      <p begin="01:18:41.375" end="01:18:42.250">for the observed versus</p>
+      <p begin="01:18:42.250" end="01:18:43.833">fitted versus counterfactual.</p>
+      <p begin="01:18:44.708" end="01:18:47.625">So the fitted line where we have our</p>
+      <p begin="01:18:47.625" end="01:18:48.625">observed data rather here</p>
+      <p begin="01:18:48.625" end="01:18:51.666">and here, going up, we have our</p>
+      <p begin="01:18:51.666" end="01:18:54.791">counterfactual without the intervention,</p>
+      <p begin="01:18:55.333" end="01:18:56.833">the red line, and then our</p>
+      <p begin="01:18:56.833" end="01:18:58.041">fitted for our interrupted</p>
+      <p begin="01:18:58.166" end="01:19:04.166">time series in here. So another time</p>
+      <p begin="01:19:04.166" end="01:19:05.708">series concept is a switchback</p>
+      <p begin="01:19:05.708" end="01:19:06.833">experiment. This is a</p>
+      <p begin="01:19:06.833" end="01:19:08.666">randomized experimental design and which</p>
+      <p begin="01:19:08.666" end="01:19:09.666">treatment assignment varies</p>
+      <p begin="01:19:09.666" end="01:19:11.791">across time blocks. So rather</p>
+      <p begin="01:19:11.791" end="01:19:14.416">than across individual units. So the</p>
+      <p begin="01:19:14.416" end="01:19:16.333">entire system is exposed to the same</p>
+      <p begin="01:19:16.333" end="01:19:18.125">random, the same conditions</p>
+      <p begin="01:19:18.250" end="01:19:20.708">during each block. So formally we would</p>
+      <p begin="01:19:20.708" end="01:19:23.000">have our Z sub T as an</p>
+      <p begin="01:19:23.000" end="01:19:25.666">element of 0 to 1, whereas Z sub T</p>
+      <p begin="01:19:25.708" end="01:19:27.500">indicates that the whole system is in a</p>
+      <p begin="01:19:27.500" end="01:19:28.916">treatment or control during the time</p>
+      <p begin="01:19:28.916" end="01:19:31.541">block T. So instead of</p>
+      <p begin="01:19:31.541" end="01:19:34.916">subbing, assigning Z sub I to individual</p>
+      <p begin="01:19:34.916" end="01:19:37.500">users, we assign Z sub T to time</p>
+      <p begin="01:19:37.500" end="01:19:39.833">intervals. So the intuition</p>
+      <p begin="01:19:39.833" end="01:19:41.916">of this is an environment with strong</p>
+      <p begin="01:19:41.916" end="01:19:43.208">interaction between units,</p>
+      <p begin="01:19:43.791" end="01:19:45.333">individual level randomization</p>
+      <p begin="01:19:45.375" end="01:19:47.750">causes interference. So one user's</p>
+      <p begin="01:19:47.750" end="01:19:49.791">treatment effect affects</p>
+      <p begin="01:19:49.791" end="01:19:51.500">another tree's use outcome.</p>
+      <p begin="01:19:52.500" end="01:19:55.416">So we have a market equilibria shift and</p>
+      <p begin="01:19:55.416" end="01:19:57.416">platform dynamics change. So switchback</p>
+      <p begin="01:19:57.416" end="01:19:59.000">experiment solved this by treating the</p>
+      <p begin="01:19:59.000" end="01:20:00.750">entire environment at once</p>
+      <p begin="01:20:00.750" end="01:20:03.000">during a time window. So the</p>
+      <p begin="01:20:03.000" end="01:20:04.958">core features of this is that we have a</p>
+      <p begin="01:20:04.958" end="01:20:05.916">unit of randomization,</p>
+      <p begin="01:20:05.916" end="01:20:06.875">which is our time block.</p>
+      <p begin="01:20:07.541" end="01:20:09.208">We have a unit of analysis, which is</p>
+      <p begin="01:20:09.208" end="01:20:10.708">system level outcomes or</p>
+      <p begin="01:20:10.708" end="01:20:12.458">user outcomes indexed by time.</p>
+      <p begin="01:20:13.083" end="01:20:15.000">The purpose of this is to mitigate cross</p>
+      <p begin="01:20:15.000" end="01:20:16.666">unit interference. And</p>
+      <p begin="01:20:16.666" end="01:20:17.583">then we have a structure with</p>
+      <p begin="01:20:17.583" end="01:20:19.250">alternating treatment and control over</p>
+      <p begin="01:20:19.250" end="01:20:20.916">time. So an example of</p>
+      <p begin="01:20:20.916" end="01:20:22.666">this might be from 9 to 930,</p>
+      <p begin="01:20:22.666" end="01:20:25.125">we have a control from 930 to 1030 of a</p>
+      <p begin="01:20:25.125" end="01:20:26.750">treatment from 10 to 1030 is</p>
+      <p begin="01:20:26.750" end="01:20:28.541">control. And then from 1030 to</p>
+      <p begin="01:20:28.541" end="01:20:31.250">11, it would be treatment. So why do we</p>
+      <p begin="01:20:31.250" end="01:20:32.916">use this? Switchback designs</p>
+      <p begin="01:20:32.916" end="01:20:34.416">are common when the treatment</p>
+      <p begin="01:20:34.541" end="01:20:36.958">changes the marketplace environment. So</p>
+      <p begin="01:20:36.958" end="01:20:38.500">supply and demand and</p>
+      <p begin="01:20:38.500" end="01:20:40.500">tract, network spillovers are</p>
+      <p begin="01:20:40.500" end="01:20:43.166">unavoidable. The system has equilibrium</p>
+      <p begin="01:20:43.166" end="01:20:45.125">dynamics. Examples of this</p>
+      <p begin="01:20:45.125" end="01:20:46.458">would be like surge pricing and</p>
+      <p begin="01:20:46.500" end="01:20:49.708">ride share markets, ranking algorithms to</p>
+      <p begin="01:20:49.708" end="01:20:51.041">where they're changing</p>
+      <p begin="01:20:51.041" end="01:20:52.291">our recommendation system,</p>
+      <p begin="01:20:53.208" end="01:20:54.958">marketplace fee adjustments, and then</p>
+      <p begin="01:20:54.958" end="01:20:57.333">congestion pricing experiments for it.</p>
+      <p begin="01:20:58.583" end="01:21:01.250">But the identification logic is the same.</p>
+      <p begin="01:21:01.250" end="01:21:01.750">Basically, we have</p>
+      <p begin="01:21:01.750" end="01:21:02.583">the treatment effect is</p>
+      <p begin="01:21:02.583" end="01:21:04.791">identified by comparing outcomes across</p>
+      <p begin="01:21:04.791" end="01:21:06.750">treated and untreated time</p>
+      <p begin="01:21:06.750" end="01:21:08.333">blocks. Because everyone is</p>
+      <p begin="01:21:08.333" end="01:21:10.500">exposed simultaneously, there is no cross</p>
+      <p begin="01:21:10.500" end="01:21:11.875">group contamination within a</p>
+      <p begin="01:21:11.875" end="01:21:13.583">block. But the key assumption</p>
+      <p begin="01:21:14.083" end="01:21:16.291">is that conditional on time trials and</p>
+      <p begin="01:21:16.291" end="01:21:17.708">seasonality treatment</p>
+      <p begin="01:21:17.708" end="01:21:18.916">assignment across blocks</p>
+      <p begin="01:21:19.041" end="01:21:21.666">independent of potential outcomes. This</p>
+      <p begin="01:21:21.666" end="01:21:23.166">requires randomized block</p>
+      <p begin="01:21:23.166" end="01:21:25.291">ordering, proper control for</p>
+      <p begin="01:21:25.291" end="01:21:27.875">time structure, no systematic alignment</p>
+      <p begin="01:21:27.875" end="01:21:29.166">with predictable cycles.</p>
+      <p begin="01:21:30.458" end="01:21:33.125">But just as a summary to</p>
+      <p begin="01:21:33.125" end="01:21:34.666">remember, the switchback experiment is a</p>
+      <p begin="01:21:34.666" end="01:21:36.333">randomized design that alternates</p>
+      <p begin="01:21:36.333" end="01:21:37.666">treatment and control across</p>
+      <p begin="01:21:37.666" end="01:21:40.041">time intervals, so that the entire system</p>
+      <p begin="01:21:40.041" end="01:21:40.375">is treated</p>
+      <p begin="01:21:40.375" end="01:21:42.458">simultaneously within each interval.</p>
+      <p begin="01:21:43.125" end="01:21:45.083">And this is going to reduce cross unit</p>
+      <p begin="01:21:45.083" end="01:21:46.500">interference and</p>
+      <p begin="01:21:46.500" end="01:21:47.916">interactive environments.</p>
+      <p begin="01:21:50.416" end="01:21:51.833">So here's maybe an example of the</p>
+      <p begin="01:21:51.833" end="01:21:52.375">switchback experiment</p>
+      <p begin="01:21:52.375" end="01:21:53.708">where we're going between</p>
+      <p begin="01:21:54.250" end="01:21:57.500">our control and our treatment mean and</p>
+      <p begin="01:21:57.500" end="01:21:57.958">then our treatment</p>
+      <p begin="01:21:57.958" end="01:22:00.541">blocks. So we have here,</p>
+      <p begin="01:22:02.291" end="01:22:04.041">and you can notice the variation</p>
+      <p begin="01:22:04.041" end="01:22:07.125">depending on our</p>
+      <p begin="01:22:07.125" end="01:22:09.500">blocking over time for it.</p>
+      <p begin="01:22:13.000" end="01:22:14.125">Okay, we're in a wrap up with talking</p>
+      <p begin="01:22:14.125" end="01:22:16.000">about sequential testing and peaking.</p>
+      <p begin="01:22:16.625" end="01:22:18.000">So the core problem is this in big data</p>
+      <p begin="01:22:18.000" end="01:22:19.416">systems, we rarely run a test</p>
+      <p begin="01:22:19.416" end="01:22:21.041">once and then check it once.</p>
+      <p begin="01:22:21.958" end="01:22:23.666">Instead, we monitor dashboards daily,</p>
+      <p begin="01:22:24.875" end="01:22:25.875">recompute P values</p>
+      <p begin="01:22:25.875" end="01:22:27.708">repeatedly, look at treatment effects</p>
+      <p begin="01:22:27.708" end="01:22:30.250">every hour, and then stop only see</p>
+      <p begin="01:22:30.250" end="01:22:32.541">significance. This behavior is called</p>
+      <p begin="01:22:32.541" end="01:22:33.666">peaking or sequential</p>
+      <p begin="01:22:33.750" end="01:22:37.250">testing without correction. So why does</p>
+      <p begin="01:22:37.250" end="01:22:38.583">repeated testing inflate</p>
+      <p begin="01:22:38.583" end="01:22:40.708">false positives? In class of</p>
+      <p begin="01:22:40.708" end="01:22:42.541">hypothesis testing, we assume that our</p>
+      <p begin="01:22:42.541" end="01:22:43.416">type one error is equal</p>
+      <p begin="01:22:43.416" end="01:22:45.666">to alpha. So in many cases,</p>
+      <p begin="01:22:45.666" end="01:22:48.708">it's going to be 0.05. This is true only</p>
+      <p begin="01:22:48.708" end="01:22:50.333">if we test once. If we test</p>
+      <p begin="01:22:50.333" end="01:22:51.333">repeatedly, the probability</p>
+      <p begin="01:22:51.500" end="01:22:53.750">of at least one false positive increases.</p>
+      <p begin="01:22:54.541" end="01:22:56.083">If we run k independent</p>
+      <p begin="01:22:56.083" end="01:22:59.041">tests at level alpha, then we</p>
+      <p begin="01:22:59.041" end="01:23:01.416">have at least one false positive is going</p>
+      <p begin="01:23:01.416" end="01:23:03.833">to be one minus the quantity</p>
+      <p begin="01:23:03.833" end="01:23:05.166">one minus alpha raise to k.</p>
+      <p begin="01:23:05.750" end="01:23:07.375">So an example, let's say we have our</p>
+      <p begin="01:23:07.375" end="01:23:10.458">alpha is 0.05. If we test 25</p>
+      <p begin="01:23:10.458" end="01:23:12.208">times, this becomes one minus</p>
+      <p begin="01:23:12.875" end="01:23:16.375">0.95 raise to the 20th or about 0.64,</p>
+      <p begin="01:23:16.875" end="01:23:17.666">which would mean there's a</p>
+      <p begin="01:23:17.666" end="01:23:19.750">64% chance of at least one false</p>
+      <p begin="01:23:19.750" end="01:23:23.333">positive, even if the null hypothesis is</p>
+      <p begin="01:23:23.333" end="01:23:26.083">true. So why does big N make</p>
+      <p begin="01:23:26.083" end="01:23:27.958">this work? We're smart sample</p>
+      <p begin="01:23:27.958" end="01:23:29.375">sizes, standard errors are going to</p>
+      <p begin="01:23:29.375" end="01:23:31.250">shrink, time differences become</p>
+      <p begin="01:23:31.250" end="01:23:32.833">statistically significant,</p>
+      <p begin="01:23:33.125" end="01:23:35.666">and noise appears meaningful. So</p>
+      <p begin="01:23:35.666" end="01:23:37.500">formally, we have our</p>
+      <p begin="01:23:37.500" end="01:23:39.666">standard error is going to be</p>
+      <p begin="01:23:39.916" end="01:23:41.500">tau hat is proportional to</p>
+      <p begin="01:23:41.500" end="01:23:42.958">one over the square root of N.</p>
+      <p begin="01:23:43.583" end="01:23:45.791">Some cases N approaches infinity, even</p>
+      <p begin="01:23:45.791" end="01:23:47.291">very small effect sizes</p>
+      <p begin="01:23:47.291" end="01:23:49.416">produce large case statistics.</p>
+      <p begin="01:23:49.958" end="01:23:51.541">So this creates a dangerous combination.</p>
+      <p begin="01:23:51.958" end="01:23:53.625">We have repeated testing issues,</p>
+      <p begin="01:23:54.166" end="01:23:56.833">very large N real time dashboards. And</p>
+      <p begin="01:23:56.833" end="01:23:57.875">the result is basically just</p>
+      <p begin="01:23:57.875" end="01:23:58.958">going to be you will almost</p>
+      <p begin="01:23:59.041" end="01:24:01.791">always find something significant under</p>
+      <p begin="01:24:01.791" end="01:24:04.541">these conditions. So</p>
+      <p begin="01:24:04.541" end="01:24:06.750">sequential testing occurs when</p>
+      <p begin="01:24:06.750" end="01:24:08.833">H don't as tested repeatedly as data</p>
+      <p begin="01:24:08.833" end="01:24:11.291">accumulates, instead of we collect a full</p>
+      <p begin="01:24:11.291" end="01:24:12.500">sample and test one.</p>
+      <p begin="01:24:13.208" end="01:24:15.833">So we do this, we collect some data we</p>
+      <p begin="01:24:15.833" end="01:24:17.125">test, we collect more data we</p>
+      <p begin="01:24:17.125" end="01:24:18.458">test again, and then we repeat</p>
+      <p begin="01:24:18.958" end="01:24:21.666">for this. The statistical properties of</p>
+      <p begin="01:24:21.666" end="01:24:24.000">tests change when the stopping time</p>
+      <p begin="01:24:24.000" end="01:24:24.791">depends on the data.</p>
+      <p begin="01:24:25.583" end="01:24:26.791">And this invalidates</p>
+      <p begin="01:24:26.791" end="01:24:30.250">naive p values for it.</p>
+      <p begin="01:24:31.458" end="01:24:33.333">There's just a minimal workflow we have</p>
+      <p begin="01:24:33.333" end="01:24:36.083">our data frame, we're</p>
+      <p begin="01:24:36.083" end="01:24:37.000">going to order a date,</p>
+      <p begin="01:24:37.666" end="01:24:39.291">we have test and training. In this</p>
+      <p begin="01:24:39.291" end="01:24:40.000">example, we're going to</p>
+      <p begin="01:24:40.000" end="01:24:41.916">fit a model in this case,</p>
+      <p begin="01:24:42.458" end="01:24:45.166">and then we're going to predict for our</p>
+      <p begin="01:24:45.166" end="01:24:48.458">left out time. And here's the same</p>
+      <p begin="01:24:48.958" end="01:24:52.250">code implementation where we're looking</p>
+      <p begin="01:24:52.250" end="01:24:54.250">at differences here</p>
+      <p begin="01:24:54.250" end="01:24:55.333">and our blue table facts</p>
+      <p begin="01:24:55.333" end="01:24:58.500">here and here for just an arbitrary</p>
+      <p begin="01:24:58.500" end="01:25:02.041">intervention. So as just a closing</p>
+      <p begin="01:25:02.041" end="01:25:03.333">reminder for time series,</p>
+      <p begin="01:25:03.500" end="01:25:04.833">error work is going to be sensitive to</p>
+      <p begin="01:25:04.833" end="01:25:06.458">the exact time for it</p>
+      <p begin="01:25:06.458" end="01:25:08.416">aggregation rules, missing</p>
+      <p begin="01:25:08.416" end="01:25:10.041">imputation and leakage for future</p>
+      <p begin="01:25:10.041" end="01:25:12.250">windows. So just always log</p>
+      <p begin="01:25:12.250" end="01:25:13.541">we'll have your split rule,</p>
+      <p begin="01:25:13.541" end="01:25:15.125">your data snapshot and your pre</p>
+      <p begin="01:25:15.125" end="01:25:17.083">processing choices. And then just keep these questions</p>
+      <p begin="01:25:17.125" end="01:25:19.916">in mind. So we're just telling the kids</p>
+      <p begin="01:25:19.916" end="01:25:21.041">happen in your own work,</p>
+      <p begin="01:25:21.541" end="01:25:22.958">what outcomes are most fragile</p>
+      <p begin="01:25:22.958" end="01:25:25.333">to instrumentation shifts, when you want</p>
+      <p begin="01:25:25.333" end="01:25:27.708">to do a B tests for time series problems,</p>
+      <p begin="01:25:28.250" end="01:25:28.916">and what makes a good</p>
+      <p begin="01:25:28.916" end="01:25:30.708">placebo test for temporal design.</p>
+    </div>
+  </body>
+</tt>
