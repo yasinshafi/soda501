@@ -1,3 +1,4 @@
+
 # Big Data Experiments as Data Pipelines
 # This script provides a complete framework for reproducible large-scale experimentation
 # Authors should modify and extend the code to meet their specific needs
@@ -15,9 +16,11 @@
 # Install packages manually (kept as comments for teaching).
 # In a real project, install once in a virtual environment.
 #
-# pip install numpy pandas scipy statsmodels matplotlib
+# pip install numpy pandas scipy statsmodels matplotlib linearmodels
 
 import os
+import sys
+import platform
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -25,6 +28,7 @@ import matplotlib.pyplot as plt
 import scipy.special as sc
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
+from linearmodels.iv import IV2SLS
 
 np.random.seed(123)
 
@@ -79,7 +83,7 @@ logging.info("Generating synthetic user table")
 
 user_id = np.arange(1, n_users + 1)
 
-platform = np.random.choice(
+platform_var = np.random.choice(
     ["ios", "android", "web"],
     size=n_users,
     replace=True,
@@ -99,7 +103,7 @@ signup_cohort = np.random.choice(
 
 users = pd.DataFrame({
     "user_id": user_id,
-    "platform": platform,
+    "platform": platform_var,
     "cluster_id": cluster_id,
     "baseline_activity": baseline_activity,
     "signup_cohort": signup_cohort
@@ -180,6 +184,9 @@ logs["click_rate"] = logs["base_rate"] * np.exp(0.05 * logs["treat"])
 logs["clicks"] = np.random.poisson(lam=logs["click_rate"].to_numpy())
 
 # Purchase probability (logistic)
+# BUG FIX: original script referenced logs["recieved"] which does not exist at this stage.
+# Treatment effect on purchases operates through treat here (in Step 8B it will operate
+# through received instead, as required by Task 5).
 # logistic(x) = 1 / (1 + exp(-x))
 lin = (
     -5.0
@@ -198,9 +205,9 @@ logs["active"] = ((logs["clicks"] > 0) | (logs["purchase"] > 0)).astype(int)
 
 # Apply logging dropout by setting outcomes to missing
 # (No if/else: use .where)
-logs["clicks"] = logs["clicks"].where(logs["logged_ok"] == 1, np.nan)
+logs["clicks"]   = logs["clicks"].where(logs["logged_ok"] == 1, np.nan)
 logs["purchase"] = logs["purchase"].where(logs["logged_ok"] == 1, np.nan)
-logs["active"] = logs["active"].where(logs["logged_ok"] == 1, np.nan)
+logs["active"]   = logs["active"].where(logs["logged_ok"] == 1, np.nan)
 
 # Save raw logs
 logs.to_csv("data/raw/event_logs.csv", index=False)
@@ -227,6 +234,19 @@ user = (
 
 # converted: any purchase > 0
 user["converted"] = (user["post_purchases"] > 0).astype(int)
+
+# TASK 4: retention outcomes
+# days_active = number of days with active == 1 (ignore missing days)
+ret = (
+    logs.groupby("user_id", as_index=False)
+    .agg(days_active=("active", "sum"))
+)
+
+# Merge into analysis-ready user table
+user = user.merge(ret, on="user_id", how="left")
+
+# retained_any = 1 if days_active >= 1 else 0
+user["retained_any"] = (user["days_active"] >= 1).astype(int)
 
 user.to_csv("data/processed/analysis_dataset.csv", index=False)
 logging.info("Saved: data/processed/analysis_dataset.csv")
@@ -270,15 +290,23 @@ smd_table.to_csv("outputs/tables/balance_smd.csv", index=False)
 
 logging.info("Estimating treatment effects (ATE)")
 
-ate_converted = user.loc[user["treat"] == 1, "converted"].mean() - user.loc[user["treat"] == 0, "converted"].mean()
-ate_purchases = user.loc[user["treat"] == 1, "post_purchases"].mean() - user.loc[user["treat"] == 0, "post_purchases"].mean()
-ate_clicks    = user.loc[user["treat"] == 1, "post_clicks"].mean() - user.loc[user["treat"] == 0, "post_clicks"].mean()
+ate_converted    = user.loc[user["treat"] == 1, "converted"].mean()    - user.loc[user["treat"] == 0, "converted"].mean()
+ate_purchases    = user.loc[user["treat"] == 1, "post_purchases"].mean() - user.loc[user["treat"] == 0, "post_purchases"].mean()
+ate_clicks       = user.loc[user["treat"] == 1, "post_clicks"].mean()  - user.loc[user["treat"] == 0, "post_clicks"].mean()
+ate_days_active  = user.loc[user["treat"] == 1, "days_active"].mean()  - user.loc[user["treat"] == 0, "days_active"].mean()
+ate_retained_any = user.loc[user["treat"] == 1, "retained_any"].mean() - user.loc[user["treat"] == 0, "retained_any"].mean()
 
+# All outcomes together
 ate_simple = pd.DataFrame({
-    "outcome": ["converted", "post_purchases", "post_clicks"],
-    "ate_diff_in_means": [ate_converted, ate_purchases, ate_clicks]
+    "outcome": ["converted", "post_purchases", "post_clicks", "days_active", "retained_any"],
+    "ate_diff_in_means": [ate_converted, ate_purchases, ate_clicks, ate_days_active, ate_retained_any]
 })
 ate_simple.to_csv("outputs/tables/ate_diff_in_means.csv", index=False)
+
+# TASK 4: save retention outcomes separately as required
+ate_retention = ate_simple[ate_simple["outcome"].isin(["days_active", "retained_any"])].copy()
+ate_retention.to_csv("outputs/tables/ate_retention.csv", index=False)
+logging.info("Saved: outputs/tables/ate_retention.csv")
 
 # Regression adjustment with cluster-robust SE
 # Note: statsmodels uses C(...) for categorical variables (do NOT define variable named C)
@@ -292,8 +320,20 @@ fit_pur = smf.ols(
     data=user
 ).fit(cov_type="cluster", cov_kwds={"groups": user["cluster_id"]})
 
+fit_days = smf.ols(
+    "days_active ~ treat + baseline_activity + pre_metric + C(block)",
+    data=user
+).fit(cov_type="cluster", cov_kwds={"groups": user["cluster_id"]})
+
+fit_ret = smf.ols(
+    "retained_any ~ treat + baseline_activity + pre_metric + C(block)",
+    data=user
+).fit(cov_type="cluster", cov_kwds={"groups": user["cluster_id"]})
+
 fit_conv.summary2().tables[1].to_csv("outputs/tables/regression_converted.csv")
 fit_pur.summary2().tables[1].to_csv("outputs/tables/regression_purchases.csv")
+fit_days.summary2().tables[1].to_csv("outputs/tables/regression_days_active.csv")
+fit_ret.summary2().tables[1].to_csv("outputs/tables/regression_retained_any.csv")
 
 ###############################################
 # STEP 7: VISUALIZATIONS (BIG DATA EXPERIMENT DIAGNOSTICS)
@@ -389,14 +429,106 @@ plt.savefig("outputs/figures/aa_placebo_hist.png", dpi=150)
 plt.close()
 
 ###############################################
+# STEP 8B: NONCOMPLIANCE — ITT vs TOT (IV)
+# TASK 5
+###############################################
+
+logging.info("Simulating noncompliance and estimating ITT vs TOT (LATE)")
+
+# Compliance probability: p = 0.60
+# Meaning 40% of treated users do not actually receive the treatment.
+# Controls always have received = 0 (no one in control self-selects into treatment).
+p_comply = 0.60
+logging.info(f"Compliance probability p = {p_comply}")
+
+np.random.seed(123)
+
+user["received"] = 0
+treat_mask = user["treat"] == 1
+user.loc[treat_mask, "received"] = (
+    np.random.rand(treat_mask.sum()) < p_comply
+).astype(int)
+
+logging.info(f"Compliance rate in treated arm: {user.loc[treat_mask, 'received'].mean():.3f}")
+
+# Redefine outcome so that the treatment effect operates through received, not treat.
+# We use post_clicks as the base and add a treatment effect only for those who received.
+# True effect of receiving treatment = 0.50 extra clicks on average.
+np.random.seed(456)
+user["outcome_iv"] = (
+    user["post_clicks"]
+    + 0.50 * user["received"]
+    + np.random.normal(0, 0.5, size=len(user))
+)
+
+# (a) ITT: regress outcome_iv on treat (assignment, not receipt)
+# ITT dilutes the true effect because some treated users never received.
+fit_itt = smf.ols(
+    "outcome_iv ~ treat + baseline_activity + pre_metric + C(block)",
+    data=user
+).fit(cov_type="cluster", cov_kwds={"groups": user["cluster_id"]})
+
+itt_estimate = fit_itt.params["treat"]
+itt_se       = fit_itt.bse["treat"]
+itt_pval     = fit_itt.pvalues["treat"]
+
+logging.info(f"ITT estimate: {itt_estimate:.4f} | SE: {itt_se:.4f} | p: {itt_pval:.4f}")
+
+# (b) TOT / LATE via 2SLS IV
+# Instrument: treat (random assignment)
+# Endogenous variable: received (actual receipt)
+# Exogenous controls: baseline_activity, pre_metric (block dummies excluded for simplicity)
+iv_data = user[["outcome_iv", "treat", "received", "baseline_activity", "pre_metric", "cluster_id"]].dropna().copy()
+
+exog_iv  = sm.add_constant(iv_data[["baseline_activity", "pre_metric"]])
+endog_iv = iv_data[["received"]]
+instr_iv = iv_data[["treat"]]
+
+fit_iv = IV2SLS(
+    dependent=iv_data["outcome_iv"],
+    exog=exog_iv,
+    endog=endog_iv,
+    instruments=instr_iv
+).fit(cov_type="clustered", clusters=iv_data["cluster_id"])
+
+tot_estimate = fit_iv.params["received"]
+tot_se       = fit_iv.std_errors["received"]
+tot_pval     = fit_iv.pvalues["received"]
+
+logging.info(f"TOT/LATE estimate: {tot_estimate:.4f} | SE: {tot_se:.4f} | p: {tot_pval:.4f}")
+
+# Save ITT vs TOT side-by-side
+itt_vs_tot = pd.DataFrame({
+    "estimand":  ["ITT", "TOT_LATE"],
+    "estimate":  [itt_estimate, tot_estimate],
+    "std_error": [itt_se, tot_se],
+    "p_value":   [itt_pval, tot_pval],
+    "p_comply":  [p_comply, p_comply]
+})
+itt_vs_tot.to_csv("outputs/tables/itt_vs_tot.csv", index=False)
+logging.info("Saved: outputs/tables/itt_vs_tot.csv")
+
+# Figure 4: ITT vs TOT point estimates with approximate 95% CI
+plt.figure()
+plt.errorbar(
+    [0, 1],
+    [itt_estimate, tot_estimate],
+    yerr=[1.96 * itt_se, 1.96 * tot_se],
+    fmt="o", capsize=6, markersize=8
+)
+plt.xticks([0, 1], ["ITT", "TOT / LATE"])
+plt.title(f"ITT vs TOT Estimates (p_comply = {p_comply})")
+plt.ylabel("Estimated effect on outcome_iv (clicks)")
+plt.axhline(0, color="grey", linestyle="--", linewidth=0.8)
+plt.tight_layout()
+plt.savefig("outputs/figures/itt_vs_tot.png", dpi=150)
+plt.close()
+
+###############################################
 # STEP 9: SAVE ENVIRONMENT INFO
 ###############################################
 
 logging.info("Saving environment information")
-
-# Save a lightweight environment snapshot
-import sys
-import platform
 
 env_lines = [
     f"Python: {sys.version}",

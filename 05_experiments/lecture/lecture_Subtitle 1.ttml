@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xml:lang="en" xmlns="http://www.w3.org/ns/ttml" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" xmlns:tts="http://www.w3.org/ns/ttml#styling" xmlns:ttp="http://www.w3.org/ns/ttml#parameter" xmlns:ittp="http://www.w3.org/ns/ttml/profile/imsc1#parameter" xmlns:itts="http://www.w3.org/ns/ttml/profile/imsc1#styling" ttp:profile="http://www.w3.org/ns/ttml/profile/imsc1/text" ttp:frameRate="24" ttp:timeBase="media">
+  <head>
+    <styling>
+      <style xml:id="s0" tts:color="#ffffff" tts:opacity="1" tts:fontSize="100%" tts:fontFamily="proportionalSansSerif" tts:fontWeight="bold" tts:textOutline="#ffffff 1px" tts:textAlign="center"/>
+    </styling>
+    <layout>
+      <region xml:id="r0" tts:origin="0.000% 70.343%" tts:extent="100.000% 19.444%" tts:displayAlign="center"/>
+    </layout>
+  </head>
+  <body>
+    <div xml:id="d0" region="r0" style="s0">
+      <p begin="01:00:04.500" end="01:00:05.833">Hi everyone, welcome. Today we're going</p>
+      <p begin="01:00:05.833" end="01:00:07.916">to be covering RCTs and large experiments</p>
+      <p begin="01:00:07.916" end="01:00:09.041">in big data settings.</p>
+      <p begin="01:00:09.791" end="01:00:11.666">This lecture has two goals. First, I want</p>
+      <p begin="01:00:11.666" end="01:00:13.291">to reinforce the poor logic and</p>
+      <p begin="01:00:13.291" end="01:00:14.500">randomized control trials.</p>
+      <p begin="01:00:15.208" end="01:00:16.541">Randomization is still the cleanest way</p>
+      <p begin="01:00:16.541" end="01:00:18.208">that we have to answer causal questions.</p>
+      <p begin="01:00:18.708" end="01:00:20.666">In my view, and I'll say this explicitly,</p>
+      <p begin="01:00:21.000" end="01:00:21.958">RCTs remain the gold</p>
+      <p begin="01:00:21.958" end="01:00:22.791">standard for research.</p>
+      <p begin="01:00:23.708" end="01:00:24.250">And they're feasible</p>
+      <p begin="01:00:24.250" end="01:00:25.083">and well implemented.</p>
+      <p begin="01:00:25.958" end="01:00:27.791">Second, I want to show you that logic</p>
+      <p begin="01:00:27.791" end="01:00:29.458">attracts the realities of big data.</p>
+      <p begin="01:00:30.666" end="01:00:32.166">Doing things like logging pipelines,</p>
+      <p begin="01:00:32.500" end="01:00:33.500">massive sample sizes.</p>
+      <p begin="01:00:34.791" end="01:00:36.541">Interference, multiple testing.</p>
+      <p begin="01:00:37.625" end="01:00:38.541">And the fact that statistical</p>
+      <p begin="01:00:38.541" end="01:00:39.666">significance becomes cheap</p>
+      <p begin="01:00:39.666" end="01:00:40.791">when your end is really huge.</p>
+      <p begin="01:00:41.708" end="01:00:43.041">So the theme of today is not to</p>
+      <p begin="01:00:43.041" end="01:00:44.083">experiment solve everything,</p>
+      <p begin="01:00:44.500" end="01:00:46.166">it's that experiments change the problem.</p>
+      <p begin="01:00:46.458" end="01:00:48.125">They eliminate some threats to inference</p>
+      <p begin="01:00:48.125" end="01:00:49.208">and introduce others.</p>
+      <p begin="01:00:53.125" end="01:00:54.791">So experiments are powerful because they</p>
+      <p begin="01:00:54.791" end="01:00:56.250">help answer causal questions and</p>
+      <p begin="01:00:56.250" end="01:00:57.708">observational data are ambiguous.</p>
+      <p begin="01:00:58.416" end="01:00:59.666">With observational data, you're always</p>
+      <p begin="01:00:59.666" end="01:01:01.000">asking whether the treatment and the</p>
+      <p begin="01:01:01.000" end="01:01:02.500">control group's different in ways you</p>
+      <p begin="01:01:02.500" end="01:01:04.083">didn't observe or couldn't measure.</p>
+      <p begin="01:01:04.541" end="01:01:06.000">Randomization solves that</p>
+      <p begin="01:01:06.000" end="01:01:07.541">on average by construction.</p>
+      <p begin="01:01:08.583" end="01:01:09.500">The big data changes the</p>
+      <p begin="01:01:09.500" end="01:01:10.541">scale and the failure modes.</p>
+      <p begin="01:01:11.166" end="01:01:12.166">Let me walk through the</p>
+      <p begin="01:01:12.166" end="01:01:13.375">four listed on this table.</p>
+      <p begin="01:01:14.458" end="01:01:16.416">So first, massive sample sizes.</p>
+      <p begin="01:01:18.000" end="01:01:19.916">Right here, this is a tiny</p>
+      <p begin="01:01:19.916" end="01:01:21.166">effect become detectable.</p>
+      <p begin="01:01:21.875" end="01:01:23.541">So you can get p-values near zero for</p>
+      <p begin="01:01:23.541" end="01:01:24.250">effects that have no</p>
+      <p begin="01:01:24.250" end="01:01:25.500">practical importance whatsoever.</p>
+      <p begin="01:01:26.666" end="01:01:28.208">So second, with logging pipelines,</p>
+      <p begin="01:01:29.458" end="01:01:30.833">outcomes often come from logging</p>
+      <p begin="01:01:30.833" end="01:01:31.750">pipelines, not from</p>
+      <p begin="01:01:31.750" end="01:01:32.750">carefully designed instruments.</p>
+      <p begin="01:01:33.541" end="01:01:35.291">So that introduces missingness,</p>
+      <p begin="01:01:35.291" end="01:01:36.958">measurement and silent breakage.</p>
+      <p begin="01:01:38.416" end="01:01:41.250">Third, inference for big social systems</p>
+      <p begin="01:01:41.250" end="01:01:42.166">often involves</p>
+      <p begin="01:01:42.166" end="01:01:43.791">interference and spillovers.</p>
+      <p begin="01:01:44.291" end="01:01:46.166">So users talk to each other, content</p>
+      <p begin="01:01:46.166" end="01:01:47.625">diffuses, networks overlap.</p>
+      <p begin="01:01:48.541" end="01:01:50.375">Several fails more often than we'd like.</p>
+      <p begin="01:01:51.500" end="01:01:53.208">And fourth, large scale experimentation</p>
+      <p begin="01:01:53.208" end="01:01:55.125">increases the risk of multiple testing</p>
+      <p begin="01:01:55.125" end="01:01:56.583">and adaptive hypotheses.</p>
+      <p begin="01:01:57.666" end="01:02:01.083">So we're running many variants, outcomes</p>
+      <p begin="01:02:01.083" end="01:02:03.000">and subgroups until something works.</p>
+      <p begin="01:02:04.125" end="01:02:05.333">So the headline here is simple.</p>
+      <p begin="01:02:06.416" end="01:02:08.000">Experiments don't magically save you.</p>
+      <p begin="01:02:08.375" end="01:02:09.708">They change the problems you have.</p>
+      <p begin="01:02:13.125" end="01:02:14.041">So this slide is doing</p>
+      <p begin="01:02:14.041" end="01:02:15.375">important conceptual work.</p>
+      <p begin="01:02:16.125" end="01:02:17.375">An experiment is not just random</p>
+      <p begin="01:02:17.375" end="01:02:19.083">assignment, it's a workflow.</p>
+      <p begin="01:02:20.208" end="01:02:21.500">So here's the things you have to do.</p>
+      <p begin="01:02:21.500" end="01:02:22.083">You have to define</p>
+      <p begin="01:02:22.083" end="01:02:23.958">your unit randomization.</p>
+      <p begin="01:02:24.958" end="01:02:26.916">You have to assign the treatment and</p>
+      <p begin="01:02:26.916" end="01:02:27.750">store that assignment.</p>
+      <p begin="01:02:29.541" end="01:02:30.083">You have to collect</p>
+      <p begin="01:02:30.083" end="01:02:31.541">outcomes often via logs.</p>
+      <p begin="01:02:33.250" end="01:02:34.583">You have to validate your measurement.</p>
+      <p begin="01:02:35.541" end="01:02:36.458">You have to analyze under</p>
+      <p begin="01:02:36.458" end="01:02:37.708">a pre-specified estimate.</p>
+      <p begin="01:02:38.958" end="01:02:39.208">And you have to</p>
+      <p begin="01:02:39.208" end="01:02:40.500">document the entire process.</p>
+      <p begin="01:02:41.625" end="01:02:43.375">In big data settings, failures rarely</p>
+      <p begin="01:02:43.375" end="01:02:44.958">happen at the randomization step.</p>
+      <p begin="01:02:45.291" end="01:02:46.291">They happen when assignments are</p>
+      <p begin="01:02:46.291" end="01:02:47.500">overwritten, when logs</p>
+      <p begin="01:02:47.500" end="01:02:49.041">change and when joins are wrong,</p>
+      <p begin="01:02:49.375" end="01:02:51.125">or when analysts don't agree on what the</p>
+      <p begin="01:02:51.125" end="01:02:52.000">outcome actually is.</p>
+      <p begin="01:02:52.666" end="01:02:54.458">So I want you to think of experiment as</p>
+      <p begin="01:02:54.458" end="01:02:55.791">an end-to-end data pipeline</p>
+      <p begin="01:02:55.791" end="01:02:57.083">with a causal interpretation.</p>
+      <p begin="01:02:57.791" end="01:02:59.000">Now is a single design choice.</p>
+      <p begin="01:03:03.083" end="01:03:03.875">So now let's talk about</p>
+      <p begin="01:03:03.875" end="01:03:04.916">the unit of randomization.</p>
+      <p begin="01:03:05.583" end="01:03:07.291">In big data experiments, common units</p>
+      <p begin="01:03:07.291" end="01:03:08.375">include users or</p>
+      <p begin="01:03:08.375" end="01:03:10.708">accounts, sessions, content items,</p>
+      <p begin="01:03:10.708" end="01:03:12.791">geographic clusters like zip codes or</p>
+      <p begin="01:03:12.791" end="01:03:15.458">counties, and institutions like</p>
+      <p begin="01:03:15.458" end="01:03:17.291">classrooms, schools, workplaces.</p>
+      <p begin="01:03:18.416" end="01:03:20.000">Your choice here matters a lot.</p>
+      <p begin="01:03:20.833" end="01:03:22.791">If you randomize the user level, you</p>
+      <p begin="01:03:22.791" end="01:03:25.083">usually get high power, but you may get</p>
+      <p begin="01:03:25.083" end="01:03:26.708">interference if users interact.</p>
+      <p begin="01:03:27.750" end="01:03:29.458">If you randomize the geographic or</p>
+      <p begin="01:03:29.458" end="01:03:31.458">cluster level, you reduce inference,</p>
+      <p begin="01:03:32.000" end="01:03:34.041">but you also reduce your effective sample</p>
+      <p begin="01:03:34.041" end="01:03:35.500">size and increase your variance.</p>
+      <p begin="01:03:37.333" end="01:03:39.166">I've seen experiments fail simply because</p>
+      <p begin="01:03:39.166" end="01:03:40.791">the unit of randomization didn't match</p>
+      <p begin="01:03:40.791" end="01:03:42.041">when the treatment actually operated.</p>
+      <p begin="01:03:42.958" end="01:03:45.583">For example, a treatment that affects a</p>
+      <p begin="01:03:45.583" end="01:03:46.583">shared feed but is</p>
+      <p begin="01:03:46.583" end="01:03:47.666">randomized at the user level</p>
+      <p begin="01:03:47.750" end="01:03:49.875">can produce misleading estimates because</p>
+      <p begin="01:03:49.875" end="01:03:50.833">users are exposed to</p>
+      <p begin="01:03:50.833" end="01:03:51.500">each other's treatment.</p>
+      <p begin="01:03:52.500" end="01:03:54.750">So the guiding principle is randomized at</p>
+      <p begin="01:03:54.750" end="01:03:55.541">the level where the</p>
+      <p begin="01:03:55.541" end="01:03:56.708">treatment actually operates.</p>
+      <p begin="01:04:00.875" end="01:04:01.625">So this slide is a</p>
+      <p begin="01:04:01.625" end="01:04:03.458">clarification more than anything else.</p>
+      <p begin="01:04:04.208" end="01:04:06.208">A-B tests all randomized control trials</p>
+      <p begin="01:04:06.208" end="01:04:06.916">in a pretty common</p>
+      <p begin="01:04:06.916" end="01:04:09.041">industry and in academic research.</p>
+      <p begin="01:04:09.708" end="01:04:11.166">They are the same ingredients, so we will</p>
+      <p begin="01:04:11.166" end="01:04:13.000">random assignment to A versus B,</p>
+      <p begin="01:04:13.458" end="01:04:14.708">outcomes measured through</p>
+      <p begin="01:04:14.708" end="01:04:17.333">instrumentation, and analysis focused on</p>
+      <p begin="01:04:17.333" end="01:04:18.125">average treatment effects.</p>
+      <p begin="01:04:18.750" end="01:04:20.583">What often gets lost in practice is the</p>
+      <p begin="01:04:20.583" end="01:04:21.750">question, &quot;What is the estimate?&quot;</p>
+      <p begin="01:04:27.125" end="01:04:28.708">So when people say A-B test, they often</p>
+      <p begin="01:04:28.708" end="01:04:30.125">mean we tried two versions</p>
+      <p begin="01:04:30.125" end="01:04:31.125">and looked at what happened.</p>
+      <p begin="01:04:31.750" end="01:04:33.833">When a researcher says RCT, they mean we</p>
+      <p begin="01:04:33.833" end="01:04:35.041">defined a causal question,</p>
+      <p begin="01:04:35.250" end="01:04:36.708">randomized unis, and estimated</p>
+      <p begin="01:04:36.708" end="01:04:38.500">a well-defined causal quantity.</p>
+      <p begin="01:04:39.708" end="01:04:40.916">So this slide is saying these are the</p>
+      <p begin="01:04:40.916" end="01:04:41.708">same thing in principle,</p>
+      <p begin="01:04:41.708" end="01:04:42.875">but only if you're clear</p>
+      <p begin="01:04:42.875" end="01:04:44.250">about what effect you're estimating.</p>
+      <p begin="01:04:44.916" end="01:04:46.666">So that's the best concepts coming in.</p>
+      <p begin="01:04:47.000" end="01:04:47.875">So what is an estimate?</p>
+      <p begin="01:04:48.375" end="01:04:49.875">An estimate is the precise causal</p>
+      <p begin="01:04:49.875" end="01:04:51.250">quantity you're trying to estimate.</p>
+      <p begin="01:04:51.708" end="01:04:53.083">It's not the method, it's not the</p>
+      <p begin="01:04:53.083" end="01:04:54.625">statistic, it's the target</p>
+      <p begin="01:04:54.625" end="01:04:56.166">causal effect defining words.</p>
+      <p begin="01:04:56.958" end="01:04:58.791">So a good estimate answers questions like</p>
+      <p begin="01:04:58.791" end="01:05:00.166">effect of what, on</p>
+      <p begin="01:05:00.166" end="01:05:01.666">whom, compared to what,</p>
+      <p begin="01:05:02.208" end="01:05:03.166">and over what time horizon.</p>
+      <p begin="01:05:03.916" end="01:05:05.500">So as a simple example, the average</p>
+      <p begin="01:05:05.500" end="01:05:06.583">effect of being assigned</p>
+      <p begin="01:05:06.583" end="01:05:08.000">to a new homepage layout</p>
+      <p begin="01:05:08.041" end="01:05:09.916">compared to the old one on user</p>
+      <p begin="01:05:09.916" end="01:05:10.666">click-through rates</p>
+      <p begin="01:05:10.666" end="01:05:11.791">over the next seven days.</p>
+      <p begin="01:05:12.458" end="01:05:14.000">So that sentence defines an estimate.</p>
+      <p begin="01:05:14.708" end="01:05:16.583">If you can state the estimate clearly in</p>
+      <p begin="01:05:16.583" end="01:05:18.250">words, you don't yet know what your</p>
+      <p begin="01:05:18.250" end="01:05:19.208">experiment is estimating.</p>
+      <p begin="01:05:20.416" end="01:05:23.125">So let's talk now about effective</p>
+      <p begin="01:05:23.125" end="01:05:25.666">assignment or ITT intention to trade.</p>
+      <p begin="01:05:26.333" end="01:05:27.875">ITT stands for attention to treat.</p>
+      <p begin="01:05:28.375" end="01:05:29.833">This is the effect of being assigned to a</p>
+      <p begin="01:05:29.833" end="01:05:30.916">treatment regardless of</p>
+      <p begin="01:05:30.916" end="01:05:31.833">whether the unit actually</p>
+      <p begin="01:05:31.875" end="01:05:33.541">complied, engaged, or used it.</p>
+      <p begin="01:05:34.208" end="01:05:35.500">So what's that in plain English?</p>
+      <p begin="01:05:35.791" end="01:05:38.666">Compared to everyone who was assigned A</p>
+      <p begin="01:05:38.666" end="01:05:39.625">with everyone who was</p>
+      <p begin="01:05:39.625" end="01:05:41.166">assigned B, no matter what</p>
+      <p begin="01:05:41.166" end="01:05:41.958">they actually did.</p>
+      <p begin="01:05:42.750" end="01:05:44.041">So why does ITT matter?</p>
+      <p begin="01:05:44.666" end="01:05:46.750">It preserves randomization, it answers</p>
+      <p begin="01:05:46.750" end="01:05:48.000">what happens if we roll</p>
+      <p begin="01:05:48.000" end="01:05:49.458">this out, and it's almost</p>
+      <p begin="01:05:49.458" end="01:05:50.750">always unbiased under</p>
+      <p begin="01:05:50.750" end="01:05:51.791">proper randomization.</p>
+      <p begin="01:05:52.791" end="01:05:55.250">So the A-B test example, you assign 50%</p>
+      <p begin="01:05:55.500" end="01:05:56.541">of users to a new</p>
+      <p begin="01:05:56.541" end="01:05:57.666">recommendation algorithm.</p>
+      <p begin="01:05:58.166" end="01:05:58.916">Some users ignore</p>
+      <p begin="01:05:58.916" end="01:06:00.041">recommendations entirely.</p>
+      <p begin="01:06:00.875" end="01:06:03.000">ITT still compares all assigned users,</p>
+      <p begin="01:06:03.291" end="01:06:04.500">not just those who clicked.</p>
+      <p begin="01:06:05.083" end="01:06:06.833">So this is the default and safest</p>
+      <p begin="01:06:06.833" end="01:06:09.208">estimate in big data experiments.</p>
+      <p begin="01:06:11.000" end="01:06:13.000">So then we have effect among those who</p>
+      <p begin="01:06:13.000" end="01:06:14.750">engaged, or TOT or LAT.</p>
+      <p begin="01:06:15.833" end="01:06:17.541">This is also what people want, but it's</p>
+      <p begin="01:06:17.541" end="01:06:18.375">much trickier to get.</p>
+      <p begin="01:06:19.041" end="01:06:20.666">So depending on context, this is called</p>
+      <p begin="01:06:20.666" end="01:06:22.125">TOT or treatment on</p>
+      <p begin="01:06:22.125" end="01:06:24.583">the treated or late local</p>
+      <p begin="01:06:24.583" end="01:06:25.625">average treatment effect.</p>
+      <p begin="01:06:26.375" end="01:06:27.458">So what are these in plain English?</p>
+      <p begin="01:06:27.958" end="01:06:29.500">The effect of the treatment among units</p>
+      <p begin="01:06:29.500" end="01:06:31.208">that actually received or used it.</p>
+      <p begin="01:06:31.791" end="01:06:33.208">So this is much harder to get.</p>
+      <p begin="01:06:33.541" end="01:06:33.916">It's because</p>
+      <p begin="01:06:33.916" end="01:06:35.833">engagement is not randomization.</p>
+      <p begin="01:06:36.333" end="01:06:38.041">People who engaged are usually different.</p>
+      <p begin="01:06:38.291" end="01:06:39.500">They're more motivated, they're more</p>
+      <p begin="01:06:39.500" end="01:06:41.708">active, they're more interested, and</p>
+      <p begin="01:06:41.708" end="01:06:42.250">they're systematically</p>
+      <p begin="01:06:42.375" end="01:06:43.833">different in unobserved ways.</p>
+      <p begin="01:06:44.583" end="01:06:46.250">So simply comparing engagers to</p>
+      <p begin="01:06:46.250" end="01:06:47.583">non-regained engagers</p>
+      <p begin="01:06:47.583" end="01:06:48.541">breaks randomization.</p>
+      <p begin="01:06:49.750" end="01:06:52.125">It's possible you can sometimes estimate</p>
+      <p begin="01:06:52.125" end="01:06:53.791">this using assignment</p>
+      <p begin="01:06:53.791" end="01:06:55.333">as an instrument, so this</p>
+      <p begin="01:06:55.333" end="01:06:56.625">is using like an instrumental variable</p>
+      <p begin="01:06:56.625" end="01:06:57.958">object, or strong</p>
+      <p begin="01:06:57.958" end="01:06:59.166">assumptions about compliance.</p>
+      <p begin="01:06:59.708" end="01:07:01.916">But this is no longer free causality.</p>
+      <p begin="01:07:01.916" end="01:07:03.125">You must justify your assumptions.</p>
+      <p begin="01:07:04.625" end="01:07:05.916">So many product teams report</p>
+      <p begin="01:07:05.916" end="01:07:07.625">impact among those who clicked.</p>
+      <p begin="01:07:08.208" end="01:07:10.041">The numbers often bias upward because</p>
+      <p begin="01:07:10.041" end="01:07:11.000">users are not randomized.</p>
+      <p begin="01:07:13.583" end="01:07:15.083">Then we have short and long-term effects.</p>
+      <p begin="01:07:15.375" end="01:07:17.291">This is about time horizons, which is</p>
+      <p begin="01:07:17.291" end="01:07:17.916">part of the estimate.</p>
+      <p begin="01:07:18.750" end="01:07:20.208">So for short-run effects, effects</p>
+      <p begin="01:07:20.208" end="01:07:21.541">measured immediately or</p>
+      <p begin="01:07:21.541" end="01:07:22.541">shortly after assignment.</p>
+      <p begin="01:07:23.250" end="01:07:25.541">Examples of them include same session,</p>
+      <p begin="01:07:25.791" end="01:07:26.708">same day, same week.</p>
+      <p begin="01:07:27.333" end="01:07:29.250">Exhaust and capture novelty effects,</p>
+      <p begin="01:07:29.250" end="01:07:30.791">curiosity, and initial attention.</p>
+      <p begin="01:07:31.541" end="01:07:33.208">But then we also have long-run effects.</p>
+      <p begin="01:07:34.041" end="01:07:35.041">So these effects are</p>
+      <p begin="01:07:35.041" end="01:07:36.291">measured with users' adapt.</p>
+      <p begin="01:07:36.791" end="01:07:38.291">So they're 30 days or later after</p>
+      <p begin="01:07:38.291" end="01:07:39.666">repeated exposure and</p>
+      <p begin="01:07:39.666" end="01:07:40.708">after learning your fatigue.</p>
+      <p begin="01:07:41.541" end="01:07:43.041">Long-run effects are often smaller,</p>
+      <p begin="01:07:43.041" end="01:07:44.541">different in size, and</p>
+      <p begin="01:07:44.541" end="01:07:45.750">they're more policy relevant.</p>
+      <p begin="01:07:46.666" end="01:07:48.541">So why does all this matter in A-B tests?</p>
+      <p begin="01:07:48.833" end="01:07:49.708">In big data, short-run</p>
+      <p begin="01:07:49.708" end="01:07:51.041">effects are easy to detect.</p>
+      <p begin="01:07:51.583" end="01:07:52.541">Long-run effects are harder</p>
+      <p begin="01:07:52.541" end="01:07:53.541">but often more meaningful.</p>
+      <p begin="01:07:54.208" end="01:07:55.750">If you don't specify the time horizon,</p>
+      <p begin="01:07:55.958" end="01:07:56.750">you don't know what</p>
+      <p begin="01:07:56.750" end="01:07:57.625">effect you're estimating.</p>
+      <p begin="01:07:59.958" end="01:08:01.458">So outcomes measured through</p>
+      <p begin="01:08:01.458" end="01:08:02.541">instrumentation, this is</p>
+      <p begin="01:08:02.541" end="01:08:03.583">how we can just think of it.</p>
+      <p begin="01:08:04.000" end="01:08:05.458">In a big data experiment, outcomes are</p>
+      <p begin="01:08:05.458" end="01:08:06.583">usually clicks, views,</p>
+      <p begin="01:08:06.583" end="01:08:08.083">events, logs, counters.</p>
+      <p begin="01:08:08.666" end="01:08:10.166">They're not natural variables.</p>
+      <p begin="01:08:10.166" end="01:08:10.625">They're constructed.</p>
+      <p begin="01:08:11.208" end="01:08:12.750">And this matters because we're logging</p>
+      <p begin="01:08:12.750" end="01:08:14.333">our definitions that can change.</p>
+      <p begin="01:08:14.916" end="01:08:15.541">Missing events look</p>
+      <p begin="01:08:15.541" end="01:08:16.625">like behavior changes.</p>
+      <p begin="01:08:17.041" end="01:08:18.125">And then we have things like boss or</p>
+      <p begin="01:08:18.125" end="01:08:20.541">automation that can skew our results.</p>
+      <p begin="01:08:36.791" end="01:08:38.041">So this slide is non-negotiable.</p>
+      <p begin="01:08:38.375" end="01:08:39.333">Assignment must be stored.</p>
+      <p begin="01:08:39.833" end="01:08:41.583">If you cannot reproduce assignment, you</p>
+      <p begin="01:08:41.583" end="01:08:43.041">cannot reproduce the experiment.</p>
+      <p begin="01:08:44.208" end="01:08:45.791">So if you can't reproduce your</p>
+      <p begin="01:08:45.791" end="01:08:46.750">assignment, what does that mean?</p>
+      <p begin="01:08:47.333" end="01:08:49.333">Your best practices are to do things like</p>
+      <p begin="01:08:49.333" end="01:08:50.875">log the assignment at the</p>
+      <p begin="01:08:50.875" end="01:08:51.916">moment of randomization,</p>
+      <p begin="01:08:52.666" end="01:08:56.750">use a stable unit ID, and prevent</p>
+      <p begin="01:08:56.750" end="01:08:57.708">re-randomization</p>
+      <p begin="01:08:57.708" end="01:08:58.708">through sticky assignment.</p>
+      <p begin="01:08:59.416" end="01:09:00.541">So here's a real failure</p>
+      <p begin="01:09:00.541" end="01:09:01.541">mode that might happen.</p>
+      <p begin="01:09:02.125" end="01:09:03.500">We have an assignment that was generated</p>
+      <p begin="01:09:03.500" end="01:09:06.041">dynamically based on a hash,</p>
+      <p begin="01:09:06.666" end="01:09:07.625">but the hashing logic</p>
+      <p begin="01:09:07.625" end="01:09:08.875">changes after deployment.</p>
+      <p begin="01:09:09.541" end="01:09:11.125">So the same user appeared in the</p>
+      <p begin="01:09:11.125" end="01:09:11.750">treatment and the</p>
+      <p begin="01:09:11.750" end="01:09:12.750">control at different times.</p>
+      <p begin="01:09:14.041" end="01:09:15.208">So nothing crashed here.</p>
+      <p begin="01:09:15.208" end="01:09:16.875">The experiment ran, but the causal</p>
+      <p begin="01:09:16.875" end="01:09:18.208">interpretation was gone.</p>
+      <p begin="01:09:18.791" end="01:09:20.000">So assignment is data.</p>
+      <p begin="01:09:20.875" end="01:09:23.500">Treat is durable, immutable, and audible.</p>
+      <p begin="01:09:28.458" end="01:09:29.875">So what is blocking stratification?</p>
+      <p begin="01:09:30.750" end="01:09:32.541">Blocking your stratification is a design</p>
+      <p begin="01:09:32.541" end="01:09:33.791">choice to improve precision.</p>
+      <p begin="01:09:34.416" end="01:09:36.041">You block on variables that are strongly</p>
+      <p begin="01:09:36.041" end="01:09:36.875">related to the outcome,</p>
+      <p begin="01:09:37.333" end="01:09:39.208">things like baseline activity, geography,</p>
+      <p begin="01:09:39.791" end="01:09:40.958">signup cohort, device</p>
+      <p begin="01:09:40.958" end="01:09:42.125">type, and platform type.</p>
+      <p begin="01:09:42.833" end="01:09:45.125">When you randomize within blocks, so that</p>
+      <p begin="01:09:45.125" end="01:09:46.166">means that each of these</p>
+      <p begin="01:09:46.166" end="01:09:47.500">blocks have an equal number of</p>
+      <p begin="01:09:47.708" end="01:09:49.291">control or treatment if we're doing a</p>
+      <p begin="01:09:49.291" end="01:09:50.458">completely randomized design.</p>
+      <p begin="01:09:51.375" end="01:09:53.250">So this kind of process doesn't bias your</p>
+      <p begin="01:09:53.250" end="01:09:55.125">experiment, it just reduces variance.</p>
+      <p begin="01:09:55.791" end="01:09:57.625">In big data settings, block is especially</p>
+      <p begin="01:09:57.625" end="01:09:58.500">valuable because</p>
+      <p begin="01:09:58.500" end="01:09:59.875">outcomes are often noisy.</p>
+      <p begin="01:10:00.750" end="01:10:02.458">Block unless you compare like with like</p>
+      <p begin="01:10:02.458" end="01:10:04.041">without increasing sample size.</p>
+      <p begin="01:10:04.625" end="01:10:06.333">So the key point is that blocking is a</p>
+      <p begin="01:10:06.333" end="01:10:08.250">design decision, not something you'd fix</p>
+      <p begin="01:10:08.250" end="01:10:09.166">later in your analysis.</p>
+      <p begin="01:10:14.875" end="01:10:17.250">So cluster randomization is common when</p>
+      <p begin="01:10:17.250" end="01:10:18.291">inference is likely,</p>
+      <p begin="01:10:18.833" end="01:10:19.666">when implementation</p>
+      <p begin="01:10:19.666" end="01:10:20.791">happens at a group level,</p>
+      <p begin="01:10:21.166" end="01:10:22.500">or when the treatment operates</p>
+      <p begin="01:10:22.500" end="01:10:23.458">through a shared environment.</p>
+      <p begin="01:10:24.416" end="01:10:25.791">So examples of these might include things</p>
+      <p begin="01:10:25.791" end="01:10:27.916">like a school, neighborhoods, workplaces,</p>
+      <p begin="01:10:28.208" end="01:10:29.416">network clusters, or communities.</p>
+      <p begin="01:10:30.208" end="01:10:31.375">The inference point here is crucial.</p>
+      <p begin="01:10:31.875" end="01:10:33.875">If you randomize at the cluster level,</p>
+      <p begin="01:10:33.875" end="01:10:35.500">you just analyze at the cluster level.</p>
+      <p begin="01:10:36.166" end="01:10:37.583">So this means that cluster robust</p>
+      <p begin="01:10:37.583" end="01:10:39.458">standard errors, randomization,</p>
+      <p begin="01:10:39.791" end="01:10:41.083">inference, and aggregation</p>
+      <p begin="01:10:41.083" end="01:10:42.583">to the unit of assignment.</p>
+      <p begin="01:10:43.333" end="01:10:45.041">So I've seen otherwise clean experiments</p>
+      <p begin="01:10:45.041" end="01:10:46.333">get invalidated because</p>
+      <p begin="01:10:46.333" end="01:10:47.833">analysts forgot this step</p>
+      <p begin="01:10:48.125" end="01:10:50.208">and treated individual observations as</p>
+      <p begin="01:10:50.208" end="01:10:51.458">independent when they weren't.</p>
+      <p begin="01:10:58.083" end="01:10:59.291">This slide is about the assumption that</p>
+      <p begin="01:10:59.291" end="01:11:01.083">underlies most causal inference methods,</p>
+      <p begin="01:11:01.083" end="01:11:02.708">including randomization experiments.</p>
+      <p begin="01:11:03.125" end="01:11:04.666">That assumption is called SEPFA, which</p>
+      <p begin="01:11:04.666" end="01:11:05.541">stands for the stable unit</p>
+      <p begin="01:11:05.541" end="01:11:06.791">treatment value assumption.</p>
+      <p begin="01:11:07.708" end="01:11:09.750">So SEPFA has two parts, but the one that</p>
+      <p begin="01:11:09.750" end="01:11:10.916">we care about here is first.</p>
+      <p begin="01:11:11.625" end="01:11:14.041">So each unit's outcome depends only on</p>
+      <p begin="01:11:14.041" end="01:11:15.916">its own treatment assignment, not on the</p>
+      <p begin="01:11:15.916" end="01:11:17.291">treatment assignment of other units.</p>
+      <p begin="01:11:18.083" end="01:11:20.375">So in plain English, SEPFA assumes no</p>
+      <p begin="01:11:20.375" end="01:11:21.583">inference between units.</p>
+      <p begin="01:11:22.208" end="01:11:23.666">If SEPFA holds them when I compare</p>
+      <p begin="01:11:23.666" end="01:11:25.250">treated and control units,</p>
+      <p begin="01:11:25.791" end="01:11:26.666">I'm isolating the causal</p>
+      <p begin="01:11:26.666" end="01:11:27.791">effect of the treatment itself.</p>
+      <p begin="01:11:28.416" end="01:11:29.583">So randomization is the rest.</p>
+      <p begin="01:11:30.083" end="01:11:31.625">The problem is that in big social</p>
+      <p begin="01:11:31.625" end="01:11:33.250">systems, SEPFA often fails.</p>
+      <p begin="01:11:35.250" end="01:11:36.875">So let me start with a case where SEPFA</p>
+      <p begin="01:11:36.875" end="01:11:38.333">would be reasonable for this.</p>
+      <p begin="01:11:41.250" end="01:11:43.041">Imagine a medical trial where patients</p>
+      <p begin="01:11:43.041" end="01:11:44.166">are randomly assigned to</p>
+      <p begin="01:11:44.166" end="01:11:45.250">receive a drug or a placebo,</p>
+      <p begin="01:11:45.666" end="01:11:46.375">and patients are</p>
+      <p begin="01:11:46.375" end="01:11:47.500">isolated from one another.</p>
+      <p begin="01:11:48.166" end="01:11:49.375">One person taking the drug does not</p>
+      <p begin="01:11:49.375" end="01:11:50.083">affect whether another</p>
+      <p begin="01:11:50.083" end="01:11:51.333">person's symptoms improve.</p>
+      <p begin="01:11:52.166" end="01:11:53.791">And that setting is reasonable to assume</p>
+      <p begin="01:11:53.791" end="01:11:55.833">that each patient's outcome depends only</p>
+      <p begin="01:11:55.833" end="01:11:57.041">on whether they receive the drug.</p>
+      <p begin="01:11:57.500" end="01:11:58.291">There's no meaningful</p>
+      <p begin="01:11:58.291" end="01:11:59.458">interaction between units.</p>
+      <p begin="01:12:00.166" end="01:12:01.791">So that's the world that SEPFA describes</p>
+      <p begin="01:12:01.791" end="01:12:02.791">and is the world that many</p>
+      <p begin="01:12:02.791" end="01:12:04.541">causal methods are designed for.</p>
+      <p begin="01:12:05.541" end="01:12:06.875">So when was SEPFA failed?</p>
+      <p begin="01:12:08.083" end="01:12:09.541">Let's change this to a social setting.</p>
+      <p begin="01:12:10.166" end="01:12:11.750">So in social systems, people interact,</p>
+      <p begin="01:12:11.958" end="01:12:13.625">they talk, they share resources, they</p>
+      <p begin="01:12:13.625" end="01:12:14.625">observe each other's behavior.</p>
+      <p begin="01:12:15.083" end="01:12:17.208">Information diffuses, congestion happens.</p>
+      <p begin="01:12:17.916" end="01:12:19.458">Because of that, one unit's treatment can</p>
+      <p begin="01:12:19.458" end="01:12:20.583">affect another unit's outcome.</p>
+      <p begin="01:12:21.333" end="01:12:22.291">So this is what we call</p>
+      <p begin="01:12:22.291" end="01:12:23.833">interference or spillovers.</p>
+      <p begin="01:12:24.708" end="01:12:25.666">So here's like a concrete</p>
+      <p begin="01:12:25.666" end="01:12:27.166">example to help motivate this.</p>
+      <p begin="01:12:28.458" end="01:12:29.875">Suppose a political campaign randomly</p>
+      <p begin="01:12:29.875" end="01:12:32.000">assigns households to receive campaign</p>
+      <p begin="01:12:32.000" end="01:12:33.333">mail encouraging turnout,</p>
+      <p begin="01:12:33.916" end="01:12:35.416">but the experiment is analyzed at the</p>
+      <p begin="01:12:35.416" end="01:12:36.583">individual voter level.</p>
+      <p begin="01:12:37.166" end="01:12:38.166">So one voter in a</p>
+      <p begin="01:12:38.166" end="01:12:39.625">household is officially treated.</p>
+      <p begin="01:12:40.000" end="01:12:41.833">The other voter in the same household is</p>
+      <p begin="01:12:41.833" end="01:12:43.041">unofficially at control.</p>
+      <p begin="01:12:43.750" end="01:12:46.583">So SEPFA wouldn't hold here because the</p>
+      <p begin="01:12:46.583" end="01:12:47.750">mail arrives at the household.</p>
+      <p begin="01:12:48.333" end="01:12:49.833">So people might talk about it, one person</p>
+      <p begin="01:12:49.833" end="01:12:51.750">might read it out loud, another person</p>
+      <p begin="01:12:51.750" end="01:12:53.125">might see it on the kitchen tabletop.</p>
+      <p begin="01:12:53.791" end="01:12:55.583">So this message can influence everyone in</p>
+      <p begin="01:12:55.583" end="01:12:57.208">the household, not just the individual</p>
+      <p begin="01:12:57.208" end="01:12:58.583">whose name was on the envelope.</p>
+      <p begin="01:12:59.416" end="01:13:01.666">So the untreated individual's outcome,</p>
+      <p begin="01:13:02.041" end="01:13:04.083">whether they turn out, now it depends on</p>
+      <p begin="01:13:04.083" end="01:13:05.333">someone else's treatment assignment.</p>
+      <p begin="01:13:05.875" end="01:13:06.458">So this would be a</p>
+      <p begin="01:13:06.458" end="01:13:07.708">direct violation of SEPFA.</p>
+      <p begin="01:13:08.625" end="01:13:09.250">And importantly,</p>
+      <p begin="01:13:09.250" end="01:13:10.583">randomization did not fail.</p>
+      <p begin="01:13:10.791" end="01:13:12.208">The experiment was randomized correctly.</p>
+      <p begin="01:13:12.625" end="01:13:13.916">The problem is that the unit of</p>
+      <p begin="01:13:13.916" end="01:13:15.041">randomization did not</p>
+      <p begin="01:13:15.041" end="01:13:16.375">match the unit of exposure.</p>
+      <p begin="01:13:18.041" end="01:13:18.750">So there's other common</p>
+      <p begin="01:13:18.750" end="01:13:19.916">examples of this in big data.</p>
+      <p begin="01:13:20.458" end="01:13:21.000">You can see this</p>
+      <p begin="01:13:21.000" end="01:13:22.500">everywhere in big data settings.</p>
+      <p begin="01:13:22.708" end="01:13:24.458">So on social media platforms, one user</p>
+      <p begin="01:13:24.458" end="01:13:26.541">seeing a new feature can affect what</p>
+      <p begin="01:13:26.541" end="01:13:27.958">content other friends see.</p>
+      <p begin="01:13:28.875" end="01:13:30.541">In recommendation systems, changing the</p>
+      <p begin="01:13:30.541" end="01:13:32.750">ranking for some users affects congestion</p>
+      <p begin="01:13:32.750" end="01:13:34.041">and availability for others.</p>
+      <p begin="01:13:34.791" end="01:13:36.708">In classrooms or workplaces, treating</p>
+      <p begin="01:13:36.708" end="01:13:39.250">some people changes the shared</p>
+      <p begin="01:13:39.250" end="01:13:40.208">environment for everyone.</p>
+      <p begin="01:13:40.958" end="01:13:42.750">In networks, information diffusion means</p>
+      <p begin="01:13:42.750" end="01:13:44.375">that exposure is really isolated.</p>
+      <p begin="01:13:44.916" end="01:13:45.750">So these are not edge</p>
+      <p begin="01:13:45.750" end="01:13:46.833">cases, they're the norm.</p>
+      <p begin="01:13:48.416" end="01:13:49.708">So when would a</p>
+      <p begin="01:13:49.708" end="01:13:51.000">randomization not protect you?</p>
+      <p begin="01:13:51.416" end="01:13:53.208">This is the key line on the slide and</p>
+      <p begin="01:13:53.208" end="01:13:54.000">it's worth repeating.</p>
+      <p begin="01:13:54.541" end="01:13:55.458">Randomization does not</p>
+      <p begin="01:13:55.458" end="01:13:56.875">protect you from interference.</p>
+      <p begin="01:13:57.333" end="01:14:00.541">Randomization guarantees balance and</p>
+      <p begin="01:14:00.541" end="01:14:02.375">expectation, but it does not guarantee</p>
+      <p begin="01:14:02.375" end="01:14:04.041">that units are causally isolated.</p>
+      <p begin="01:14:04.833" end="01:14:07.375">So if inference is present and you ignore</p>
+      <p begin="01:14:07.375" end="01:14:10.333">it, your estimate can be biased even if</p>
+      <p begin="01:14:10.333" end="01:14:12.541">perfect randomization in the experiment.</p>
+      <p begin="01:14:13.166" end="01:14:14.541">So the bias can be in either direction,</p>
+      <p begin="01:14:14.750" end="01:14:16.541">effects can be inflated, diluted, or even</p>
+      <p begin="01:14:16.541" end="01:14:17.458">flipped and signed</p>
+      <p begin="01:14:17.458" end="01:14:19.500">depending on how spillovers operate.</p>
+      <p begin="01:14:21.500" end="01:14:22.958">So what do we do when</p>
+      <p begin="01:14:22.958" end="01:14:24.500">we suspect interference?</p>
+      <p begin="01:14:24.916" end="01:14:26.166">There are several design strategies.</p>
+      <p begin="01:14:26.416" end="01:14:27.666">One is cluster randomization.</p>
+      <p begin="01:14:27.916" end="01:14:29.541">So instead of randomizing individuals,</p>
+      <p begin="01:14:29.541" end="01:14:31.208">you randomize groups, households,</p>
+      <p begin="01:14:31.333" end="01:14:31.875">classrooms,</p>
+      <p begin="01:14:31.875" end="01:14:33.041">neighborhoods, or network clusters.</p>
+      <p begin="01:14:33.791" end="01:14:35.708">So that inference happens within clusters</p>
+      <p begin="01:14:35.708" end="01:14:37.375">rather than across treatment and control.</p>
+      <p begin="01:14:38.166" end="01:14:40.125">Another approach is saturation designs</p>
+      <p begin="01:14:40.125" end="01:14:41.875">where you vary the proportion of treated</p>
+      <p begin="01:14:41.875" end="01:14:43.583">units within a cluster and</p>
+      <p begin="01:14:43.583" end="01:14:44.958">explicitly study spillovers.</p>
+      <p begin="01:14:46.166" end="01:14:47.791">You can also use buffer zones, so</p>
+      <p begin="01:14:47.791" end="01:14:49.541">excluding units where treatment</p>
+      <p begin="01:14:49.541" end="01:14:51.500">boundaries form analyses.</p>
+      <p begin="01:14:53.791" end="01:14:55.000">And then in some settings, you can</p>
+      <p begin="01:14:55.000" end="01:14:56.833">explicitly measure exposure such as the</p>
+      <p begin="01:14:56.833" end="01:14:58.250">number of treated neighbors or treated</p>
+      <p begin="01:14:58.250" end="01:15:00.291">friends and the outcome as a function of</p>
+      <p begin="01:15:00.291" end="01:15:01.416">exposure rather than assignment.</p>
+      <p begin="01:15:02.250" end="01:15:03.541">But the key idea is that when</p>
+      <p begin="01:15:03.541" end="01:15:06.500">interference is plausible, it has to be</p>
+      <p begin="01:15:06.500" end="01:15:07.666">designed for not ignored.</p>
+      <p begin="01:15:10.916" end="01:15:12.375">So with used sample size, tiny effects</p>
+      <p begin="01:15:12.375" end="01:15:13.916">can become statistically significant.</p>
+      <p begin="01:15:14.625" end="01:15:16.125">This is where many big data experiments</p>
+      <p begin="01:15:16.125" end="01:15:17.208">go wrong conceptually.</p>
+      <p begin="01:15:17.833" end="01:15:21.208">You should always report effect sizes in</p>
+      <p begin="01:15:21.208" end="01:15:23.000">meaningful units, uncertainty intervals,</p>
+      <p begin="01:15:23.250" end="01:15:25.000">minimal detectable effects, and where</p>
+      <p begin="01:15:25.000" end="01:15:26.041">appropriate cost-benefit</p>
+      <p begin="01:15:26.041" end="01:15:27.166">or welfare interpretation.</p>
+      <p begin="01:15:28.208" end="01:15:29.291">But also this is pretty bluntly.</p>
+      <p begin="01:15:29.583" end="01:15:31.875">A p-value is not a research contribution.</p>
+      <p begin="01:15:32.583" end="01:15:34.416">If an effect is statistically safe again</p>
+      <p begin="01:15:34.416" end="01:15:36.416">but practically meaningless, the right</p>
+      <p begin="01:15:36.416" end="01:15:38.375">conclusion is often this doesn't matter.</p>
+      <p begin="01:15:39.041" end="01:15:40.500">Big data forces you to care about</p>
+      <p begin="01:15:40.500" end="01:15:42.208">magnitude, not just detectability.</p>
+      <p begin="01:15:47.833" end="01:15:49.833">So big experiments naturally generate</p>
+      <p begin="01:15:49.833" end="01:15:51.583">many outcomes, variants, and subgroups.</p>
+      <p begin="01:15:52.041" end="01:15:52.833">That creates a series</p>
+      <p begin="01:15:52.833" end="01:15:54.541">multiple hypothesis testing problem.</p>
+      <p begin="01:15:55.125" end="01:15:57.000">Controls include pre-registration or</p>
+      <p begin="01:15:57.000" end="01:15:58.875">analysis plans, false discovery</p>
+      <p begin="01:15:58.875" end="01:16:01.666">readjustments, holdout outcomes, holdout</p>
+      <p begin="01:16:01.666" end="01:16:03.333">time windows, and hierarchical models.</p>
+      <p begin="01:16:04.250" end="01:16:06.041">The deeper point is about governance.</p>
+      <p begin="01:16:06.541" end="01:16:08.833">Big experiments create the temptation and</p>
+      <p begin="01:16:08.833" end="01:16:09.541">the ability to keep</p>
+      <p begin="01:16:09.541" end="01:16:11.208">looking until something works.</p>
+      <p begin="01:16:11.833" end="01:16:13.208">So without discipline, you will almost</p>
+      <p begin="01:16:13.208" end="01:16:15.000">certainly find something that looks</p>
+      <p begin="01:16:15.000" end="01:16:16.583">exciting but isn't real.</p>
+      <p begin="01:16:19.041" end="01:16:19.958">So before interpreting</p>
+      <p begin="01:16:19.958" end="01:16:21.291">results, you should run checks.</p>
+      <p begin="01:16:21.958" end="01:16:22.958">Balanced checks on</p>
+      <p begin="01:16:22.958" end="01:16:24.291">pretreatment covariates.</p>
+      <p begin="01:16:24.583" end="01:16:25.875">You should do AA tests</p>
+      <p begin="01:16:25.875" end="01:16:27.750">where nothing should differ.</p>
+      <p begin="01:16:28.416" end="01:16:30.291">placebo outcomes that should not move.</p>
+      <p begin="01:16:30.958" end="01:16:32.250">Incrementation checks to</p>
+      <p begin="01:16:32.250" end="01:16:33.333">ensure logs are stable.</p>
+      <p begin="01:16:34.125" end="01:16:34.833">These checks are not</p>
+      <p begin="01:16:34.833" end="01:16:36.958">about proving causality.</p>
+      <p begin="01:16:36.958" end="01:16:37.708">They're about catching</p>
+      <p begin="01:16:37.708" end="01:16:39.208">implementation failures early.</p>
+      <p begin="01:16:40.041" end="01:16:40.916">So in big systems,</p>
+      <p begin="01:16:40.916" end="01:16:42.041">many errors are silent.</p>
+      <p begin="01:16:42.666" end="01:16:43.833">Checks are how you surface them.</p>
+      <p begin="01:16:45.916" end="01:16:47.375">So now we can talk about known compliance</p>
+      <p begin="01:16:47.375" end="01:16:48.083">and missing outcomes.</p>
+      <p begin="01:16:48.583" end="01:16:50.291">This is where estimates really matter.</p>
+      <p begin="01:16:50.875" end="01:16:56.333">So the ITT effect is the effect of the</p>
+      <p begin="01:16:56.333" end="01:16:57.333">assignment is almost</p>
+      <p begin="01:16:57.333" end="01:16:58.791">always the safest quantity.</p>
+      <p begin="01:16:59.583" end="01:17:01.958">Estimating facts among the compilers can</p>
+      <p begin="01:17:01.958" end="01:17:04.083">be useful, but it requires additional</p>
+      <p begin="01:17:04.083" end="01:17:05.750">assumptions and careful interpretation.</p>
+      <p begin="01:17:06.666" end="01:17:07.833">The discipline here is simple.</p>
+      <p begin="01:17:08.375" end="01:17:10.166">Define your estimate first and then let</p>
+      <p begin="01:17:10.166" end="01:17:11.500">your analysis fall from that.</p>
+      <p begin="01:17:11.541" end="01:17:21.791">So how can we make experiments often</p>
+      <p begin="01:17:21.791" end="01:17:22.791">measured through logs?</p>
+      <p begin="01:17:23.416" end="01:17:25.208">This introduces specific risks.</p>
+      <p begin="01:17:25.833" end="01:17:27.583">If logging definitions change, you can</p>
+      <p begin="01:17:27.583" end="01:17:29.250">get artificial treatment effects.</p>
+      <p begin="01:17:29.791" end="01:17:30.875">If events drop, they can</p>
+      <p begin="01:17:30.875" end="01:17:32.166">look like behavior changed.</p>
+      <p begin="01:17:32.958" end="01:17:35.083">Bots, fraud, or automated activity can</p>
+      <p begin="01:17:35.083" end="01:17:36.458">contaminate your outcomes.</p>
+      <p begin="01:17:37.416" end="01:17:39.333">So the key principle here is the</p>
+      <p begin="01:17:39.333" end="01:17:40.750">assignment pipeline is</p>
+      <p begin="01:17:40.750" end="01:17:41.958">part of the experiment design.</p>
+      <p begin="01:17:42.958" end="01:17:43.583">Randomization doesn't</p>
+      <p begin="01:17:43.583" end="01:17:45.250">fix bad measurement.</p>
+      <p begin="01:17:54.291" end="01:17:55.916">So larger experiments typically store</p>
+      <p begin="01:17:55.916" end="01:17:57.458">data in logs, data</p>
+      <p begin="01:17:57.458" end="01:17:59.583">lakes, or feature stores.</p>
+      <p begin="01:18:00.333" end="01:18:01.166">So a common workflow</p>
+      <p begin="01:18:01.166" end="01:18:02.291">is you have a raw event.</p>
+      <p begin="01:18:02.791" end="01:18:07.375">Here you have clean data as a clean table</p>
+      <p begin="01:18:07.375" end="01:18:09.875">on it, and then you have</p>
+      <p begin="01:18:09.875" end="01:18:13.000">analysis for data sets for it.</p>
+      <p begin="01:18:13.583" end="01:18:15.125">So this is where your data scales matter.</p>
+      <p begin="01:18:15.708" end="01:18:17.416">If joins are wrong, time stamps are</p>
+      <p begin="01:18:17.416" end="01:18:19.333">misaligned, or IDs don't match, your</p>
+      <p begin="01:18:19.333" end="01:18:20.250">estimate is no longer</p>
+      <p begin="01:18:20.250" end="01:18:21.333">what you think it is.</p>
+      <p begin="01:18:21.916" end="01:18:23.583">Experiments and databases are inseparable</p>
+      <p begin="01:18:23.583" end="01:18:24.583">in big data settings.</p>
+      <p begin="01:18:29.250" end="01:18:29.333">So this slide introduces the<br/>simplest estimator.</p>
+      <p begin="01:18:29.666" end="01:18:32.625">It's the difference in means.</p>
+      <p begin="01:18:33.208" end="01:18:35.250">The difference in means is unbiased for</p>
+      <p begin="01:18:35.250" end="01:18:37.041">the ITTF factor under randomization.</p>
+      <p begin="01:18:38.625" end="01:18:40.041">Regression adjustments can improve</p>
+      <p begin="01:18:40.041" end="01:18:41.541">precision if you include strong</p>
+      <p begin="01:18:41.541" end="01:18:42.583">predictors of the outcome.</p>
+      <p begin="01:18:43.333" end="01:18:44.750">But the key point is interpretive.</p>
+      <p begin="01:18:45.083" end="01:18:46.750">Randomization does the causal work.</p>
+      <p begin="01:18:47.041" end="01:18:47.916">Regression is there for</p>
+      <p begin="01:18:47.916" end="01:18:49.500">efficiency, non-identification.</p>
+      <p begin="01:18:54.833" end="01:18:55.750">So this slide shows a</p>
+      <p begin="01:18:55.750" end="01:18:56.458">conceptual assignment.</p>
+      <p begin="01:18:56.458" end="01:19:00.208">The point is not to memorize the code. It's to understand <br/>the logic.</p>
+      <p begin="01:19:00.916" end="01:19:03.083">We have blocking here,</p>
+      <p begin="01:19:03.541" end="01:19:05.791">randomization, and assignment storage.</p>
+      <p begin="01:19:06.541" end="01:19:08.208">So in production, the hard part is not</p>
+      <p begin="01:19:08.208" end="01:19:09.583">generating random numbers.</p>
+      <p begin="01:19:10.750" end="01:19:12.666">It's ensuring assignment is sticky,</p>
+      <p begin="01:19:13.166" end="01:19:14.416">logged, and consistent over time.</p>
+      <p begin="01:19:39.541" end="01:19:40.958">This is an example of the same thing in</p>
+      <p begin="01:19:40.958" end="01:19:42.208">R, where we have our</p>
+      <p begin="01:19:42.208" end="01:19:44.708">synthetic data frame created here,</p>
+      <p begin="01:19:44.708" end="01:19:45.291">where there's blocking</p>
+      <p begin="01:19:45.291" end="01:19:46.250">and baseline activity.</p>
+      <p begin="01:19:47.166" end="01:19:49.041">We're grouping by D, which is in this</p>
+      <p begin="01:19:49.041" end="01:19:51.875">case the gene notation for treatment.</p>
+      <p begin="01:19:52.750" end="01:19:54.000">And we're looking at just the difference</p>
+      <p begin="01:19:54.000" end="01:19:55.208">in means between the trait</p>
+      <p begin="01:19:55.208" end="01:19:56.500">and the control group here.</p>
+      <p begin="01:19:57.291" end="01:19:59.458">And then we can fit it with robust</p>
+      <p begin="01:19:59.458" end="01:20:01.583">standard errors using this function here.</p>
+      <p begin="01:20:02.166" end="01:20:03.375">All right, this would just be how we set</p>
+      <p begin="01:20:03.375" end="01:20:04.708">up synthetic data in R.</p>
+      <p begin="01:20:08.416" end="01:20:09.500">And then again, I kind of</p>
+      <p begin="01:20:09.500" end="01:20:10.625">passed over quite quickly.</p>
+      <p begin="01:20:11.708" end="01:20:13.708">But if we use the estimator package in R</p>
+      <p begin="01:20:13.708" end="01:20:16.041">or something comparable in Python,</p>
+      <p begin="01:20:16.708" end="01:20:20.041">we can use our clusters here for robust</p>
+      <p begin="01:20:20.041" end="01:20:21.333">linear model entries.</p>
+      <p begin="01:20:26.166" end="01:20:28.000">So big data invites subgroup analyses,</p>
+      <p begin="01:20:28.000" end="01:20:29.541">but this can be quite risky.</p>
+      <p begin="01:20:30.208" end="01:20:31.833">For it, subgroups are often numerous.</p>
+      <p begin="01:20:32.291" end="01:20:33.166">Estimates are noisy and</p>
+      <p begin="01:20:33.166" end="01:20:34.250">false discoveries are common.</p>
+      <p begin="01:20:34.750" end="01:20:36.666">So safer approaches include things like</p>
+      <p begin="01:20:36.666" end="01:20:39.125">pre-specified subgroups, partial pooling,</p>
+      <p begin="01:20:39.125" end="01:20:40.666">and just honest estimation.</p>
+      <p begin="01:20:41.833" end="01:20:44.333">The discipline is to treat heterogeneity</p>
+      <p begin="01:20:44.333" end="01:20:45.708">as a model outcome, not</p>
+      <p begin="01:20:45.708" end="01:20:46.583">as a fishing expedition.</p>
+      <p begin="01:20:47.500" end="01:20:48.666">And one way to get around this is</p>
+      <p begin="01:20:48.666" end="01:20:50.750">pre-registering your</p>
+      <p begin="01:20:50.750" end="01:20:52.500">analytic approach for it.</p>
+      <p begin="01:20:52.708" end="01:20:56.375">So for example, whenever I read work that</p>
+      <p begin="01:20:56.375" end="01:20:58.500">says, okay, the treatment effect for</p>
+      <p begin="01:20:58.500" end="01:21:00.500">group A differs in direction,</p>
+      <p begin="01:21:00.875" end="01:21:02.625">or let's say, magnitude in group B.</p>
+      <p begin="01:21:04.083" end="01:21:06.083">That to me strikes me as a very common</p>
+      <p begin="01:21:06.083" end="01:21:06.916">way that someone's on</p>
+      <p begin="01:21:06.916" end="01:21:07.916">a fishing expedition.</p>
+      <p begin="01:21:08.208" end="01:21:09.625">So then I go back and I look for</p>
+      <p begin="01:21:09.625" end="01:21:12.625">pre-registration of hypotheses on it.</p>
+      <p begin="01:21:15.166" end="01:21:17.291">Another thing, and again, we emphasize</p>
+      <p begin="01:21:17.291" end="01:21:18.291">this throughout the class,</p>
+      <p begin="01:21:18.291" end="01:21:20.625">is reproducibility for large experiments.</p>
+      <p begin="01:21:21.291" end="01:21:23.500">So we want minimal reproducible</p>
+      <p begin="01:21:23.500" end="01:21:24.583">artifacts, things like</p>
+      <p begin="01:21:24.583" end="01:21:26.625">assignment table, raw data snapshots.</p>
+      <p begin="01:21:27.333" end="01:21:28.833">We want to look at our scripts that we</p>
+      <p begin="01:21:28.833" end="01:21:31.708">built, and then environment locks and</p>
+      <p begin="01:21:31.708" end="01:21:32.875">version parameters for it.</p>
+      <p begin="01:21:32.875" end="01:21:34.250">So the same type of consistency</p>
+      <p begin="01:21:34.250" end="01:21:36.500">throughout the course.</p>
+      <p begin="01:21:36.791" end="01:21:38.166">We want that also in our experiments.</p>
+      <p begin="01:21:40.916" end="01:21:42.541">So on with a few discussion questions for</p>
+      <p begin="01:21:42.541" end="01:21:43.125">you to keep in mind.</p>
+      <p begin="01:21:44.125" end="01:21:44.791">So what is the unit of</p>
+      <p begin="01:21:44.791" end="01:21:46.083">randomization in your research?</p>
+      <p begin="01:21:47.875" end="01:21:51.458">When, where would inference occur for it?</p>
+      <p begin="01:21:51.750" end="01:21:53.166">Which outcomes are fragile</p>
+      <p begin="01:21:53.166" end="01:21:55.791">because of logging on it?</p>
+      <p begin="01:21:56.000" end="01:21:59.166">Logging as in not logging the outcome</p>
+      <p begin="01:21:59.166" end="01:21:59.833">variable, logging</p>
+      <p begin="01:21:59.833" end="01:22:00.916">your decision rules here.</p>
+      <p begin="01:22:01.666" end="01:22:02.416">How do you prevent</p>
+      <p begin="01:22:02.416" end="01:22:05.583">multiple testing disasters for it?</p>
+      <p begin="01:22:05.750" end="01:22:06.541">So adjusting for multiple</p>
+      <p begin="01:22:06.541" end="01:22:07.583">comparisons, for example.</p>
+      <p begin="01:22:08.416" end="01:22:10.333">And then what does it mean for an effect</p>
+      <p begin="01:22:10.333" end="01:22:11.833">to be real at scale?</p>
+      <p begin="01:22:12.166" end="01:22:12.750">So keep that in mind.</p>
+      <p begin="01:22:13.333" end="01:22:14.916">In big data settings, real is going to</p>
+      <p begin="01:22:14.916" end="01:22:16.250">usually mean robust to reasonable</p>
+      <p begin="01:22:16.250" end="01:22:17.333">measurement variation,</p>
+      <p begin="01:22:17.625" end="01:22:18.333">save up your time,</p>
+      <p begin="01:22:18.833" end="01:22:20.375">interpretable and meaningful units,</p>
+      <p begin="01:22:20.875" end="01:22:22.250">and not an average effect of</p>
+      <p begin="01:22:22.250" end="01:22:23.708">instrumentation or</p>
+      <p begin="01:22:23.708" end="01:22:24.666">searching for our data.</p>
+      <p begin="01:22:25.125" end="01:22:26.083">And that's it for today.</p>
+    </div>
+  </body>
+</tt>

@@ -1,0 +1,23 @@
+2026-02-18 22:18:00,554 | INFO | Starting big data experiment pipeline
+2026-02-18 22:18:00,554 | INFO | n_users = 100000 | n_days = 14
+2026-02-18 22:18:00,555 | INFO | Generating synthetic user table
+2026-02-18 22:18:00,858 | INFO | Saved: data/raw/users.csv
+2026-02-18 22:18:00,860 | INFO | Creating blocked assignment table (and saving it)
+2026-02-18 22:18:01,267 | INFO | Saved: data/raw/assignment_table.csv
+2026-02-18 22:18:01,269 | INFO | Generating synthetic event logs (user-day table)
+2026-02-18 22:18:25,925 | INFO | Saved: data/raw/event_logs.csv
+2026-02-18 22:18:25,928 | INFO | Building analysis-ready dataset (user-level aggregation)
+2026-02-18 22:19:04,888 | INFO | Saved: data/processed/analysis_dataset.csv
+2026-02-18 22:19:04,898 | INFO | Running randomization checks / balance checks
+2026-02-18 22:19:04,972 | INFO | Estimating treatment effects (ATE)
+2026-02-18 22:19:05,014 | INFO | Saved: outputs/tables/ate_retention.csv
+2026-02-18 22:19:08,724 | INFO | Creating figures
+2026-02-18 22:19:11,417 | INFO | Running placebo tests (A/A and placebo outcome)
+2026-02-18 22:19:15,985 | INFO | Simulating noncompliance and estimating ITT vs TOT (LATE)
+2026-02-18 22:19:16,002 | INFO | Compliance probability p = 0.6
+2026-02-18 22:19:16,032 | INFO | Compliance rate in treated arm: 0.598
+2026-02-18 22:19:17,240 | INFO | ITT estimate: 0.6073 | SE: 0.0156 | p: 0.0000
+2026-02-18 22:19:17,844 | INFO | TOT/LATE estimate: 1.0172 | SE: 0.0262 | p: 0.0000
+2026-02-18 22:19:17,860 | INFO | Saved: outputs/tables/itt_vs_tot.csv
+2026-02-18 22:19:18,336 | INFO | Saving environment information
+2026-02-18 22:19:18,413 | INFO | Pipeline complete
