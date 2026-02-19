@@ -1,3 +1,12 @@
+##############################
+####### PROBLEM SET ##########
+####### TIME SERIES ##########
+##############################
+
+##############################
+### CODING DEMO SETUP ########
+##############################
+
 import os
 
 import numpy as np
@@ -180,3 +189,112 @@ print("- ACF/PACF make that dependence visible.")
 print("- Removing trend helps isolate autocorrelation in the error process.")
 print("- Separately: random splits leak time and look too good; past->future splits are the honest default.")
 
+############################################
+########### PROBLEM SET TASKS ##############
+############################################
+
+############################################
+# TASK 1: Decomposition (trend + seasonality + residual)
+############################################
+
+from statsmodels.tsa.seasonal import STL
+
+# Convert to a pandas Series with DatetimeIndex (required for STL)
+y_series = pd.Series(df["y"].values, index=pd.DatetimeIndex(df["date"]))
+
+# Run STL decomposition with weekly frequency (period=7)
+stl = STL(y_series, period=7, robust=True)
+stl_result = stl.fit()
+
+# Extract components
+observed   = stl_result.observed
+trend_comp = stl_result.trend
+seasonal_comp = stl_result.seasonal
+resid_comp = stl_result.resid
+
+# Plot all four panels in one figure
+fig, axes = plt.subplots(4, 1, figsize=(10, 8), sharex=True)
+
+axes[0].plot(df["date"], observed, lw=0.8)
+axes[0].set_ylabel("Observed")
+
+axes[1].plot(df["date"], trend_comp, lw=0.8, color="orange")
+axes[1].set_ylabel("Trend")
+
+axes[2].plot(df["date"], seasonal_comp, lw=0.8, color="green")
+axes[2].set_ylabel("Seasonality")
+
+axes[3].plot(df["date"], resid_comp, lw=0.8, color="red")
+axes[3].set_ylabel("Residual")
+axes[3].set_xlabel("Date")
+
+fig.suptitle("STL Decomposition: trend + weekly seasonality + residual", y=1.01)
+plt.tight_layout()
+
+os.makedirs("outputs/figures", exist_ok=True)
+plt.savefig("outputs/figures/decomposition.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: outputs/figures/decomposition.png")
+
+
+############################################
+# TASK 2: Rolling-origin backtest (h=1 step ahead)
+############################################
+
+init_window = 300   # first 300 days as initial training window
+h = 1               # forecast horizon
+
+dates_arr = df["date"].to_numpy()
+y_arr     = df["y"].to_numpy()
+
+backtest_dates = []
+backtest_y     = []
+backtest_yhat  = []
+backtest_error = []
+
+for t in range(init_window, n - h):
+    y_train_bt = y_arr[:t]
+    y_true     = y_arr[t]                          # one step ahead true value
+
+    fit_bt  = ARIMA(y_train_bt, order=(1, 0, 0)).fit()
+    y_hat   = fit_bt.forecast(steps=h)[0]          # scalar forecast
+
+    error = y_true - y_hat
+
+    backtest_dates.append(dates_arr[t])
+    backtest_y.append(y_true)
+    backtest_yhat.append(y_hat)
+    backtest_error.append(error)
+
+# Compute backtest RMSE
+backtest_errors_arr = np.array(backtest_error)
+rmse_backtest = np.sqrt(np.mean(backtest_errors_arr ** 2))
+
+print("\n==============================")
+print(f"Rolling-origin backtest RMSE : {rmse_backtest:.6f}")
+print(f"Single time-split RMSE       : {rmse_time:.6f}")
+print("==============================")
+
+# Save backtest errors CSV
+os.makedirs("outputs/tables", exist_ok=True)
+df_backtest = pd.DataFrame({
+    "date" : backtest_dates,
+    "y"    : backtest_y,
+    "yhat" : backtest_yhat,
+    "error": backtest_error
+})
+df_backtest.to_csv("outputs/tables/backtest_errors.csv", index=False)
+print("Saved: outputs/tables/backtest_errors.csv")
+
+# Plot y vs yhat over the test region
+plt.figure(figsize=(10, 4))
+plt.plot(df_backtest["date"], df_backtest["y"],    label="Observed y",    lw=0.8)
+plt.plot(df_backtest["date"], df_backtest["yhat"], label="Forecast yhat", lw=0.8, linestyle="--", color="red")
+plt.title("Rolling-origin backtest: observed vs one-step-ahead forecast")
+plt.xlabel("Date")
+plt.ylabel("y")
+plt.legend()
+plt.tight_layout()
+plt.savefig("outputs/figures/backtest_forecast.png", dpi=150, bbox_inches="tight")
+plt.close()
+print("Saved: outputs/figures/backtest_forecast.png")
