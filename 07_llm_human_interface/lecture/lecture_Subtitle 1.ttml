@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xml:lang="en" xmlns="http://www.w3.org/ns/ttml" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" xmlns:tts="http://www.w3.org/ns/ttml#styling" xmlns:ttp="http://www.w3.org/ns/ttml#parameter" xmlns:ittp="http://www.w3.org/ns/ttml/profile/imsc1#parameter" xmlns:itts="http://www.w3.org/ns/ttml/profile/imsc1#styling" ttp:profile="http://www.w3.org/ns/ttml/profile/imsc1/text" ttp:frameRate="24" ttp:timeBase="media">
+  <head>
+    <styling>
+      <style xml:id="s0" tts:color="#ffffff" tts:opacity="1" tts:fontSize="100%" tts:fontFamily="proportionalSansSerif" tts:fontWeight="bold" tts:textOutline="#ffffff 1px" tts:textAlign="center"/>
+    </styling>
+    <layout>
+      <region xml:id="r0" tts:origin="14.591% 74.884%" tts:extent="70.833% 10.278%" tts:displayAlign="center"/>
+    </layout>
+  </head>
+  <body>
+    <div xml:id="d0" region="r0" style="s0">
+      <p begin="01:00:04.166" end="01:00:05.583">Hi everyone, today's lecture is</p>
+      <p begin="01:00:05.583" end="01:00:07.333">going to focus on how the use of</p>
+      <p begin="01:00:07.333" end="01:00:09.708">large language models, or LLMs, for</p>
+      <p begin="01:00:09.708" end="01:00:11.791">structured data extraction in a way</p>
+      <p begin="01:00:11.791" end="01:00:13.375">that's methodologically defensible.</p>
+      <p begin="01:00:14.125" end="01:00:16.083">So the most important phrase today</p>
+      <p begin="01:00:16.083" end="01:00:17.833">is going to be &quot;assistance, not</p>
+      <p begin="01:00:17.833" end="01:00:20.583">automation.&quot; We're not treating LLMs</p>
+      <p begin="01:00:20.583" end="01:00:22.958">as autonomous decision makers. We're</p>
+      <p begin="01:00:22.958" end="01:00:24.333">treating them as tools embedded</p>
+      <p begin="01:00:24.333" end="01:00:25.625">inside a structured</p>
+      <p begin="01:00:25.625" end="01:00:26.666">measurement pipeline.</p>
+      <p begin="01:00:27.041" end="01:00:29.458">So the lecture is about turning</p>
+      <p begin="01:00:29.458" end="01:00:31.541">messy, unstructured text into</p>
+      <p begin="01:00:31.541" end="01:00:34.625">analysis, structured data, while</p>
+      <p begin="01:00:34.625" end="01:00:36.125">preserving transparency,</p>
+      <p begin="01:00:36.125" end="01:00:38.125">replicability, and validity.</p>
+      <p begin="01:00:42.041" end="01:00:43.833">So many social science data sets</p>
+      <p begin="01:00:43.833" end="01:00:45.625">that originally are from things like</p>
+      <p begin="01:00:45.625" end="01:00:47.791">archival documents, news articles,</p>
+      <p begin="01:00:48.041" end="01:00:49.250">legal filings, speeches,</p>
+      <p begin="01:00:49.625" end="01:00:50.083">transcripts,</p>
+      <p begin="01:00:50.333" end="01:00:51.625">reports, and social media.</p>
+      <p begin="01:00:53.041" end="01:00:54.958">These sources are often messy.</p>
+      <p begin="01:00:55.375" end="01:00:57.375">There's formatting that's going to</p>
+      <p begin="01:00:57.375" end="01:00:59.541">vary. They're unstructured. They're</p>
+      <p begin="01:00:59.541" end="01:01:01.458">not already in rows or columns.</p>
+      <p begin="01:01:02.166" end="01:01:03.625">They're text-heavy, so they have</p>
+      <p begin="01:01:03.625" end="01:01:04.750">long narratives rather</p>
+      <p begin="01:01:04.750" end="01:01:06.250">than discrete variables.</p>
+      <p begin="01:01:07.166" end="01:01:07.750">And they're</p>
+      <p begin="01:01:07.750" end="01:01:09.000">expensive to code manually.</p>
+      <p begin="01:01:10.041" end="01:01:12.875">Traditional hand coding is slow,</p>
+      <p begin="01:01:13.291" end="01:01:15.458">costly, and difficult to scale. And</p>
+      <p begin="01:01:15.458" end="01:01:17.208">often undergraduate coders</p>
+      <p begin="01:01:17.208" end="01:01:18.833">are also very unreliable.</p>
+      <p begin="01:01:19.916" end="01:01:21.708">So LLMs can provide things like</p>
+      <p begin="01:01:21.708" end="01:01:24.250">rapid text parsing, pattern</p>
+      <p begin="01:01:24.250" end="01:01:26.500">recognition, information extraction,</p>
+      <p begin="01:01:26.875" end="01:01:28.458">and instruction output generation.</p>
+      <p begin="01:01:29.208" end="01:01:31.000">But they do not provide truth.</p>
+      <p begin="01:01:31.041" end="01:01:33.291">So they provide probabilistic</p>
+      <p begin="01:01:33.291" end="01:01:36.291">outputs based on training data. So</p>
+      <p begin="01:01:36.291" end="01:01:38.000">the methodological shift is this.</p>
+      <p begin="01:01:38.416" end="01:01:39.916">We're going to use LLMs to scale</p>
+      <p begin="01:01:39.916" end="01:01:41.833">extraction, but we designed</p>
+      <p begin="01:01:41.833" end="01:01:44.000">workflows to detect incorrect error.</p>
+      <p begin="01:01:44.041" end="01:01:49.208">So what's human-in-the-loop</p>
+      <p begin="01:01:49.208" end="01:01:51.500">philosophy? Let's define it.</p>
+      <p begin="01:01:52.000" end="01:01:53.291">Human-in-the-loop systems are</p>
+      <p begin="01:01:53.291" end="01:01:55.583">workflows in which AI generates</p>
+      <p begin="01:01:55.583" end="01:01:58.500">provisional outputs. Humans monitor,</p>
+      <p begin="01:01:58.833" end="01:01:59.666">validate, and</p>
+      <p begin="01:01:59.666" end="01:02:00.875">override these outputs.</p>
+      <p begin="01:02:01.500" end="01:02:03.500">The system routes uncertainty back</p>
+      <p begin="01:02:03.500" end="01:02:04.000">to human judgment.</p>
+      <p begin="01:02:05.041" end="01:02:08.500">So in this course, LLMs are used to</p>
+      <p begin="01:02:08.500" end="01:02:13.208">propose structured outputs. They're</p>
+      <p begin="01:02:13.208" end="01:02:14.916">going to accelerate your labeling.</p>
+      <p begin="01:02:16.833" end="01:02:19.208">And when we have cases of</p>
+      <p begin="01:02:19.208" end="01:02:20.833">uncertainty, we're going to flag it</p>
+      <p begin="01:02:20.833" end="01:02:22.166">so that humans are</p>
+      <p begin="01:02:22.166" end="01:02:23.000">responsible for the validation.</p>
+      <p begin="01:02:24.041" end="01:02:26.625">So humans are going to be then, in</p>
+      <p begin="01:02:26.625" end="01:02:28.458">this case, responsible for a final</p>
+      <p begin="01:02:28.458" end="01:02:31.916">validation, schema design, error</p>
+      <p begin="01:02:31.916" end="01:02:33.541">detection, and then</p>
+      <p begin="01:02:33.541" end="01:02:34.916">theoretical interpretation.</p>
+      <p begin="01:02:36.750" end="01:02:38.041">The human is going to be accountable</p>
+      <p begin="01:02:38.041" end="01:02:41.291">for the measurement. The LLM is</p>
+      <p begin="01:02:41.291" end="01:02:42.583">basically seen as a</p>
+      <p begin="01:02:42.583" end="01:02:44.000">fast, fallible system.</p>
+      <p begin="01:02:44.041" end="01:02:51.916">So now let's define the core</p>
+      <p begin="01:02:51.916" end="01:02:53.666">concept, structured extraction.</p>
+      <p begin="01:02:54.958" end="01:02:56.166">Structured extraction is going to</p>
+      <p begin="01:02:56.166" end="01:02:56.833">mean you're going to</p>
+      <p begin="01:02:56.833" end="01:02:58.458">define a schema in advance.</p>
+      <p begin="01:02:59.208" end="01:03:00.791">You're going to constrain outputs</p>
+      <p begin="01:03:00.791" end="01:03:02.583">into fixed fields, and you're going</p>
+      <p begin="01:03:02.583" end="01:03:04.000">to reject freeform narrative output.</p>
+      <p begin="01:03:05.041" end="01:03:08.208">So what is a schema? A schema is a</p>
+      <p begin="01:03:08.208" end="01:03:10.333">predefined structure that specifies</p>
+      <p begin="01:03:10.333" end="01:03:12.833">variable names, data times,</p>
+      <p begin="01:03:13.125" end="01:03:14.250">permissible values,</p>
+      <p begin="01:03:14.541" end="01:03:15.541">and format constraints.</p>
+      <p begin="01:03:16.916" end="01:03:18.583">So an example of this would be,</p>
+      <p begin="01:03:18.583" end="01:03:20.375">instead of asking what happened in</p>
+      <p begin="01:03:20.375" end="01:03:23.958">this article, you ask to extract the</p>
+      <p begin="01:03:23.958" end="01:03:25.916">actor, the action, the</p>
+      <p begin="01:03:25.916" end="01:03:27.000">target, and the date.</p>
+      <p begin="01:03:28.041" end="01:03:30.750">So the schema's disciplined model</p>
+      <p begin="01:03:30.750" end="01:03:33.041">behavior, without a schema, the</p>
+      <p begin="01:03:33.041" end="01:03:35.333">model improvises. With the schema,</p>
+      <p begin="01:03:35.333" end="01:03:37.125">the model fills structured slots.</p>
+      <p begin="01:03:37.750" end="01:03:39.000">This dramatically improves</p>
+      <p begin="01:03:39.000" end="01:03:41.416">consistency and auditability.</p>
+      <p begin="01:03:46.916" end="01:03:47.708">So let's take a look</p>
+      <p begin="01:03:47.708" end="01:03:48.000">at a schema example.</p>
+      <p begin="01:03:49.041" end="01:03:51.708">We have our actor, which is a</p>
+      <p begin="01:03:51.708" end="01:03:53.791">string, our action within a string,</p>
+      <p begin="01:03:54.041" end="01:03:56.000">the target of that action, the date,</p>
+      <p begin="01:03:56.333" end="01:03:57.875">and the confidence for it.</p>
+      <p begin="01:03:59.041" end="01:04:00.708">So the actor, in this case, would be</p>
+      <p begin="01:04:00.708" end="01:04:02.458">like an entity performing the</p>
+      <p begin="01:04:02.458" end="01:04:05.500">action. The action would be a verb</p>
+      <p begin="01:04:05.500" end="01:04:06.750">describing the behavior.</p>
+      <p begin="01:04:07.458" end="01:04:09.541">The target would be the recipient of</p>
+      <p begin="01:04:09.541" end="01:04:11.958">that actor. The date is going to be</p>
+      <p begin="01:04:11.958" end="01:04:14.333">a standardized temporal format, and</p>
+      <p begin="01:04:14.333" end="01:04:15.625">the confidence is going to be the</p>
+      <p begin="01:04:15.625" end="01:04:17.291">model reported on a certain date.</p>
+      <p begin="01:04:18.291" end="01:04:20.583">So why do we include confidence?</p>
+      <p begin="01:04:22.666" end="01:04:23.333">Because uncertainty</p>
+      <p begin="01:04:23.333" end="01:04:25.125">must become measurable.</p>
+      <p begin="01:04:26.166" end="01:04:31.000">So explicit schemas reduce ambiguity</p>
+      <p begin="01:04:31.000" end="01:04:33.416">in three ways. They reduce the</p>
+      <p begin="01:04:33.416" end="01:04:36.125">interpretive drift, they enable</p>
+      <p begin="01:04:36.125" end="01:04:38.583">automated validation, and they make</p>
+      <p begin="01:04:38.583" end="01:04:40.000">downstream analysis tractable.</p>
+      <p begin="01:04:40.041" end="01:04:44.750">So if the alpha is not valid JSON,</p>
+      <p begin="01:04:45.083" end="01:04:46.958">the pipeline is going to reject it.</p>
+      <p begin="01:04:55.208" end="01:04:58.083">So how do we find prompt design? A</p>
+      <p begin="01:04:58.083" end="01:05:00.208">prompt is not just instructions,</p>
+      <p begin="01:05:00.208" end="01:05:01.625">it's the part of the</p>
+      <p begin="01:05:01.625" end="01:05:02.666">measurement instrument.</p>
+      <p begin="01:05:03.666" end="01:05:05.958">So effective extraction prompts are</p>
+      <p begin="01:05:05.958" end="01:05:07.000">going to describe the task narrowly.</p>
+      <p begin="01:05:08.041" end="01:05:12.541">They're going to specify the exact</p>
+      <p begin="01:05:12.541" end="01:05:16.166">output format. They're going to</p>
+      <p begin="01:05:16.166" end="01:05:18.875">include examples, if it's possible,</p>
+      <p begin="01:05:19.125" end="01:05:19.958">and they're going to</p>
+      <p begin="01:05:19.958" end="01:05:21.708">find abstention behavior.</p>
+      <p begin="01:05:23.000" end="01:05:24.791">So prompting is part of that method.</p>
+      <p begin="01:05:25.500" end="01:05:27.208">If two researchers use different</p>
+      <p begin="01:05:27.208" end="01:05:28.916">prompts, they are measuring</p>
+      <p begin="01:05:28.916" end="01:05:29.916">different things.</p>
+      <p begin="01:05:30.458" end="01:05:32.500">Therefore, prompts must be version</p>
+      <p begin="01:05:32.500" end="01:05:33.041">controlled,</p>
+      <p begin="01:05:33.291" end="01:05:35.000">documented, and reproducible.</p>
+      <p begin="01:05:41.291" end="01:05:43.583">So this is a prompt example here. We</p>
+      <p begin="01:05:43.583" end="01:05:45.416">have extract the following fields</p>
+      <p begin="01:05:45.416" end="01:05:47.750">from the text below, and then return</p>
+      <p begin="01:05:47.750" end="01:05:49.541">a JSON match in the schema.</p>
+      <p begin="01:05:50.250" end="01:05:52.916">I showed an example previously where</p>
+      <p begin="01:05:52.916" end="01:05:55.708">we have the actor, the action, the</p>
+      <p begin="01:05:55.708" end="01:05:56.916">target, the date, and</p>
+      <p begin="01:05:56.916" end="01:05:58.000">the confidence on it.</p>
+      <p begin="01:05:59.041" end="01:06:03.291">So notice what this is going to do</p>
+      <p begin="01:06:03.291" end="01:06:05.041">together. It's going to force a</p>
+      <p begin="01:06:05.041" end="01:06:07.000">structure in it. It's going to</p>
+      <p begin="01:06:07.000" end="01:06:09.041">eliminate narrative prose.</p>
+      <p begin="01:06:09.875" end="01:06:11.000">It's going to constrain our</p>
+      <p begin="01:06:11.000" end="01:06:13.625">formatting, and it's going to enable</p>
+      <p begin="01:06:13.625" end="01:06:14.708">a machine validation.</p>
+      <p begin="01:06:15.791" end="01:06:18.208">So if the model outputs invalid</p>
+      <p begin="01:06:18.208" end="01:06:19.666">JSON, we're going to get an</p>
+      <p begin="01:06:19.666" end="01:06:21.916">automatic failure, and then a brief</p>
+      <p begin="01:06:21.916" end="01:06:23.000">prompt for you in review.</p>
+      <p begin="01:06:24.041" end="01:06:26.166">But this machine checkable outputs</p>
+      <p begin="01:06:26.166" end="01:06:27.583">are critical for scale.</p>
+      <p begin="01:06:32.666" end="01:06:35.166">So now let's shift from single calls</p>
+      <p begin="01:06:35.166" end="01:06:38.166">to scale. When you scale LLM</p>
+      <p begin="01:06:38.166" end="01:06:39.916">extraction, you build a pipeline.</p>
+      <p begin="01:06:40.583" end="01:06:42.875">Pipelines must manage rate limits,</p>
+      <p begin="01:06:44.500" end="01:06:47.708">API failures, token limits, cost</p>
+      <p begin="01:06:47.708" end="01:06:49.041">constraints, logging,</p>
+      <p begin="01:06:49.208" end="01:06:50.000">and reproducibility.</p>
+      <p begin="01:06:51.041" end="01:06:53.000">So scaling is an engineering</p>
+      <p begin="01:06:53.000" end="01:06:57.666">problem. Each API call has latency,</p>
+      <p begin="01:06:58.208" end="01:07:00.541">monetary costs, and potential error.</p>
+      <p begin="01:07:01.541" end="01:07:04.041">So extraction pipelines must retry</p>
+      <p begin="01:07:04.041" end="01:07:06.875">failures, log prompts and responses,</p>
+      <p begin="01:07:07.916" end="01:07:10.166">track token usage, and handle</p>
+      <p begin="01:07:10.166" end="01:07:11.000">malformed outputs.</p>
+      <p begin="01:07:12.041" end="01:07:20.208">So let's see what a typical error</p>
+      <p begin="01:07:20.208" end="01:07:22.166">might be. We have our results here.</p>
+      <p begin="01:07:22.416" end="01:07:24.166">We're iterating over our documents.</p>
+      <p begin="01:07:24.708" end="01:07:26.750">We're calling our LLM here, and then</p>
+      <p begin="01:07:26.750" end="01:07:29.375">we're appending it. That size is</p>
+      <p begin="01:07:29.375" end="01:07:30.666">going to affect the cost and</p>
+      <p begin="01:07:30.666" end="01:07:32.000">reliability for it.</p>
+      <p begin="01:07:38.916" end="01:07:41.750">So now we define model uncertainty</p>
+      <p begin="01:07:41.750" end="01:07:44.625">for it. How do we define this?</p>
+      <p begin="01:07:44.833" end="01:07:46.666">Right? So LLMs are going to generate</p>
+      <p begin="01:07:46.666" end="01:07:48.250">outputs probabilistically.</p>
+      <p begin="01:07:49.250" end="01:07:51.166">They can report confidence scores,</p>
+      <p begin="01:07:51.625" end="01:07:52.625">express uncertainty,</p>
+      <p begin="01:07:53.083" end="01:07:55.000">abstain, or flag ambiguity.</p>
+      <p begin="01:07:56.041" end="01:07:57.666">Uncertainty should be captured</p>
+      <p begin="01:07:57.666" end="01:08:00.208">explicitly. So why would we want to</p>
+      <p begin="01:08:00.208" end="01:08:01.166">do this? Because</p>
+      <p begin="01:08:01.166" end="01:08:02.333">uncertainty is data.</p>
+      <p begin="01:08:02.958" end="01:08:06.291">Instead of hiding model output, we</p>
+      <p begin="01:08:06.291" end="01:08:07.500">want to actually just measure.</p>
+      <p begin="01:08:09.250" end="01:08:10.666">So here's an example of how we might</p>
+      <p begin="01:08:10.666" end="01:08:13.458">do this, right? If our response</p>
+      <p begin="01:08:13.458" end="01:08:16.708">confidence is less than 0.6, we want</p>
+      <p begin="01:08:16.708" end="01:08:17.833">a flag of her view.</p>
+      <p begin="01:08:18.625" end="01:08:20.583">So low confidence cases are routed</p>
+      <p begin="01:08:20.583" end="01:08:21.833">to humans in this case.</p>
+      <p begin="01:08:25.041" end="01:08:27.500">So how do we define validation?</p>
+      <p begin="01:08:28.583" end="01:08:30.791">Validation is a process of verifying</p>
+      <p begin="01:08:30.791" end="01:08:33.000">that extracted data reflect the</p>
+      <p begin="01:08:33.000" end="01:08:34.125">intended concept.</p>
+      <p begin="01:08:35.000" end="01:08:37.791">So human review serves two purposes.</p>
+      <p begin="01:08:37.791" end="01:08:39.708">We want to spot check our outputs,</p>
+      <p begin="01:08:40.416" end="01:08:43.375">identify systematic errors, refine</p>
+      <p begin="01:08:43.375" end="01:08:45.000">prompts, and adjust schemas.</p>
+      <p begin="01:08:46.041" end="01:08:48.666">Validation can be iterative. The</p>
+      <p begin="01:08:48.666" end="01:08:50.166">process can be we're going to run</p>
+      <p begin="01:08:50.166" end="01:08:53.250">our extraction, audit a subset of</p>
+      <p begin="01:08:53.250" end="01:08:56.333">it, identify failure modes, modify</p>
+      <p begin="01:08:56.333" end="01:08:57.208">our schema or</p>
+      <p begin="01:08:57.208" end="01:08:59.000">prompt, and then rerun it.</p>
+      <p begin="01:08:59.375" end="01:09:01.291">This cycle is central to</p>
+      <p begin="01:09:01.291" end="01:09:02.000">defensible measurement.</p>
+      <p begin="01:09:02.041" end="01:09:10.291">So what are spot audits? Audit</p>
+      <p begin="01:09:10.291" end="01:09:11.666">strategies are going to include</p>
+      <p begin="01:09:11.666" end="01:09:13.166">things like random sampling,</p>
+      <p begin="01:09:13.625" end="01:09:16.750">stratified sampling, edge case</p>
+      <p begin="01:09:16.750" end="01:09:17.875">review, and then</p>
+      <p begin="01:09:17.875" end="01:09:19.291">adversarial testing.</p>
+      <p begin="01:09:20.250" end="01:09:22.000">Audits do not just estimate error</p>
+      <p begin="01:09:22.000" end="01:09:25.000">rates. They're going to</p>
+      <p begin="01:09:25.000" end="01:09:26.000">reveal our failure modes.</p>
+      <p begin="01:09:27.041" end="01:09:28.916">So for example, models of</p>
+      <p begin="01:09:28.916" end="01:09:30.750">hallucinating states when none</p>
+      <p begin="01:09:30.750" end="01:09:33.583">exist, models might swamp actor and</p>
+      <p begin="01:09:33.583" end="01:09:36.291">target, models might overassign</p>
+      <p begin="01:09:36.291" end="01:09:38.625">agent same, and then failure</p>
+      <p begin="01:09:38.625" end="01:09:40.250">discovery is going to be part of our</p>
+      <p begin="01:09:40.250" end="01:09:41.125">scientific record.</p>
+      <p begin="01:09:48.375" end="01:09:49.666">So what are our failure modes?</p>
+      <p begin="01:09:50.000" end="01:09:51.500">Common how long failure modes</p>
+      <p begin="01:09:51.500" end="01:09:52.500">include things like</p>
+      <p begin="01:09:52.500" end="01:09:53.875">hallucinated fields.</p>
+      <p begin="01:09:56.041" end="01:09:59.041">Overconfident errors, wrong but with</p>
+      <p begin="01:09:59.041" end="01:09:59.916">high certainty.</p>
+      <p begin="01:10:01.041" end="01:10:03.625">Formatting drift, so invalid JSON.</p>
+      <p begin="01:10:05.708" end="01:10:07.583">Sensitivity to phrasing, so</p>
+      <p begin="01:10:07.583" end="01:10:10.958">inconsistent outputs. And failures</p>
+      <p begin="01:10:10.958" end="01:10:12.916">must be documented. We want to</p>
+      <p begin="01:10:12.916" end="01:10:14.791">maintain a failure along. So what</p>
+      <p begin="01:10:14.791" end="01:10:17.250">happened? Why? How often? And what</p>
+      <p begin="01:10:17.250" end="01:10:19.416">are our mitigation steps? And this</p>
+      <p begin="01:10:19.416" end="01:10:20.166">becomes part of</p>
+      <p begin="01:10:20.166" end="01:10:21.125">our methods appendix.</p>
+      <p begin="01:10:25.291" end="01:10:27.208">So extraction performance is going</p>
+      <p begin="01:10:27.208" end="01:10:28.875">to be evaluated with something</p>
+      <p begin="01:10:28.875" end="01:10:31.541">called precision recall. This is</p>
+      <p begin="01:10:31.541" end="01:10:33.000">going to be the proportion of</p>
+      <p begin="01:10:33.000" end="01:10:35.458">precision is the proportion of</p>
+      <p begin="01:10:35.458" end="01:10:37.333">extraction items that are correct.</p>
+      <p begin="01:10:38.000" end="01:10:39.291">Recall is going to be the proportion</p>
+      <p begin="01:10:39.291" end="01:10:43.000">of true items that are extracted. We</p>
+      <p begin="01:10:43.000" end="01:10:44.166">can combine this with something</p>
+      <p begin="01:10:44.166" end="01:10:46.208">called an F1 score, which balances</p>
+      <p begin="01:10:46.208" end="01:10:48.000">our precision recall metrics.</p>
+      <p begin="01:10:49.041" end="01:10:51.583">We want to also use field level</p>
+      <p begin="01:10:51.583" end="01:10:55.916">accuracy. This is going to be just</p>
+      <p begin="01:10:55.916" end="01:10:58.375">how well it does across different</p>
+      <p begin="01:10:58.375" end="01:10:59.791">dimensions for our data.</p>
+      <p begin="01:11:01.458" end="01:11:03.166">We want to look at agreement with</p>
+      <p begin="01:11:03.166" end="01:11:05.500">human labels. This can be intercoder</p>
+      <p begin="01:11:05.500" end="01:11:07.291">or agreement comparisons or</p>
+      <p begin="01:11:07.291" end="01:11:08.416">intercoder reliability.</p>
+      <p begin="01:11:11.125" end="01:11:12.500">But these are all different ways</p>
+      <p begin="01:11:12.500" end="01:11:13.708">that we can evaluate</p>
+      <p begin="01:11:13.708" end="01:11:15.875">how well an LM is doing.</p>
+      <p begin="01:11:20.708" end="01:11:22.916">So one thing to remember is that LMs</p>
+      <p begin="01:11:22.916" end="01:11:24.833">are not neutral. They reflect</p>
+      <p begin="01:11:24.833" end="01:11:27.000">training data biases, prompt</p>
+      <p begin="01:11:27.000" end="01:11:28.458">framing, and then</p>
+      <p begin="01:11:28.458" end="01:11:30.083">default response tendencies.</p>
+      <p begin="01:11:30.833" end="01:11:33.166">So they may under identify</p>
+      <p begin="01:11:33.166" end="01:11:35.916">marginalized actress, misclassify</p>
+      <p begin="01:11:35.916" end="01:11:38.458">ambiguous cases, default to</p>
+      <p begin="01:11:38.458" end="01:11:41.041">stereotypical assumptions. So in</p>
+      <p begin="01:11:41.041" end="01:11:44.125">these cases, human oversight is as</p>
+      <p begin="01:11:44.125" end="01:11:45.000">essential for it.</p>
+      <p begin="01:11:46.041" end="01:11:48.500">This is both a technical and ethical</p>
+      <p begin="01:11:48.500" end="01:11:51.041">requirement. But one thing to also</p>
+      <p begin="01:11:51.041" end="01:11:52.708">keep in mind when we're talking</p>
+      <p begin="01:11:52.708" end="01:11:55.833">about LMs assisting with data</p>
+      <p begin="01:11:55.833" end="01:11:59.000">extraction is that undergraduate or</p>
+      <p begin="01:11:59.000" end="01:12:01.208">graduate coders or whoever is coding</p>
+      <p begin="01:12:01.208" end="01:12:03.958">the data really also suffer from</p>
+      <p begin="01:12:03.958" end="01:12:07.125">things like biases, prompt framing</p>
+      <p begin="01:12:07.125" end="01:12:09.875">issues, and then they maybe do</p>
+      <p begin="01:12:09.875" end="01:12:11.000">things like hallucinate as well.</p>
+      <p begin="01:12:11.041" end="01:12:13.833">So anyone that's had undergraduate</p>
+      <p begin="01:12:13.833" end="01:12:17.375">coders for a large project know that</p>
+      <p begin="01:12:17.375" end="01:12:19.625">cases where undergraduates are not</p>
+      <p begin="01:12:19.625" end="01:12:21.541">reliable, they're not really paying</p>
+      <p begin="01:12:21.541" end="01:12:23.333">attention to what they're doing, and</p>
+      <p begin="01:12:23.333" end="01:12:24.208">they're like quickly</p>
+      <p begin="01:12:24.208" end="01:12:25.833">going through a coding task.</p>
+      <p begin="01:12:26.791" end="01:12:28.375">I've had an experience on a project</p>
+      <p begin="01:12:28.375" end="01:12:31.166">that I worked on where an</p>
+      <p begin="01:12:31.166" end="01:12:33.250">undergraduate pretended to do a</p>
+      <p begin="01:12:33.250" end="01:12:35.625">bunch of work and then arbitrarily</p>
+      <p begin="01:12:35.625" end="01:12:38.000">coded and asked to be paid on it.</p>
+      <p begin="01:12:38.875" end="01:12:40.875">So that would be an example of like</p>
+      <p begin="01:12:40.875" end="01:12:43.083">an undergraduate at code, having</p>
+      <p begin="01:12:43.083" end="01:12:45.833">hallucination in this case. So all</p>
+      <p begin="01:12:45.833" end="01:12:47.333">of them have these problems, but</p>
+      <p begin="01:12:47.333" end="01:12:48.958">they also exist with</p>
+      <p begin="01:12:48.958" end="01:12:50.500">human coders as well.</p>
+      <p begin="01:12:51.000" end="01:12:52.458">And I think that's especially true</p>
+      <p begin="01:12:52.458" end="01:12:56.333">for things that are low skilled</p>
+      <p begin="01:12:56.333" end="01:12:58.458">tasks like things that we would</p>
+      <p begin="01:12:58.458" end="01:13:00.000">delegate to undergraduates.</p>
+      <p begin="01:13:03.958" end="01:13:06.875">So every LLM extraction pipeline has</p>
+      <p begin="01:13:06.875" end="01:13:09.000">to record its model name and</p>
+      <p begin="01:13:09.000" end="01:13:13.083">version, the exact prompt text, the</p>
+      <p begin="01:13:13.083" end="01:13:16.083">schema definition, its batch size,</p>
+      <p begin="01:13:16.875" end="01:13:19.000">its validation procedure, its</p>
+      <p begin="01:13:19.000" end="01:13:20.208">failure rates, and</p>
+      <p begin="01:13:20.208" end="01:13:21.000">its null limitations.</p>
+      <p begin="01:13:21.041" end="01:13:23.833">This transparency is useful because</p>
+      <p begin="01:13:23.833" end="01:13:26.125">it enables reuse for people who are</p>
+      <p begin="01:13:26.125" end="01:13:28.583">going to work on this later. And</p>
+      <p begin="01:13:28.583" end="01:13:30.500">without documentation, the data set</p>
+      <p begin="01:13:30.500" end="01:13:31.000">cannot be replicated.</p>
+      <p begin="01:13:31.041" end="01:13:38.041">So what do we want to emphasize in</p>
+      <p begin="01:13:38.041" end="01:13:42.125">practice? For this course test, we</p>
+      <p begin="01:13:42.125" end="01:13:43.875">want to use LLMs as assistance,</p>
+      <p begin="01:13:44.791" end="01:13:47.000">enforce structure aggressively,</p>
+      <p begin="01:13:47.625" end="01:13:49.000">validate with humans,</p>
+      <p begin="01:13:49.500" end="01:13:50.625">document our failures.</p>
+      <p begin="01:13:51.041" end="01:13:52.666">And if you follow these principles,</p>
+      <p begin="01:13:53.000" end="01:13:54.583">you can scale extraction without</p>
+      <p begin="01:13:54.583" end="01:13:55.750">sacrificing murder.</p>
+      <p begin="01:13:56.041" end="01:14:02.500">So where are LLMs going to help</p>
+      <p begin="01:14:02.500" end="01:14:06.583">most? For large text corpora, for</p>
+      <p begin="01:14:06.583" end="01:14:10.041">vent extraction, metadata tagging,</p>
+      <p begin="01:14:11.083" end="01:14:13.791">first pass coding, and where do they</p>
+      <p begin="01:14:13.791" end="01:14:15.666">fail quietly? Things where there's</p>
+      <p begin="01:14:15.666" end="01:14:17.625">like ambiguous language, rare</p>
+      <p begin="01:14:17.625" end="01:14:21.333">categories, edge cases, context</p>
+      <p begin="01:14:21.333" end="01:14:22.375">heavy interpretation.</p>
+      <p begin="01:14:23.500" end="01:14:25.250">So how much better, and when we're</p>
+      <p begin="01:14:25.250" end="01:14:26.500">doing these things, we want to think</p>
+      <p begin="01:14:26.500" end="01:14:28.541">about how much validation is enough.</p>
+      <p begin="01:14:29.541" end="01:14:31.041">We want to have enough that our</p>
+      <p begin="01:14:31.041" end="01:14:33.458">error rates are estimated, our</p>
+      <p begin="01:14:33.458" end="01:14:36.000">failure moves are documented, the</p>
+      <p begin="01:14:36.000" end="01:14:37.000">pipeline is transparent.</p>
+      <p begin="01:14:37.041" end="01:14:41.000">And when we end up, we want to just</p>
+      <p begin="01:14:41.000" end="01:14:43.333">begin, this is assistance, not</p>
+      <p begin="01:14:43.333" end="01:14:46.250">automation. So if all ones are</p>
+      <p begin="01:14:46.250" end="01:14:47.875">embedded inside a structure,</p>
+      <p begin="01:14:47.875" end="01:14:49.500">validated, and document measurement</p>
+      <p begin="01:14:49.500" end="01:14:51.541">pipeline, they can meaningfully</p>
+      <p begin="01:14:51.541" end="01:14:53.500">increase our productivity without</p>
+      <p begin="01:14:53.500" end="01:14:55.583">undermining scientific integrity.</p>
+    </div>
+  </body>
+</tt>
