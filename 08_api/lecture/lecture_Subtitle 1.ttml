@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tt xml:lang="en" xmlns="http://www.w3.org/ns/ttml" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" xmlns:tts="http://www.w3.org/ns/ttml#styling" xmlns:ttp="http://www.w3.org/ns/ttml#parameter" xmlns:ittp="http://www.w3.org/ns/ttml/profile/imsc1#parameter" xmlns:itts="http://www.w3.org/ns/ttml/profile/imsc1#styling" ttp:profile="http://www.w3.org/ns/ttml/profile/imsc1/text" ttp:frameRate="24" ttp:timeBase="media">
+  <head>
+    <styling>
+      <style xml:id="s0" tts:color="#ffffff" tts:opacity="1" tts:fontSize="100%" tts:fontFamily="proportionalSansSerif" tts:fontWeight="bold" tts:textOutline="#ffffff 1px" tts:textAlign="center"/>
+    </styling>
+    <layout>
+      <region xml:id="r0" tts:origin="15.894% 74.884%" tts:extent="68.229% 10.278%" tts:displayAlign="center"/>
+    </layout>
+  </head>
+  <body>
+    <div xml:id="d0" region="r0" style="s0">
+      <p begin="01:00:04.083" end="01:00:05.666">Hi everyone, welcome. Today we're</p>
+      <p begin="01:00:05.666" end="01:00:07.666">going to be covering APIs and large</p>
+      <p begin="01:00:07.666" end="01:00:08.875">scale data collection.</p>
+      <p begin="01:00:09.708" end="01:00:11.541">This lecture is not about memorizing</p>
+      <p begin="01:00:11.541" end="01:00:13.583">syntax, it's about developing a</p>
+      <p begin="01:00:13.583" end="01:00:14.500">workflow mindset.</p>
+      <p begin="01:00:15.541" end="01:00:16.916">The goal is to help you think about</p>
+      <p begin="01:00:16.916" end="01:00:19.541">APIs as a system, data collection as</p>
+      <p begin="01:00:19.541" end="01:00:23.208">a pipeline, failure as normal, scale</p>
+      <p begin="01:00:23.208" end="01:00:24.166">as transformative,</p>
+      <p begin="01:00:25.083" end="01:00:27.291">reproducibility as non-ecosable.</p>
+      <p begin="01:00:29.000" end="01:00:30.625">When you move from collecting 100</p>
+      <p begin="01:00:30.625" end="01:00:32.541">records to collecting 1 million,</p>
+      <p begin="01:00:32.750" end="01:00:34.625">everything changes. Your mindset has</p>
+      <p begin="01:00:34.625" end="01:00:36.000">to change with it.</p>
+      <p begin="01:00:44.291" end="01:00:46.250">So, what do APIs matter for social</p>
+      <p begin="01:00:46.250" end="01:00:48.625">science data? Let's begin with this.</p>
+      <p begin="01:00:49.000" end="01:00:51.000">So, in contemporary social science</p>
+      <p begin="01:00:51.000" end="01:00:52.666">research, many of the largest data</p>
+      <p begin="01:00:52.666" end="01:00:53.541">sets are not</p>
+      <p begin="01:00:53.541" end="01:00:56.125">downloaded as static CSV files.</p>
+      <p begin="01:00:56.458" end="01:00:58.375">They're accessed through Application</p>
+      <p begin="01:00:58.375" end="01:01:00.625">Programming Interfaces, or APIs.</p>
+      <p begin="01:01:02.000" end="01:01:03.833">These have structured endpoints,</p>
+      <p begin="01:01:04.166" end="01:01:05.708">machine readable responses.</p>
+      <p begin="01:01:07.041" end="01:01:08.875">And Application Programming</p>
+      <p begin="01:01:08.875" end="01:01:11.625">Interface, or API, is a formal</p>
+      <p begin="01:01:11.625" end="01:01:13.875">mechanism that allows one computer</p>
+      <p begin="01:01:13.875" end="01:01:15.250">system to request and</p>
+      <p begin="01:01:15.250" end="01:01:16.375">receive data from another.</p>
+      <p begin="01:01:17.000" end="01:01:19.708">The API is often the intended</p>
+      <p begin="01:01:19.708" end="01:01:22.916">interface for data access. This</p>
+      <p begin="01:01:22.916" end="01:01:24.291">matters for three reasons.</p>
+      <p begin="01:01:25.291" end="01:01:27.500">First, APIs are structured. The data</p>
+      <p begin="01:01:27.500" end="01:01:28.416">are organized in</p>
+      <p begin="01:01:28.416" end="01:01:29.500">unpredictable format.</p>
+      <p begin="01:01:30.375" end="01:01:32.375">Second, APIs are monitored. The</p>
+      <p begin="01:01:32.375" end="01:01:34.000">provider can track usage.</p>
+      <p begin="01:01:35.125" end="01:01:37.458">Third, APIs are controlled. Access</p>
+      <p begin="01:01:37.458" end="01:01:38.625">and limits are governed.</p>
+      <p begin="01:01:39.000" end="01:01:41.500">So, when an API exists, you should</p>
+      <p begin="01:01:41.500" end="01:01:43.708">treat it as a canonical interface.</p>
+      <p begin="01:01:44.125" end="01:01:45.666">It reflects how the data provider</p>
+      <p begin="01:01:45.666" end="01:01:47.458">wants the data to be accessed.</p>
+      <p begin="01:01:51.041" end="01:01:53.250">So, an API is not just a technical</p>
+      <p begin="01:01:53.250" end="01:01:55.583">tool. It's a contract.</p>
+      <p begin="01:01:56.333" end="01:01:58.250">It specifies what data can be</p>
+      <p begin="01:01:58.250" end="01:02:01.291">requested, or how requests must be</p>
+      <p begin="01:02:01.291" end="01:02:03.916">structured, what constraints apply</p>
+      <p begin="01:02:03.916" end="01:02:05.500">to usage, what</p>
+      <p begin="01:02:05.500" end="01:02:07.083">authentication is required,</p>
+      <p begin="01:02:08.375" end="01:02:09.250">and what response</p>
+      <p begin="01:02:09.250" end="01:02:10.583">format will be returned.</p>
+      <p begin="01:02:12.000" end="01:02:13.916">APIs encode institutional and</p>
+      <p begin="01:02:13.916" end="01:02:16.500">technical choices. They define what</p>
+      <p begin="01:02:16.500" end="01:02:19.333">is visible and what is invisible,</p>
+      <p begin="01:02:20.125" end="01:02:22.875">what is searchable, what is</p>
+      <p begin="01:02:22.875" end="01:02:24.208">filterable, and</p>
+      <p begin="01:02:24.208" end="01:02:25.125">what's afraid limited.</p>
+      <p begin="01:02:26.666" end="01:02:27.500">These are design</p>
+      <p begin="01:02:27.500" end="01:02:29.666">decisions. They're not neutral.</p>
+      <p begin="01:02:31.083" end="01:02:32.750">So, if the field has not been</p>
+      <p begin="01:02:32.750" end="01:02:34.083">exposed, it may as</p>
+      <p begin="01:02:34.083" end="01:02:35.416">well not exist for you.</p>
+      <p begin="01:02:36.333" end="01:02:37.916">If the filter is allowed, your</p>
+      <p begin="01:02:37.916" end="01:02:39.625">research question becomes feasible.</p>
+      <p begin="01:02:40.458" end="01:02:42.750">So, when using an API, you are</p>
+      <p begin="01:02:42.750" end="01:02:44.625">operating within someone else's</p>
+      <p begin="01:02:44.625" end="01:02:45.625">governing structure.</p>
+      <p begin="01:02:49.791" end="01:02:51.166">So, let's clarify the difference</p>
+      <p begin="01:02:51.166" end="01:02:52.625">between APIs and scraping.</p>
+      <p begin="01:02:53.333" end="01:02:56.000">APIs expose structure explicitly.</p>
+      <p begin="01:02:57.000" end="01:02:58.875">They return structured responses.</p>
+      <p begin="01:02:59.500" end="01:03:01.958">They enforce rules formally. They</p>
+      <p begin="01:03:01.958" end="01:03:03.166">log usage and then</p>
+      <p begin="01:03:03.166" end="01:03:04.083">provide documentation.</p>
+      <p begin="01:03:05.000" end="01:03:07.125">On the other hand, web scraping</p>
+      <p begin="01:03:07.125" end="01:03:09.375">extracts information from HTML</p>
+      <p begin="01:03:09.375" end="01:03:12.166">pages, recovers structure from</p>
+      <p begin="01:03:12.166" end="01:03:14.208">presentation ordered content,</p>
+      <p begin="01:03:15.000" end="01:03:17.541">often relies on brittle selectors,</p>
+      <p begin="01:03:18.083" end="01:03:20.291">and can break when layout changes.</p>
+      <p begin="01:03:21.333" end="01:03:23.583">The key difference is this. Scraping</p>
+      <p begin="01:03:23.583" end="01:03:25.958">recovers structure, APIs declare.</p>
+      <p begin="01:03:26.416" end="01:03:29.416">If an API exists and provides what</p>
+      <p begin="01:03:29.416" end="01:03:31.500">you need, it's almost always more</p>
+      <p begin="01:03:31.500" end="01:03:32.500">stable and more</p>
+      <p begin="01:03:32.500" end="01:03:34.000">reproducible than scraping.</p>
+      <p begin="01:03:34.000" end="01:03:37.041">Scraping is often a last resort when</p>
+      <p begin="01:03:37.041" end="01:03:39.083">APIs do not expose data.</p>
+      <p begin="01:03:45.333" end="01:03:48.958">So, most social science APIs return</p>
+      <p begin="01:03:48.958" end="01:03:52.083">data in JSON format. JSON stands for</p>
+      <p begin="01:03:52.083" end="01:03:55.000">JavaScript Object Notation.</p>
+      <p begin="01:03:56.000" end="01:03:57.375">So, you're going to commonly</p>
+      <p begin="01:03:57.375" end="01:03:59.208">encounter things like objects that</p>
+      <p begin="01:03:59.208" end="01:04:02.291">are key-value pairs, arrays and</p>
+      <p begin="01:04:02.291" end="01:04:04.500">lists, nested structure.</p>
+      <p begin="01:04:05.416" end="01:04:07.541">The critical insight here is that</p>
+      <p begin="01:04:07.541" end="01:04:08.666">understanding structure</p>
+      <p begin="01:04:08.666" end="01:04:10.541">matters more than syntax.</p>
+      <p begin="01:04:11.458" end="01:04:14.291">The technical act of sending a GET</p>
+      <p begin="01:04:14.291" end="01:04:15.541">request is trivial.</p>
+      <p begin="01:04:16.000" end="01:04:17.875">The hard part is inspecting the</p>
+      <p begin="01:04:17.875" end="01:04:20.416">response, understanding its nesting,</p>
+      <p begin="01:04:21.000" end="01:04:23.125">mapping into a relational structure,</p>
+      <p begin="01:04:23.458" end="01:04:24.791">and then preserving the metadata.</p>
+      <p begin="01:04:25.708" end="01:04:26.833">The conceptual skill</p>
+      <p begin="01:04:26.833" end="01:04:28.000">is structural reasoning.</p>
+      <p begin="01:04:32.416" end="01:04:34.416">So, JSON represents hierarchical</p>
+      <p begin="01:04:34.416" end="01:04:37.000">data. It contains objects, arrays,</p>
+      <p begin="01:04:37.500" end="01:04:38.625">nested hierarchies.</p>
+      <p begin="01:04:39.750" end="01:04:42.000">The important conceptual line is</p>
+      <p begin="01:04:42.000" end="01:04:43.041">that APIs are going to</p>
+      <p begin="01:04:43.041" end="01:04:44.958">return trees, not tables.</p>
+      <p begin="01:04:46.000" end="01:04:48.833">So, in other words, our response is</p>
+      <p begin="01:04:48.833" end="01:04:51.458">often we have the metadata, results,</p>
+      <p begin="01:04:52.083" end="01:04:54.458">ID1, ID2, and these are going to</p>
+      <p begin="01:04:54.458" end="01:04:56.000">correspond to our different data.</p>
+      <p begin="01:04:57.333" end="01:04:59.666">This is not flat. It's going to be</p>
+      <p begin="01:04:59.666" end="01:05:01.750">in a hierarchical structure or tree.</p>
+      <p begin="01:05:03.208" end="01:05:05.291">So, your job is often to extract the</p>
+      <p begin="01:05:05.291" end="01:05:07.291">branch of that tree, flatten the</p>
+      <p begin="01:05:07.291" end="01:05:08.583">nested fields, and then</p>
+      <p begin="01:05:08.583" end="01:05:09.583">preserve the relationships.</p>
+      <p begin="01:05:11.125" end="01:05:12.291">You're going to be converting</p>
+      <p begin="01:05:12.291" end="01:05:13.541">tree-shaped data</p>
+      <p begin="01:05:13.541" end="01:05:15.375">into table-shaped data.</p>
+      <p begin="01:05:15.958" end="01:05:18.125">This transformation is interpretive.</p>
+      <p begin="01:05:18.416" end="01:05:20.291">You decide which branches matter.</p>
+      <p begin="01:05:24.583" end="01:05:26.750">Most APIs require authentication.</p>
+      <p begin="01:05:27.791" end="01:05:30.375">Authentication methods include API</p>
+      <p begin="01:05:30.375" end="01:05:35.083">keys, bearer tokens, or OAuth flows.</p>
+      <p begin="01:05:36.083" end="01:05:37.750">Authentication is going to govern</p>
+      <p begin="01:05:37.750" end="01:05:39.916">things like access rights, rate</p>
+      <p begin="01:05:39.916" end="01:05:42.958">limits, attribution, audit trials.</p>
+      <p begin="01:05:44.333" end="01:05:45.708">But there are two best practices.</p>
+      <p begin="01:05:46.208" end="01:05:47.875">The first is you want to treat your</p>
+      <p begin="01:05:47.875" end="01:05:49.583">credentials as secret.</p>
+      <p begin="01:05:50.625" end="01:05:52.666">So, never hard-code tokens and</p>
+      <p begin="01:05:52.666" end="01:05:53.500">descript so it will</p>
+      <p begin="01:05:53.500" end="01:05:56.000">be shared or committed.</p>
+      <p begin="01:05:56.000" end="01:05:58.000">And then you go in and use things</p>
+      <p begin="01:05:58.000" end="01:05:59.666">like environmental variables.</p>
+      <p begin="01:05:59.875" end="01:06:01.791">So, you want to configure files that</p>
+      <p begin="01:06:01.791" end="01:06:03.041">exclude from version</p>
+      <p begin="01:06:03.041" end="01:06:06.000">control and secure storage.</p>
+      <p begin="01:06:06.958" end="01:06:08.333">And then second, authentication</p>
+      <p begin="01:06:08.333" end="01:06:09.500">defines your scope.</p>
+      <p begin="01:06:10.416" end="01:06:12.750">Some endpoints are only accessible</p>
+      <p begin="01:06:12.750" end="01:06:15.000">with elevated privileges.</p>
+      <p begin="01:06:16.000" end="01:06:16.958">So, your authentication</p>
+      <p begin="01:06:16.958" end="01:06:18.583">level shapes your dataset.</p>
+      <p begin="01:06:19.000" end="01:06:25.791">So, here's a minimal Python example.</p>
+      <p begin="01:06:26.875" end="01:06:28.541">You want to import your request.</p>
+      <p begin="01:06:30.833" end="01:06:34.250">You want to define a URL. You want</p>
+      <p begin="01:06:34.250" end="01:06:36.166">to define, pass</p>
+      <p begin="01:06:36.166" end="01:06:37.333">your parameters rather.</p>
+      <p begin="01:06:39.250" end="01:06:40.000">You want to add in</p>
+      <p begin="01:06:40.000" end="01:06:41.000">headers in this case.</p>
+      <p begin="01:06:42.000" end="01:06:45.083">You want to pull response and then</p>
+      <p begin="01:06:45.083" end="01:06:47.250">parse the data here.</p>
+      <p begin="01:06:47.250" end="01:06:47.916">So, this is just</p>
+      <p begin="01:06:47.916" end="01:06:50.458">parsing your JSON on it.</p>
+      <p begin="01:06:56.250" end="01:06:58.625">So, a JSON response can represent an</p>
+      <p begin="01:06:58.625" end="01:07:00.500">error just as easily as the data.</p>
+      <p begin="01:07:01.041" end="01:07:03.500">You never assume that this outcome</p>
+      <p begin="01:07:03.500" end="01:07:06.458">here means that it was successful.</p>
+      <p begin="01:07:06.458" end="01:07:07.583">You always have to check it.</p>
+      <p begin="01:07:08.000" end="01:07:10.083">And I've had projects too where I</p>
+      <p begin="01:07:10.083" end="01:07:11.416">thought I was scraping data.</p>
+      <p begin="01:07:12.166" end="01:07:14.166">The whole time I was hitting a rate</p>
+      <p begin="01:07:14.166" end="01:07:15.958">limit that I didn't realize and I</p>
+      <p begin="01:07:15.958" end="01:07:17.041">was returning a lot</p>
+      <p begin="01:07:17.041" end="01:07:19.458">of empty JSON files</p>
+      <p begin="01:07:19.458" end="01:07:20.041">and I had to go</p>
+      <p begin="01:07:20.041" end="01:07:21.500">back and redo it again.</p>
+      <p begin="01:07:21.500" end="01:07:23.958">So, this is a pretty common issue</p>
+      <p begin="01:07:23.958" end="01:07:25.375">and something you spend a lot of</p>
+      <p begin="01:07:25.375" end="01:07:27.375">time focusing on when you're doing</p>
+      <p begin="01:07:27.375" end="01:07:29.625">large-scale polling data.</p>
+      <p begin="01:07:32.375" end="01:07:34.291">And here's a similar version of R.</p>
+      <p begin="01:07:35.541" end="01:07:39.750">We have our website here. We're</p>
+      <p begin="01:07:39.750" end="01:07:41.500">getting a response with the URL</p>
+      <p begin="01:07:41.500" end="01:07:43.250">querying 100,</p>
+      <p begin="01:07:44.208" end="01:07:45.083">adding our headers here,</p>
+      <p begin="01:07:45.416" end="01:07:46.458">and then we are taking</p>
+      <p begin="01:07:46.458" end="01:07:49.916">out the response here.</p>
+      <p begin="01:07:55.500" end="01:07:56.500">So, the APIs rarely</p>
+      <p begin="01:07:56.500" end="01:07:58.333">return all records at once.</p>
+      <p begin="01:08:50.166" end="01:08:52.291">Why is this? Well first, large</p>
+      <p begin="01:08:52.291" end="01:08:54.583">responses strain servers.</p>
+      <p begin="01:08:55.916" end="01:08:58.875">They encourage inefficient use and</p>
+      <p begin="01:08:58.875" end="01:09:00.583">they reduce system stability.</p>
+      <p begin="01:09:01.166" end="01:09:03.250">So common pagination patterns</p>
+      <p begin="01:09:03.250" end="01:09:05.000">include things like page numbers,</p>
+      <p begin="01:09:05.333" end="01:09:08.291">offsets, cursor based pagination,</p>
+      <p begin="01:09:09.375" end="01:09:11.625">and then time window slicing.</p>
+      <p begin="01:09:12.750" end="01:09:15.041">So cursor based pagination is</p>
+      <p begin="01:09:15.041" end="01:09:16.041">especially common</p>
+      <p begin="01:09:16.041" end="01:09:18.166">in modern page APIs.</p>
+      <p begin="01:09:18.666" end="01:09:20.833">So instead of page one, page two,</p>
+      <p begin="01:09:20.833" end="01:09:22.291">page three, you get</p>
+      <p begin="01:09:22.291" end="01:09:24.125">a next cursor token.</p>
+      <p begin="01:09:24.958" end="01:09:27.583">So pagination logic becomes part of</p>
+      <p begin="01:09:27.583" end="01:09:29.208">your data generating process.</p>
+      <p begin="01:09:29.750" end="01:09:31.750">Your data set exists because you</p>
+      <p begin="01:09:31.750" end="01:09:33.416">loop over tourist</p>
+      <p begin="01:09:33.416" end="01:09:35.166">pages in a specific order.</p>
+      <p begin="01:09:39.208" end="01:09:40.458">So this is an example how we do</p>
+      <p begin="01:09:40.458" end="01:09:41.666">this. We have our all items.</p>
+      <p begin="01:09:41.666" end="01:09:43.625">This is turning to page one. So</p>
+      <p begin="01:09:43.625" end="01:09:44.708">while true, we are</p>
+      <p begin="01:09:44.708" end="01:09:48.250">looping through this page here.</p>
+      <p begin="01:09:50.208" end="01:09:51.916">We're pulling it with our response.</p>
+      <p begin="01:09:52.583" end="01:09:54.750">If not, we break it and we append.</p>
+      <p begin="01:09:57.541" end="01:10:00.375">In the same kind of syntax here</p>
+      <p begin="01:10:00.375" end="01:10:02.625">where we have all of our items,</p>
+      <p begin="01:10:02.875" end="01:10:04.666">paging one, and repeating this here,</p>
+      <p begin="01:10:05.666" end="01:10:08.750">we're pulling over for a</p>
+      <p begin="01:10:08.750" end="01:10:11.083">page here, one plus one.</p>
+      <p begin="01:10:11.083" end="01:10:12.416">So we're just iterating over the</p>
+      <p begin="01:10:12.416" end="01:10:13.791">same kind of process.</p>
+      <p begin="01:10:20.541" end="01:10:21.458">So rate limits</p>
+      <p begin="01:10:21.458" end="01:10:23.083">protect infrastructure.</p>
+      <p begin="01:10:24.500" end="01:10:26.083">Common constraints include things</p>
+      <p begin="01:10:26.083" end="01:10:28.208">like requests per second, requests</p>
+      <p begin="01:10:28.208" end="01:10:29.666">per minute, requests per day,</p>
+      <p begin="01:10:30.666" end="01:10:33.583">and then burst limits. So violating</p>
+      <p begin="01:10:33.583" end="01:10:35.291">your limits can result in things</p>
+      <p begin="01:10:35.291" end="01:10:39.750">like an HTTP 429 error.</p>
+      <p begin="01:10:39.958" end="01:10:42.166">That's what the problem was with the</p>
+      <p begin="01:10:42.166" end="01:10:42.833">project where I</p>
+      <p begin="01:10:42.833" end="01:10:43.916">thought I was pulling data,</p>
+      <p begin="01:10:43.916" end="01:10:45.041">but I was actually just getting a</p>
+      <p begin="01:10:45.041" end="01:10:46.666">bunch of empty JSON files.</p>
+      <p begin="01:10:48.250" end="01:10:50.166">You can have temporary bands if you</p>
+      <p begin="01:10:50.166" end="01:10:51.666">continue to file these things.</p>
+      <p begin="01:10:52.666" end="01:10:54.791">And then also permanent reallocation</p>
+      <p begin="01:10:54.791" end="01:10:58.333">if you continue to</p>
+      <p begin="01:10:58.333" end="01:11:00.750">circumvent the rules on it.</p>
+      <p begin="01:11:02.000" end="01:11:04.166">But basically what you need to take</p>
+      <p begin="01:11:04.166" end="01:11:05.833">away from here is that rate limits</p>
+      <p begin="01:11:05.833" end="01:11:07.000">shape visibility.</p>
+      <p begin="01:11:07.750" end="01:11:09.708">They constrain what can be collected</p>
+      <p begin="01:11:09.708" end="01:11:12.625">within a time window, and they're</p>
+      <p begin="01:11:12.625" end="01:11:14.416">not really technical.</p>
+      <p begin="01:11:14.666" end="01:11:16.083">They shape research design.</p>
+      <p begin="01:11:24.666" end="01:11:26.458">So as a best practice, you want to</p>
+      <p begin="01:11:26.458" end="01:11:28.958">set a sleeper between your requests.</p>
+      <p begin="01:11:29.625" end="01:11:30.791">Here in this table here, we're</p>
+      <p begin="01:11:30.791" end="01:11:31.916">sleeping for one second.</p>
+      <p begin="01:11:32.750" end="01:11:35.291">You want to read rate limit headers,</p>
+      <p begin="01:11:36.416" end="01:11:38.250">back off when there's an error, and</p>
+      <p begin="01:11:38.250" end="01:11:41.416">then implement exponential back off.</p>
+      <p begin="01:11:42.083" end="01:11:43.208">So exponential back</p>
+      <p begin="01:11:43.208" end="01:11:44.166">off, what does that mean?</p>
+      <p begin="01:11:45.041" end="01:11:46.083">If the first retry</p>
+      <p begin="01:11:46.083" end="01:11:46.666">fails, wait one second.</p>
+      <p begin="01:11:46.666" end="01:11:50.041">If the second retry fails, wait two</p>
+      <p begin="01:11:50.041" end="01:11:52.500">seconds, four seconds, eight</p>
+      <p begin="01:11:52.500" end="01:11:54.125">seconds, and so forth.</p>
+      <p begin="01:11:54.958" end="01:11:56.166">And this is a way to</p>
+      <p begin="01:11:56.166" end="01:11:59.041">stabilize your pipeline on it.</p>
+      <p begin="01:11:59.041" end="01:12:02.041">And I built all this in my code when</p>
+      <p begin="01:12:02.041" end="01:12:04.250">I'm doing large API extraction.</p>
+      <p begin="01:12:08.125" end="01:12:09.958">So what are retries and failures?</p>
+      <p begin="01:12:11.333" end="01:12:12.958">So at scale, failure is really</p>
+      <p begin="01:12:12.958" end="01:12:14.666">normal when you're using an API.</p>
+      <p begin="01:12:14.666" end="01:12:16.458">You want to expect things like</p>
+      <p begin="01:12:16.458" end="01:12:18.208">network interruptions, server</p>
+      <p begin="01:12:18.208" end="01:12:21.333">time-mails, malformed responses,</p>
+      <p begin="01:12:21.791" end="01:12:22.541">transient errors.</p>
+      <p begin="01:12:23.375" end="01:12:25.166">Your pipeline must assume there's</p>
+      <p begin="01:12:25.166" end="01:12:26.916">going to be failure built into it.</p>
+      <p begin="01:12:27.625" end="01:12:28.875">And so you need to code in things</p>
+      <p begin="01:12:28.875" end="01:12:30.083">like resilience to</p>
+      <p begin="01:12:30.083" end="01:12:32.500">design so it's not accidental.</p>
+      <p begin="01:12:33.000" end="01:12:34.583">And so when you get a failure, it</p>
+      <p begin="01:12:34.583" end="01:12:36.250">repeats and checks again.</p>
+      <p begin="01:12:37.666" end="01:12:42.541">And here's an example of retry logic</p>
+      <p begin="01:12:42.541" end="01:12:44.333">where we're setting it three times a</p>
+      <p begin="01:12:44.333" end="01:12:47.916">retry, try for a response here.</p>
+      <p begin="01:12:50.041" end="01:12:53.125">If it fails, we're sleeping for two</p>
+      <p begin="01:12:53.125" end="01:12:55.000">seconds, you want to be building an</p>
+      <p begin="01:12:55.000" end="01:12:58.125">exponential sleep here.</p>
+      <p begin="01:12:59.125" end="01:13:00.083">And then if it happens</p>
+      <p begin="01:13:00.083" end="01:13:01.500">three times, it moves on.</p>
+      <p begin="01:13:08.166" end="01:13:10.208">So logging is not optional.</p>
+      <p begin="01:13:10.958" end="01:13:13.166">In this case, it matters because we</p>
+      <p begin="01:13:13.166" end="01:13:14.083">want to track things</p>
+      <p begin="01:13:14.083" end="01:13:15.166">like failures, right?</p>
+      <p begin="01:13:16.458" end="01:13:17.916">But we also want to look at things</p>
+      <p begin="01:13:17.916" end="01:13:20.750">like what was requested and when it</p>
+      <p begin="01:13:20.750" end="01:13:23.000">was requested with what parameters.</p>
+      <p begin="01:13:24.458" end="01:13:26.333">What status code was returned and</p>
+      <p begin="01:13:26.333" end="01:13:28.208">how many records were received.</p>
+      <p begin="01:13:29.583" end="01:13:30.791">Logs are going to allow you to do</p>
+      <p begin="01:13:30.791" end="01:13:33.083">things like partial reruns, failure</p>
+      <p begin="01:13:33.083" end="01:13:35.333">points, data boundaries.</p>
+      <p begin="01:13:36.250" end="01:13:37.166">But logging is part</p>
+      <p begin="01:13:37.166" end="01:13:38.458">of reproducibility.</p>
+      <p begin="01:13:38.958" end="01:13:42.958">If you cannot reconstruct your</p>
+      <p begin="01:13:42.958" end="01:13:45.000">collection process, the</p>
+      <p begin="01:13:45.000" end="01:13:46.458">dataset is not auditable.</p>
+      <p begin="01:13:53.208" end="01:13:55.416">So another thing we're going to talk</p>
+      <p begin="01:13:55.416" end="01:13:57.583">about is storing bra API responses.</p>
+      <p begin="01:13:58.666" end="01:14:01.666">One thing is to run bra JSON files.</p>
+      <p begin="01:14:02.291" end="01:14:04.625">You don't want to overwrite these</p>
+      <p begin="01:14:04.625" end="01:14:05.875">necessarily, right?</p>
+      <p begin="01:14:06.625" end="01:14:08.375">And you want to have separate raw</p>
+      <p begin="01:14:08.375" end="01:14:11.416">data for your process data on it.</p>
+      <p begin="01:14:11.625" end="01:14:14.291">So I have like a separate, the one</p>
+      <p begin="01:14:14.291" end="01:14:16.125">bad part of this is JSON files can</p>
+      <p begin="01:14:16.125" end="01:14:18.291">be quite large for</p>
+      <p begin="01:14:18.291" end="01:14:18.666">storage purposes, right?</p>
+      <p begin="01:14:18.666" end="01:14:21.166">So for that project that I was</p>
+      <p begin="01:14:21.166" end="01:14:22.875">discussing earlier, I actually had</p>
+      <p begin="01:14:22.875" end="01:14:26.083">to buy an external hard drive for</p>
+      <p begin="01:14:26.083" end="01:14:29.708">all this JSON data on it.</p>
+      <p begin="01:14:30.000" end="01:14:32.791">Even though the CSV files are much</p>
+      <p begin="01:14:32.791" end="01:14:34.791">smaller, I want to be able to keep</p>
+      <p begin="01:14:34.791" end="01:14:36.041">the raw data so I bought</p>
+      <p begin="01:14:36.041" end="01:14:38.041">an external drive for it.</p>
+      <p begin="01:14:39.250" end="01:14:41.166">But in general, you want to keep</p>
+      <p begin="01:14:41.166" end="01:14:44.458">your APIs for replication or rather</p>
+      <p begin="01:14:44.458" end="01:14:45.875">your raw JSON files</p>
+      <p begin="01:14:45.875" end="01:14:47.416">for replication purposes.</p>
+      <p begin="01:16:43.666" end="01:16:45.500">So it's also very important in this</p>
+      <p begin="01:16:45.500" end="01:16:46.416">case to document.</p>
+      <p begin="01:16:46.750" end="01:16:48.625">You want to have your endpoint URL,</p>
+      <p begin="01:16:50.416" end="01:16:52.291">parameters that were used, the</p>
+      <p begin="01:16:52.291" end="01:16:53.666">authentication type,</p>
+      <p begin="01:16:55.458" end="01:16:58.541">the collection date, the API version</p>
+      <p begin="01:16:58.541" end="01:16:59.916">that you're working with, and then</p>
+      <p begin="01:16:59.916" end="01:17:01.166">any known constraints.</p>
+      <p begin="01:17:02.375" end="01:17:03.041">And the reason being</p>
+      <p begin="01:17:03.041" end="01:17:04.791">this is that APIs evolve,</p>
+      <p begin="01:17:05.541" end="01:17:06.666">fields might disappear,</p>
+      <p begin="01:17:07.458" end="01:17:08.791">defaults might change,</p>
+      <p begin="01:17:09.291" end="01:17:10.583">endpoints might deprecate.</p>
+      <p begin="01:17:11.791" end="01:17:13.250">So without this kind of information,</p>
+      <p begin="01:17:13.625" end="01:17:14.916">your dataset becomes</p>
+      <p begin="01:17:14.916" end="01:17:16.791">uninterpretable over time.</p>
+      <p begin="01:17:20.791" end="01:17:22.125">So what do we emphasize in practice?</p>
+      <p begin="01:17:22.458" end="01:17:24.208">You want to treat APIs as an</p>
+      <p begin="01:17:24.208" end="01:17:25.458">institutional artifact.</p>
+      <p begin="01:17:26.250" end="01:17:27.000">You want to inspect</p>
+      <p begin="01:17:27.000" end="01:17:28.583">structure before modeling,</p>
+      <p begin="01:17:29.625" end="01:17:32.125">expect failure at scale, preserve</p>
+      <p begin="01:17:32.125" end="01:17:33.500">raw data and logs.</p>
+      <p begin="01:17:34.333" end="01:17:35.166">And these principles</p>
+      <p begin="01:17:35.166" end="01:17:36.750">convert fragile scripts</p>
+      <p begin="01:17:36.750" end="01:17:38.208">into robust pipelines.</p>
+      <p begin="01:17:42.916" end="01:17:44.458">So let's just close with a</p>
+      <p begin="01:17:44.458" end="01:17:46.458">couple of thoughts, right?</p>
+      <p begin="01:17:46.500" end="01:17:47.541">So APIs are going to</p>
+      <p begin="01:17:47.541" end="01:17:48.625">embed your assumptions.</p>
+      <p begin="01:17:49.500" end="01:17:49.916">They reflect</p>
+      <p begin="01:17:49.916" end="01:17:52.291">governance, they shape visibility,</p>
+      <p begin="01:17:53.416" end="01:17:53.833">they're going to</p>
+      <p begin="01:17:53.833" end="01:17:55.041">constrain your scale.</p>
+      <p begin="01:17:55.791" end="01:17:57.458">And when you use an API, you're not</p>
+      <p begin="01:17:57.458" end="01:17:58.583">just collecting data,</p>
+      <p begin="01:17:59.333" end="01:18:00.916">you're participating in a structured</p>
+      <p begin="01:18:00.916" end="01:18:02.333">informational ecosystem.</p>
+      <p begin="01:18:02.750" end="01:18:03.166">So you want to</p>
+      <p begin="01:18:03.166" end="01:18:04.333">understand that ecosystem</p>
+      <p begin="01:18:04.666" end="01:18:05.708">as part of a</p>
+      <p begin="01:18:05.708" end="01:18:07.125">responsible data science.</p>
+      <p begin="01:18:07.833" end="01:18:10.416">And that's going to be it for today.</p>
+    </div>
+  </body>
+</tt>
