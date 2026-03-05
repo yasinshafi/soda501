@@ -46,7 +46,7 @@ import plotly.express as px
 # Part 1: Presidential vote data (national-level)
 # -----------------------------------------------------------------------------
 # Read in the presidential election vote data
-vote_data = pd.read_csv("votes/1976-2020-president.csv")
+vote_data = pd.read_csv("demo/1976-2020-president.csv")
 
 # Keep only Democrat and Republican votes
 vote_data = vote_data[
@@ -80,7 +80,7 @@ election_years = np.sort(vote_data["year"].unique())
 # Part 2: Pulling economic indicators from FRED (Q1/Q2 of election years)
 # -----------------------------------------------------------------------------
 # NOTE: Replace with your own key (students should get one from FRED).
-fred_api_key = "YOUR_FRED_API_KEY_HERE"
+fred_api_key = "771ce2b1203d8c85e07c7d1eba7b6d76"
 fred = Fred(api_key=fred_api_key)
 
 # Define observation window based on the election years in the vote data
@@ -201,7 +201,7 @@ print(test_pred.head())
 # -----------------------------------------------------------------------------
 # Load pre-existing poll and census data (RDS) and convert to pandas DataFrame
 # NOTE: Update the path to wherever the RDS file lives on your system.
-poll_census_path = "poll_census_data.rds"
+poll_census_path = "demo/poll_census_data.rds"
 poll_census_obj = pyreadr.read_r(poll_census_path)
 poll_census_data = list(poll_census_obj.values())[0]
 
