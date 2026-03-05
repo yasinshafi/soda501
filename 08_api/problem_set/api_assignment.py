@@ -27,7 +27,6 @@ from fredapi import Fred
 #   export FRED_API_KEY="your_key_here"   (Linux/Mac)
 #   set FRED_API_KEY=your_key_here        (Windows CMD)
 
-os.environ["FRED_API_KEY"] = "771ce2b1203d8c85e07c7d1eba7b6d76"
 fred_api_key = os.environ.get("FRED_API_KEY")
 fred = Fred(api_key=fred_api_key)
 
