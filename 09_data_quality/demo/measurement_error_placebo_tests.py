@@ -33,11 +33,11 @@ import statsmodels.formula.api as smf
 np.random.seed(123)
 
 # Create common project folders (safe to run repeatedly)
-os.makedirs("data_raw", exist_ok=True)
-os.makedirs("data_processed", exist_ok=True)
-os.makedirs("figures", exist_ok=True)
-os.makedirs("outputs", exist_ok=True)
-os.makedirs("src", exist_ok=True)
+os.makedirs("D:/r_workspace/soda_501/09_data_quality/data_raw", exist_ok=True)
+os.makedirs("D:/r_workspace/soda_501/09_data_quality/data_processed", exist_ok=True)
+os.makedirs("D:/r_workspace/soda_501/09_data_quality/figures", exist_ok=True)
+os.makedirs("D:/r_workspace/soda_501/09_data_quality/outputs", exist_ok=True)
+os.makedirs("D:/r_workspace/soda_501/09_data_quality/src", exist_ok=True)
 
 # -----------------------------------------------------------------------------
 # Part 1: A simple data generating process with confounding
