@@ -1,0 +1,3 @@
+id,parent,notused,detail
+4,0,203,SEARCH co USING INDEX idx_contrib_amount (amount>?)
+8,0,45,SEARCH ca USING INTEGER PRIMARY KEY (rowid=?)

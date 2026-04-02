@@ -1,0 +1,5 @@
+name,sql
+idx_contrib_contributor_id,CREATE INDEX idx_contrib_contributor_id ON contributions (contributor_id)
+idx_contrib_candidate_id,CREATE INDEX idx_contrib_candidate_id   ON contributions (candidate_id)
+idx_contrib_amount,CREATE INDEX idx_contrib_amount         ON contributions (amount)
+idx_contrib_date,CREATE INDEX idx_contrib_date           ON contributions (date)

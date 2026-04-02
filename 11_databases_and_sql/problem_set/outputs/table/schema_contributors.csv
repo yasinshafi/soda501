@@ -1,0 +1,6 @@
+cid,name,type,notnull,dflt_value,pk
+0,id,INTEGER,0,,1
+1,name,TEXT,0,,0
+2,occupation,TEXT,0,,0
+3,employer,TEXT,0,,0
+4,state,TEXT,0,,0

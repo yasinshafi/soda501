@@ -1,0 +1,6 @@
+cid,name,type,notnull,dflt_value,pk
+0,id,INTEGER,0,,1
+1,contributor_id,INTEGER,0,,0
+2,candidate_id,INTEGER,0,,0
+3,amount,REAL,0,,0
+4,date,TEXT,0,,0
