@@ -1,0 +1,3 @@
+Model,Validation Acc.,Test Acc.
+Logistic Regression (features only),0.9450,0.9750
+GCN (features + graph),0.6600,0.6350
